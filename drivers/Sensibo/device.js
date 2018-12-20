@@ -10,8 +10,8 @@ class SensiboDevice extends Homey.Device {
     onInit() {
         this.log('virtual device initialized');
 
-        this._deviceId = undefined;
-        this._deviceName = undefined;
+        this._deviceId = this.getData().id;
+        this._deviceName = this.getName();
         this._acState = {
             on: true,
             mode: "heat",
@@ -60,8 +60,7 @@ class SensiboDevice extends Homey.Device {
             return this.onUpdateTargetTemperature(value, opts);
         });
 
-        this.initDevices();
-        this.scheduleCheckData(10);
+        this.scheduleCheckData(5);
     }
 
     onAdded() {
@@ -70,23 +69,6 @@ class SensiboDevice extends Homey.Device {
 
     onDeleted() {
         this.log('virtual device deleted');
-    }
-
-    initDevices() {
-        this.getAllDevices()
-            .then(data => {
-                this.log('devices', data.data);
-                let result = data.data.result;
-                if (result && result.length > 0) {
-                    this.log('result[0]', result[0]);
-                    this._deviceId = result[0].id;
-                    this._deviceName = result[0].room.name;
-                    this.log('device: ', this._deviceId, this._deviceName);
-                } else {
-                    this.log('No devices found');
-                }
-            })
-            .catch(err => this.log('ERROR', err));
     }
 
     checkData() {
@@ -215,13 +197,6 @@ class SensiboDevice extends Homey.Device {
                 return Promise.resolve(true);
             })
             .catch(err => this.log('ERROR', err));
-    }
-
-    getAllDevices() {
-        return http({
-            uri: SENSIBO_API + '/users/me/pods?fields=id,room&apiKey=' + Homey.env.API_KEY,
-            json: true
-        });
     }
 
     getSpecificDeviceInfo(deviceId) {
