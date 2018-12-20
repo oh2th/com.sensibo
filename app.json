@@ -1,0 +1,354 @@
+{
+  "id": "com.sensibo",
+  "version": "0.0.1",
+  "compatibility": ">=1.5.0",
+  "sdk": 2,
+  "name": {
+    "en": "Sensibo"
+  },
+  "description": {
+    "en": "Sensibo"
+  },
+  "category": [
+    "climate"
+  ],
+  "tags": {
+    "en": [
+      "sensibo",
+      "temperature control",
+      "heating",
+      "humidity"
+    ]
+  },
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Bjørnar Almli",
+    "email": "bjornar.almli@gmail.com"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "bjornaralmli"
+      }
+    }
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Bjørnar Almli",
+        "email": "bjornar.almli@gmail.com"
+      }
+    ]
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "se_temperature_changed",
+        "title": {
+          "en": "The temperature changed"
+        },
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature"
+            },
+            "example": 20
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
+      {
+        "id": "se_humidity_changed",
+        "title": {
+          "en": "The humidity changed"
+        },
+        "tokens": [
+          {
+            "name": "humidity",
+            "type": "number",
+            "title": {
+              "en": "Humidity"
+            },
+            "example": 35
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
+      {
+        "id": "se_onoff_true",
+        "title": {
+          "en": "Sensibo turned on"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
+      {
+        "id": "se_onoff_false",
+        "title": {
+          "en": "Sensibo turned off"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "se_onoff_is_on",
+        "title": {
+          "en": "Sensibo is !{{on|off}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "sensibo_on",
+        "title": {
+          "en": "Turn on"
+        },
+        "hint": {
+          "en": "Turn on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
+      {
+        "id": "sensibo_off",
+        "title": {
+          "en": "Turn off"
+        },
+        "hint": {
+          "en": "Turn of"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
+      {
+        "id": "sensibo_mode",
+        "title": {
+          "en": "Set the mode"
+        },
+        "hint": {
+          "en": "Set the mode (heat, cool, fan or off)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          },
+          {
+            "name": "mode",
+            "title": {
+              "en": "Mode"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "cool",
+                "label": {
+                  "en": "Cool"
+                }
+              },
+              {
+                "id": "heat",
+                "label": {
+                  "en": "Heat"
+                }
+              },
+              {
+                "id": "fan",
+                "label": {
+                  "en": "Fan"
+                }
+              },
+              {
+                "id": "auto",
+                "label": {
+                  "en": "Auto"
+                }
+              },
+              {
+                "id": "dry",
+                "label": {
+                  "en": "Dry"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sensibo_fanlevel",
+        "title": {
+          "en": "Set the fan level"
+        },
+        "hint": {
+          "en": "Set the fan level (auto, high, medium or low)"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          },
+          {
+            "name": "fanLevel",
+            "title": {
+              "en": "Fan level"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "auto",
+                "label": {
+                  "en": "Auto"
+                }
+              },
+              {
+                "id": "high",
+                "label": {
+                  "en": "High"
+                }
+              },
+              {
+                "id": "medium",
+                "label": {
+                  "en": "Medium"
+                }
+              },
+              {
+                "id": "low",
+                "label": {
+                  "en": "Low"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "id": "Sensibo",
+      "name": {
+        "en": "Sensibo"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "se_onoff",
+        "target_temperature",
+        "measure_temperature",
+        "measure_humidity"
+      ],
+      "capabilitiesOptions": {
+        "se_onoff": {
+          "greyout": true
+        },
+        "target_temperature": {
+          "decimals": 1,
+          "min": 16,
+          "max": 30,
+          "step": 0.5
+        }
+      },
+      "mobile": {
+        "components": [
+          {
+            "id": "icon",
+            "capabilities": []
+          },
+          {
+            "id": "sensor",
+            "capabilities": [
+              "measure_humidity",
+              "measure_temperature"
+            ]
+          },
+          {
+            "id": "thermostat",
+            "capabilities": [
+              "target_temperature"
+            ]
+          }
+        ]
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_my_devices"
+          }
+        },
+        {
+          "id": "add_my_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/Sensibo/assets/images/large.png",
+        "small": "/drivers/Sensibo/assets/images/small.png"
+      }
+    }
+  ],
+  "capabilities": {
+    "se_onoff": {
+      "type": "boolean",
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the device"
+      },
+      "getable": true,
+      "setable": false,
+      "greyout": true
+    }
+  }
+}
