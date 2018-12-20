@@ -102,6 +102,9 @@ class SensiboDevice extends Homey.Device {
                     this._turnedOffTrigger.trigger(this);
                 }
             }
+            if (result.acState.targetTemperature !== this.getCapabilityValue('target_temperature')) {
+                this.setCapabilityValue('target_temperature', result.acState.targetTemperature);
+            }
             this._acState = {
                 on: result.acState.on,
                 mode: result.acState.mode,
