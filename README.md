@@ -6,7 +6,7 @@ To install:
 
 1. Get an API-key from https://home.sensibo.com/me/api
 1. Add a env.json file, with your API-key: ```{
-   "API_KEY": "{insert api key here}"
+   "API_KEY": "insert api key here"
 }```
 
 3. Install the app: ```athom app run --clean``` or ```athom app install```.
