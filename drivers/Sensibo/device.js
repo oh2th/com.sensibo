@@ -71,6 +71,10 @@ class SensiboDevice extends Homey.Device {
         this.log('virtual device deleted');
     }
 
+    getApiKey() {
+        return Homey.ManagerSettings.get('apikey');
+    }
+
     checkData() {
         this.clearCheckData();
         if (this._deviceId) {
@@ -204,14 +208,14 @@ class SensiboDevice extends Homey.Device {
 
     getSpecificDeviceInfo(deviceId) {
         return http({
-            uri: SENSIBO_API + '/pods/' + deviceId + '?fields=measurements,acState&apiKey=' + Homey.env.API_KEY,
+            uri: SENSIBO_API + '/pods/' + deviceId + '?fields=measurements,acState&apiKey=' + this.getApiKey(),
             json: true
         });
     }
 
     setAcState(deviceId, acState) {
         return http.post({
-            uri: SENSIBO_API + '/pods/' + deviceId + '/acStates?apiKey=' + Homey.env.API_KEY,
+            uri: SENSIBO_API + '/pods/' + deviceId + '/acStates?apiKey=' + this.getApiKey(),
             json: true
         }, {acState: acState});
     }

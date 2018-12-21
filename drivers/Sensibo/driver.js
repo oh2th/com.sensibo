@@ -12,32 +12,46 @@ class SensiboDriver extends Homey.Driver {
     }
 
     onPairListDevices(data, callback) {
-        this.getAllDevices()
-            .then(data => {
-                if (!data.data || !data.data.result || data.data.result.length === 0) {
-                    callback(new Error("Failed to retrieve devices."));
-                } else {
-                    let result = data.data.result;
-                    let devices = [];
-                    for (let i = 0; i < result.length; i++) {
-                        devices.push({
-                            "name": `Sensibo ${result[i].room.name}`,
-                            "data": {
-                                "id": result[i].id
-                            }
-                        });
+        if (!this.hasApiKey()) {
+            callback(new Error("The API-key must be configured."));
+        } else {
+            this.getAllDevices()
+                .then(data => {
+                    if (!data.data || !data.data.result || data.data.result.length === 0) {
+                        callback(new Error("Failed to retrieve devices."));
+                    } else {
+                        let result = data.data.result;
+                        let devices = [];
+                        for (let i = 0; i < result.length; i++) {
+                            devices.push({
+                                "name": `Sensibo ${result[i].room.name}`,
+                                "data": {
+                                    "id": result[i].id
+                                }
+                            });
+                        }
+                        callback(null, devices);
                     }
-                    callback(null, devices);
-                }
-            })
-            .catch(err => {
-                callback(new Error("Failed to retrieve devices."));
-            });
+                })
+                .catch(err => {
+                    callback(new Error("Failed to retrieve devices."));
+                });
+        }
+    }
+
+    hasApiKey() {
+        return this.getApiKey() !== undefined &&
+            this.getApiKey() !== null &&
+            this.getApiKey().length > 0;
+    }
+
+    getApiKey() {
+        return Homey.ManagerSettings.get('apikey');
     }
 
     getAllDevices() {
         return http({
-            uri: SENSIBO_API + '/users/me/pods?fields=id,room&apiKey=' + Homey.env.API_KEY,
+            uri: SENSIBO_API + '/users/me/pods?fields=id,room&apiKey=' + this.getApiKey(),
             json: true
         });
     }

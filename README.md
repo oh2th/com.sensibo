@@ -5,13 +5,8 @@ For https://sensibo.com/ air condition controllers.
 To install:
 
 1. Get an API-key from https://home.sensibo.com/me/api
-1. Add a env.json file, with your API-key: ```{
-   "API_KEY": "insert api key here"
-}```
-
-3. Install the app: ```athom app run --clean``` or ```athom app install```.
-
-
+2. Install the app
+3. Configure the API-key in the Configure app menu.  This must be done before adding the Sensibo device.
 
 ## Device: Sensibo
 
@@ -42,6 +37,6 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
-#### 0.0.1
+#### 0.2.0
 
-- Initial version
+- Beta version for app store

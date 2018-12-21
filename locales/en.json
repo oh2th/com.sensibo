@@ -1,1 +1,10 @@
-{}
+{
+  "settings": {
+    "title": "VThermo",
+    "subtitle": "Virtual thermostat."
+  },
+  "tab1": {
+    "title": "API-key",
+    "save": "Save changes"
+  }
+}
