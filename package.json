@@ -1,6 +1,6 @@
 {
   "name": "com.sensibo",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Sensibo",
   "main": "app.js",
   "scripts": {
