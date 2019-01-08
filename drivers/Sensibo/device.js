@@ -214,6 +214,7 @@ class SensiboDevice extends Homey.Device {
     }
 
     setAcState(deviceId, acState) {
+        this.log('setAcState', deviceId, acState);
         return http.post({
             uri: SENSIBO_API + '/pods/' + deviceId + '/acStates?apiKey=' + this.getApiKey(),
             json: true
