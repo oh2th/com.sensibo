@@ -42,19 +42,19 @@ class SensiboDevice extends Homey.Device {
 
         this._onAction = new Homey.FlowCardAction('sensibo_on')
             .register()
-            .registerRunListener((args, state) => this.onActionTurnOn(args));
+            .registerRunListener(this.onActionTurnOn.bind(this));
 
         this._offAction = new Homey.FlowCardAction('sensibo_off')
             .register()
-            .registerRunListener((args, state) => this.onActionTurnOff(args));
+            .registerRunListener(this.onActionTurnOff.bind(this));
 
         this._modeAction = new Homey.FlowCardAction('sensibo_mode')
             .register()
-            .registerRunListener((args, state) => this.onActionSetMode(args));
+            .registerRunListener(this.onActionSetMode.bind(this));
 
         this._fanLevelAction = new Homey.FlowCardAction('sensibo_fanlevel')
             .register()
-            .registerRunListener((args, state) => this.onActionSetFanLevel(args));
+            .registerRunListener(this.onActionSetFanLevel.bind(this));
 
         this.registerCapabilityListener('target_temperature', (value, opts) => {
             return this.onUpdateTargetTemperature(value, opts);
@@ -132,64 +132,67 @@ class SensiboDevice extends Homey.Device {
         this.curTimeout = setTimeout(this.checkData.bind(this), seconds * 1000);
     }
 
-    onActionTurnOn(args) {
-        this._acState.on = true;
-        this.setCapabilityValue('se_onoff', true);
-        this.setAcState(this._deviceId, this._acState)
+    async onActionTurnOn(args, state) {
+        args.device.log('onActionTurnOn', args.device._deviceId);
+        args.device._acState.on = true;
+        args.device.setCapabilityValue('se_onoff', true);
+        args.device.setAcState(args.device._deviceId, args.device._acState)
             .then(data => {
                 if (data.response.statusCode !== 200) {
-                    this.log('ERROR turning on', data.response);
+                    args.device.log('ERROR turning on', data.response);
                     return Promise.reject(data.response.statusCode);
                 }
-                this._turnedOnTrigger.trigger(this);
-                this.log('turned on');
+                this._turnedOnTrigger.trigger(args.device);
+                args.device.log('turned on', args.device._deviceId);
                 return Promise.resolve(true);
             })
-            .catch(err => this.log('ERROR', err));
+            .catch(err => args.device.log('ERROR', err));
     }
 
-    onActionTurnOff(args) {
-        this._acState.on = false;
-        this.setCapabilityValue('se_onoff', false);
-        this.setAcState(this._deviceId, this._acState)
+
+    async onActionTurnOff(args, state) {
+        args.device.log('onActionTurnOff', args.device._deviceId);
+        args.device._acState.on = false;
+        args.device.setCapabilityValue('se_onoff', false);
+        args.device.setAcState(args.device._deviceId, args.device._acState)
             .then(data => {
                 if (data.response.statusCode !== 200) {
-                    this.log('ERROR turning off', data.response);
+                    args.device.log('ERROR turning off', data.response);
                     return Promise.reject(data.response.statusCode);
                 }
-                this._turnedOffTrigger.trigger(this);
-                this.log('turned off');
+                this._turnedOffTrigger.trigger(args.device);
+                args.device.log('turned off');
                 return Promise.resolve(true);
             })
-            .catch(err => this.log('ERROR', err));
+            .catch(err => args.device.log('ERROR', err));
     }
 
-    onActionSetMode(args) {
-        this._acState.mode = args.mode;
-        this.setAcState(this._deviceId, this._acState)
+    onActionSetMode(args, state) {
+        args.device._acState.mode = args.mode;
+        args.device.setAcState(args.device._deviceId, args.device._acState)
             .then(data => {
                 if (data.response.statusCode !== 200) {
-                    this.log('ERROR setting mode', data.response);
+                    args.device.log('ERROR setting mode', data.response);
                     return Promise.reject(data.response.statusCode);
                 }
-                this.log('set mode', args.mode);
+                args.device.log('set mode', args.mode);
                 return Promise.resolve(true);
             })
-            .catch(err => this.log('ERROR', err));
+            .catch(err => args.device.log('ERROR', err));
     }
 
-    onActionSetFanLevel(args) {
-        this._acState.fanLevel = args.fanLevel;
-        this.setAcState(this._deviceId, this._acState)
+    onActionSetFanLevel(args, state) {
+        args.device._acState.fanLevel = args.fanLevel;
+        args.device.setAcState(args.device._deviceId, args.device._acState)
             .then(data => {
                 if (data.response.statusCode !== 200) {
-                    this.log('ERROR setting fan leven', data.response);
+                    args.device.log('ERROR setting fan leven', data.response);
                     return Promise.reject(data.response.statusCode);
                 }
-                this.log('set fant level', args.fanLevel);
+                args.device.log('set fan level', args.fanLevel);
                 return Promise.resolve(true);
             })
-            .catch(err => this.log('ERROR', err));
+            .catch(err => args.device.log('ERROR', err));
     }
 
     onUpdateTargetTemperature(value, opts) {
