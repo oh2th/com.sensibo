@@ -12,6 +12,8 @@ To install:
 
 #### Triggers
 
+- The target temperature changed.
+- Thermostat mode has changed.
 - The temperature changed.
 - The humidity changed.
 - The device turned off.
@@ -39,11 +41,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 #### 0.3.2
 
-- Possible to change fan mode and fan level from the app
-
-#### 0.3.1
-
-- Possible to turn on / off directly from the app (quick-toggle)
+- Possible to turn on / off, change fan mode and fan level from the app (the device must be reinstalled for this)
 
 #### 0.3.0
 
