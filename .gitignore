@@ -1,4 +1,6 @@
 env.json
 *.iml
 .idea
-test/
+node_modules/*
+!node_modules/athom-api
+test2/

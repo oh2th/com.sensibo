@@ -1,24 +1,18 @@
 'use strict';
 
 const Homey = require('homey');
-const http = require('http.min');
+const Sensibo = require('../../lib/sensibo');
 
-const SENSIBO_API = 'https://home.sensibo.com/api/v2';
-
-class SensiboDevice extends Homey.Device {
+module.exports = class SensiboDevice extends Homey.Device {
 
     onInit() {
         this.log('virtual device initialized');
 
-        this._deviceId = this.getData().id;
-        this._deviceName = this.getName();
-        this._acState = {
-            on: true,
-            mode: "heat",
-            fanLevel: "auto",
-            targetTemperature: 21,
-            temperatureUnit: "C"
-        };
+        this._sensibo = new Sensibo({
+            Homey: Homey,
+            deviceId: this.getData().id,
+            logger: this.log
+        });
 
         this._temperatureChangedTrigger = new Homey.FlowCardTriggerDevice('se_temperature_changed');
         this._temperatureChangedTrigger
@@ -36,23 +30,23 @@ class SensiboDevice extends Homey.Device {
         this._turnedOffTrigger
             .register();
 
-        this._onoffCondition = new Homey.FlowCardCondition('se_onoff_is_on')
+        new Homey.FlowCardCondition('se_onoff_is_on')
             .register()
             .registerRunListener((args, state) => args.device.getCapabilityValue('se_onoff'));
 
-        this._onAction = new Homey.FlowCardAction('sensibo_on')
+        new Homey.FlowCardAction('sensibo_on')
             .register()
             .registerRunListener(this.onActionTurnOn.bind(this));
 
-        this._offAction = new Homey.FlowCardAction('sensibo_off')
+        new Homey.FlowCardAction('sensibo_off')
             .register()
             .registerRunListener(this.onActionTurnOff.bind(this));
 
-        this._modeAction = new Homey.FlowCardAction('sensibo_mode')
+        new Homey.FlowCardAction('sensibo_mode')
             .register()
             .registerRunListener(this.onActionSetMode.bind(this));
 
-        this._fanLevelAction = new Homey.FlowCardAction('sensibo_fanlevel')
+        new Homey.FlowCardAction('sensibo_fanlevel')
             .register()
             .registerRunListener(this.onActionSetFanLevel.bind(this));
 
@@ -60,11 +54,19 @@ class SensiboDevice extends Homey.Device {
             return this.onUpdateTargetTemperature(value, opts);
         });
 
+        this.registerCapabilityListener('thermostat_mode', (value, opts) => {
+            return this.onUpdateThermostatMode(value, opts);
+        });
+
+        this.registerCapabilityListener('se_fanlevel', (value, opts) => {
+            return this.onUpdateFanlevel(value, opts);
+        });
+
         this.registerCapabilityListener('se_onoff', async (value, opts) => {
             return value ? this.onActionTurnOn({device: this}) : this.onActionTurnOff({device: this});
         });
 
-        this.scheduleCheckData(5);
+        this.scheduleCheckData(2);
     }
 
     onAdded() {
@@ -75,51 +77,47 @@ class SensiboDevice extends Homey.Device {
         this.log('virtual device deleted');
     }
 
-    getApiKey() {
-        return Homey.ManagerSettings.get('apikey');
-    }
-
     async checkData() {
         this.clearCheckData();
-        if (this._deviceId) {
-            this.log(`Start fetching state from device: ${this._deviceId} - ${this._deviceName}`);
-            let data = await this.getSpecificDeviceInfo(this._deviceId);
-            await this.onDeviceInfoReceived(this._deviceId, data);
-        }
-        this.scheduleCheckData(60);
+        this.log(`Fetching AC state for: ${this._sensibo.getDeviceId()}`);
+        let data = await this._sensibo.getSpecificDeviceInfo();
+        await this.onDeviceInfoReceived(data);
+        this.scheduleCheckData();
     }
 
-    async onDeviceInfoReceived(deviceId, data) {
-        this.log('device info for ' + deviceId, data.data);
+    async onDeviceInfoReceived(data) {
+        this.log(`AC state for: ${this._sensibo.getDeviceId()}`, data.data);
         if (data.data) {
             let result = data.data.result;
-            if (result.measurements.temperature !== this.getCapabilityValue('measure_temperature')) {
-                this._temperatureChangedTrigger.trigger(this, {temperature: result.measurements.temperature});
-                await this.setCapabilityValue('measure_temperature', result.measurements.temperature).catch(console.error);
-            }
-            if (result.measurements.humidity !== this.getCapabilityValue('measure_humidity')) {
-                this._humidityChangedTrigger.trigger(this, {humidity: result.measurements.humidity});
-                await this.setCapabilityValue('measure_humidity', result.measurements.humidity).catch(console.error);
-            }
-            if (this._acState.on !== result.acState.on) {
-                await this.setCapabilityValue('se_onoff', result.acState.on).catch(console.error);
+            this._sensibo.updateAcState(result.acState);
+            if (await this.updateIfChanged('se_onoff', result.acState.on)) {
                 if (result.acState.on) {
                     this._turnedOnTrigger.trigger(this);
                 } else {
                     this._turnedOffTrigger.trigger(this);
                 }
             }
-            if (result.acState.targetTemperature !== this.getCapabilityValue('target_temperature')) {
-                await this.setCapabilityValue('target_temperature', result.acState.targetTemperature).catch(console.error);
+            await this.updateIfChanged('target_temperature', result.acState.targetTemperature);
+            if (result.acState.mode === 'auto' || result.acState.mode === 'heat' || result.acState.mode === 'cool') {
+                await this.updateIfChanged('thermostat_mode', result.acState.mode);
             }
-            this._acState = {
-                on: result.acState.on,
-                mode: result.acState.mode,
-                fanLevel: result.acState.fanLevel,
-                targetTemperature: result.acState.targetTemperature,
-                temperatureUnit: result.acState.temperatureUnit
-            };
+            await this.updateIfChanged('se_fanlevel', result.acState.fanLevel);
+            if (await this.updateIfChanged('measure_temperature', result.measurements.temperature)) {
+                this._temperatureChangedTrigger.trigger(this, {temperature: result.measurements.temperature});
+            }
+            if (await this.updateIfChanged('measure_humidity', result.measurements.humidity)) {
+                this._humidityChangedTrigger.trigger(this, {humidity: result.measurements.humidity});
+            }
         }
+    }
+
+    async updateIfChanged(cap, toValue) {
+        let capValue = this.getCapabilityValue(cap);
+        if (capValue !== toValue || capValue === undefined || capValue === null) {
+            await this.setCapabilityValue(cap, toValue).catch(console.error);
+            return true;
+        }
+        return false;
     }
 
     clearCheckData() {
@@ -129,84 +127,90 @@ class SensiboDevice extends Homey.Device {
         }
     }
 
-    scheduleCheckData(seconds) {
+    scheduleCheckData(seconds = 60) {
         this.clearCheckData();
-        this.log(`Checking data in ${seconds} seconds`);
         this.curTimeout = setTimeout(this.checkData.bind(this), seconds * 1000);
     }
 
     async onActionTurnOn(args, state) {
-        args.device.log('onActionTurnOn', args.device._deviceId);
-        args.device._acState.on = true;
-        await args.device.setCapabilityValue('se_onoff', true).catch(console.error);
-        let data = await args.device.setAcState(args.device._deviceId, args.device._acState);
-        if (data.response.statusCode !== 200) {
-            args.device.log('ERROR turning on', data.response);
-            throw new Error(`Error turning on (${data.response.statusCode} - ${data.response.statusMessage})`);
+        try {
+            args.device.clearCheckData();
+            args.device.log(`turn on: ${args.device._sensibo.getDeviceId()}`);
+            await args.device._sensibo.setAcState({on: true});
+            await args.device.setCapabilityValue('se_onoff', true).catch(console.error);
+            args.device._turnedOnTrigger.trigger(args.device);
+            args.device.log(`turned on OK: ${args.device._sensibo.getDeviceId()}`);
+        } finally {
+            args.device.scheduleCheckData();
         }
-        this._turnedOnTrigger.trigger(args.device);
-        args.device.log('turned on', args.device._deviceId);
     }
 
-
     async onActionTurnOff(args, state) {
-        args.device.log('onActionTurnOff', args.device._deviceId);
-        args.device._acState.on = false;
-        await args.device.setCapabilityValue('se_onoff', false).catch(console.error);
-        let data = await args.device.setAcState(args.device._deviceId, args.device._acState);
-        if (data.response.statusCode !== 200) {
-            args.device.log('ERROR turning off', data.response);
-            throw new Error(`Error turning off (${data.response.statusCode} - ${data.response.statusMessage})`);
+        try {
+            args.device.clearCheckData();
+            args.device.log(`turn off: ${args.device._sensibo.getDeviceId()}`);
+            await args.device._sensibo.setAcState({on: false});
+            await args.device.setCapabilityValue('se_onoff', false).catch(console.error);
+            args.device._turnedOffTrigger.trigger(args.device);
+            args.device.log(`turned off OK: ${args.device._sensibo.getDeviceId()}`);
+        } finally {
+            args.device.scheduleCheckData();
         }
-        this._turnedOffTrigger.trigger(args.device);
-        args.device.log('turned off');
     }
 
     async onActionSetMode(args, state) {
-        args.device._acState.mode = args.mode;
-        let data = await args.device.setAcState(args.device._deviceId, args.device._acState);
-        if (data.response.statusCode !== 200) {
-            args.device.log('ERROR setting mode', data.response);
-            throw new Error(`Error setting mode (${data.response.statusCode} - ${data.response.statusMessage})`);
-        }
-        args.device.log('set mode', args.mode);
+        await args.device.onUpdateThermostatMode(args.mode);
+        await args.device.setCapabilityValue('thermostat_mode', args.mode).catch(console.error);
     }
 
     async onActionSetFanLevel(args, state) {
-        args.device._acState.fanLevel = args.fanLevel;
-        let data = await args.device.setAcState(args.device._deviceId, args.device._acState);
-        if (data.response.statusCode !== 200) {
-            args.device.log('ERROR setting fan level', data.response);
-            throw new Error(`Error setting fan level (${data.response.statusCode} - ${data.response.statusMessage})`);
-        }
-        args.device.log('set fan level', args.fanLevel);
+        await args.device.onUpdateFanlevel(args.fanLevel);
+        await args.device.setCapabilityValue('se_fanlevel', args.fanLevel).catch(console.error);
     }
 
     async onUpdateTargetTemperature(value, opts) {
-        this._acState.targetTemperature = value;
-        let data = await this.setAcState(this._deviceId, this._acState);
-        if (data.response.statusCode !== 200) {
-            this.log('ERROR setting target temperature', data.response);
-            throw new Error(`Error setting target temperature (${data.response.statusCode} - ${data.response.statusMessage})`);
+        try {
+            this.clearCheckData();
+            this.log(`set target temperature: ${this._sensibo.getDeviceId()} -> ${value}`);
+            await this._sensibo.setAcState({targetTemperature: value});
+            this.log(`set target temperature OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+        } finally {
+            this.scheduleCheckData();
         }
-        this.log('updated target temperature', value);
     }
 
-    async getSpecificDeviceInfo(deviceId) {
-        return http({
-            uri: SENSIBO_API + '/pods/' + deviceId + '?fields=measurements,acState&apiKey=' + this.getApiKey(),
-            json: true
-        });
+    async onUpdateThermostatMode(value, opts) {
+        try {
+            this.clearCheckData();
+            this.log(`set thermostat mode: ${this._sensibo.getDeviceId()} -> ${value}`);
+            const onOff = value !== 'off';
+            await this._sensibo.setAcState({
+                on: onOff,
+                mode: onOff ? value : undefined
+            });
+            if (onOff !== this.getCapabilityValue('se_onoff')) {
+                await this.setCapabilityValue('se_onoff', onOff).catch(console.error);
+                if (onOff) {
+                    this._turnedOnTrigger.trigger(this);
+                } else {
+                    this._turnedOffTrigger.trigger(this);
+                }
+            }
+            this.log(`set thermostat mode OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+        } finally {
+            this.scheduleCheckData();
+        }
     }
 
-    async setAcState(deviceId, acState) {
-        this.log('setAcState', deviceId, acState);
-        return http.post({
-            uri: SENSIBO_API + '/pods/' + deviceId + '/acStates?apiKey=' + this.getApiKey(),
-            json: true
-        }, {acState: acState});
+    async onUpdateFanlevel(value, opts) {
+        try {
+            this.clearCheckData();
+            this.log(`set fanLevel: ${this._sensibo.getDeviceId()} -> ${value}`);
+            await this._sensibo.setAcState({fanLevel: value});
+            this.log(`set fanLevel OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+        } finally {
+            this.scheduleCheckData();
+        }
     }
 
-}
-
-module.exports = SensiboDevice;
+};

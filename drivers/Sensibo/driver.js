@@ -1,21 +1,23 @@
 'use strict';
 
 const Homey = require('homey');
-const http = require('http.min');
+const Sensibo = require('../../lib/sensibo');
 
-const SENSIBO_API = 'https://home.sensibo.com/api/v2';
-
-class SensiboDriver extends Homey.Driver {
+module.exports = class SensiboDriver extends Homey.Driver {
 
     onInit() {
         this.log('Sensibo driver has been initialized');
     }
 
     onPairListDevices(data, callback) {
-        if (!this.hasApiKey()) {
+        let sensibo = new Sensibo({
+            Homey: Homey,
+            logger: this.log
+        });
+        if (!sensibo.hasApiKey()) {
             callback(new Error("The API-key must be configured."));
         } else {
-            this.getAllDevices()
+            sensibo.getAllDevices()
                 .then(data => {
                     if (!data.data || !data.data.result || data.data.result.length === 0) {
                         callback(new Error("Failed to retrieve devices."));
@@ -39,23 +41,4 @@ class SensiboDriver extends Homey.Driver {
         }
     }
 
-    hasApiKey() {
-        return this.getApiKey() !== undefined &&
-            this.getApiKey() !== null &&
-            this.getApiKey().length > 0;
-    }
-
-    getApiKey() {
-        return Homey.ManagerSettings.get('apikey');
-    }
-
-    getAllDevices() {
-        return http({
-            uri: SENSIBO_API + '/users/me/pods?fields=id,room&apiKey=' + this.getApiKey(),
-            json: true
-        });
-    }
-
-}
-
-module.exports = SensiboDriver;
+};

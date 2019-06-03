@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
@@ -189,9 +189,9 @@
             "type": "dropdown",
             "values": [
               {
-                "id": "cool",
+                "id": "auto",
                 "label": {
-                  "en": "Cool"
+                  "en": "Automatic"
                 }
               },
               {
@@ -201,21 +201,15 @@
                 }
               },
               {
-                "id": "fan",
+                "id": "cool",
                 "label": {
-                  "en": "Fan"
+                  "en": "Cool"
                 }
               },
               {
-                "id": "auto",
+                "id": "off",
                 "label": {
-                  "en": "Auto"
-                }
-              },
-              {
-                "id": "dry",
-                "label": {
-                  "en": "Dry"
+                  "en": "Off"
                 }
               }
             ]
@@ -283,6 +277,8 @@
       "capabilities": [
         "se_onoff",
         "target_temperature",
+        "thermostat_mode",
+        "se_fanlevel",
         "measure_temperature",
         "measure_humidity"
       ],
@@ -353,6 +349,45 @@
       "setable": true,
       "uiQuickAction": true,
       "greyout": true
+    },
+    "se_fanlevel": {
+      "type": "enum",
+      "title": {
+        "en": "Fanlevel"
+      },
+      "desc": {
+        "en": "Fanlevel"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": false,
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
+          }
+        }
+      ]
     }
   }
 }

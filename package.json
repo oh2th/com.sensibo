@@ -1,14 +1,21 @@
 {
   "name": "com.sensibo",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Sensibo",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "eslint --ignore-path .gitignore app.js lib drivers test",
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "posttest": "athom app validate --level publish"
   },
   "author": "Bjørnar Almli",
   "license": "ISC",
   "dependencies": {
     "http.min": "1.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^5.2.0"
   }
 }

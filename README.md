@@ -37,6 +37,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 0.3.2
+
+- Possible to change fan mode and fan level from the app
+
 #### 0.3.1
 
 - Possible to turn on / off directly from the app (quick-toggle)
