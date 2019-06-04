@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
@@ -170,10 +170,10 @@
       {
         "id": "sensibo_mode",
         "title": {
-          "en": "Set the mode"
+          "en": "Set the fan mode"
         },
         "hint": {
-          "en": "Set the mode (heat, cool, fan or off)"
+          "en": "Set the mode (heat, cool, fan, auto or dry)"
         },
         "args": [
           {
@@ -189,9 +189,9 @@
             "type": "dropdown",
             "values": [
               {
-                "id": "auto",
+                "id": "cool",
                 "label": {
-                  "en": "Automatic"
+                  "en": "Cool"
                 }
               },
               {
@@ -201,15 +201,21 @@
                 }
               },
               {
-                "id": "cool",
+                "id": "fan",
                 "label": {
-                  "en": "Cool"
+                  "en": "Fan"
                 }
               },
               {
-                "id": "off",
+                "id": "auto",
                 "label": {
-                  "en": "Off"
+                  "en": "Auto"
+                }
+              },
+              {
+                "id": "dry",
+                "label": {
+                  "en": "Dry"
                 }
               }
             ]
@@ -277,7 +283,7 @@
       "capabilities": [
         "se_onoff",
         "target_temperature",
-        "thermostat_mode",
+        "se_thermostat_mode",
         "se_fanlevel",
         "measure_temperature",
         "measure_humidity"
@@ -350,13 +356,58 @@
       "uiQuickAction": true,
       "greyout": true
     },
+    "se_thermostat_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Fan mode"
+      },
+      "desc": {
+        "en": "Fan mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": false,
+      "values": [
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cool"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heat"
+          }
+        },
+        {
+          "id": "fan",
+          "title": {
+            "en": "Fan"
+          }
+        },
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "dry",
+          "title": {
+            "en": "Dry"
+          }
+        }
+      ]
+    },
     "se_fanlevel": {
       "type": "enum",
       "title": {
-        "en": "Fanlevel"
+        "en": "Fan level"
       },
       "desc": {
-        "en": "Fanlevel"
+        "en": "Fan level"
       },
       "getable": true,
       "setable": true,
