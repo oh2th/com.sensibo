@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
@@ -283,7 +283,7 @@
       "capabilities": [
         "se_onoff",
         "target_temperature",
-        "se_thermostat_mode",
+        "thermostat_mode",
         "se_fanlevel",
         "measure_temperature",
         "measure_humidity"
@@ -355,51 +355,6 @@
       "setable": true,
       "uiQuickAction": true,
       "greyout": true
-    },
-    "se_thermostat_mode": {
-      "type": "enum",
-      "title": {
-        "en": "Fan mode"
-      },
-      "desc": {
-        "en": "Fan mode"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "picker",
-      "insights": false,
-      "values": [
-        {
-          "id": "cool",
-          "title": {
-            "en": "Cool"
-          }
-        },
-        {
-          "id": "heat",
-          "title": {
-            "en": "Heat"
-          }
-        },
-        {
-          "id": "fan",
-          "title": {
-            "en": "Fan"
-          }
-        },
-        {
-          "id": "auto",
-          "title": {
-            "en": "Auto"
-          }
-        },
-        {
-          "id": "dry",
-          "title": {
-            "en": "Dry"
-          }
-        }
-      ]
     },
     "se_fanlevel": {
       "type": "enum",
