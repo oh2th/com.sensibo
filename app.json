@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
@@ -46,52 +46,6 @@
   },
   "flow": {
     "triggers": [
-      {
-        "id": "se_temperature_changed",
-        "title": {
-          "en": "The temperature changed"
-        },
-        "tokens": [
-          {
-            "name": "temperature",
-            "type": "number",
-            "title": {
-              "en": "Temperature"
-            },
-            "example": 20
-          }
-        ],
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=Sensibo"
-          }
-        ]
-      },
-      {
-        "id": "se_humidity_changed",
-        "title": {
-          "en": "The humidity changed"
-        },
-        "tokens": [
-          {
-            "name": "humidity",
-            "type": "number",
-            "title": {
-              "en": "Humidity"
-            },
-            "example": 35
-          }
-        ],
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=Sensibo"
-          }
-        ]
-      },
       {
         "id": "se_onoff_true",
         "title": {

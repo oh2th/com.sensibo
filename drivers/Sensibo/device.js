@@ -14,14 +14,6 @@ module.exports = class SensiboDevice extends Homey.Device {
             logger: this.log
         });
 
-        this._temperatureChangedTrigger = new Homey.FlowCardTriggerDevice('se_temperature_changed');
-        this._temperatureChangedTrigger
-            .register();
-
-        this._humidityChangedTrigger = new Homey.FlowCardTriggerDevice('se_humidity_changed');
-        this._humidityChangedTrigger
-            .register();
-
         this._turnedOnTrigger = new Homey.FlowCardTriggerDevice('se_onoff_true');
         this._turnedOnTrigger
             .register();
@@ -54,13 +46,17 @@ module.exports = class SensiboDevice extends Homey.Device {
             return this.onUpdateTargetTemperature(value, opts);
         });
 
-        this.registerCapabilityListener('thermostat_mode', (value, opts) => {
-            return this.onUpdateThermostatMode(value, opts);
-        });
+        if (this.hasCapability('thermostat_mode')) {
+            this.registerCapabilityListener('thermostat_mode', (value, opts) => {
+                return this.onUpdateThermostatMode(value, opts);
+            });
+        }
 
-        this.registerCapabilityListener('se_fanlevel', (value, opts) => {
-            return this.onUpdateFanlevel(value, opts);
-        });
+        if (this.hasCapability('se_fanlevel')) {
+            this.registerCapabilityListener('se_fanlevel', (value, opts) => {
+                return this.onUpdateFanlevel(value, opts);
+            });
+        }
 
         this.registerCapabilityListener('se_onoff', async (value, opts) => {
             return value ? this.onActionTurnOn({device: this}) : this.onActionTurnOff({device: this});
@@ -98,18 +94,18 @@ module.exports = class SensiboDevice extends Homey.Device {
                 }
             }
             await this.updateIfChanged('target_temperature', result.acState.targetTemperature);
-            await this.updateIfChanged('se_fanlevel', result.acState.fanLevel);
-            let thermostat_mode = result.acState.on === false ? 'off' :
-                (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
-            if (thermostat_mode) {
-                await this.updateIfChanged('thermostat_mode', thermostat_mode);
+            if (this.hasCapability('se_fanlevel')) {
+                await this.updateIfChanged('se_fanlevel', result.acState.fanLevel);
             }
-            if (await this.updateIfChanged('measure_temperature', result.measurements.temperature)) {
-                this._temperatureChangedTrigger.trigger(this, {temperature: result.measurements.temperature});
+            if (this.hasCapability('thermostat_mode')) {
+                let thermostat_mode = result.acState.on === false ? 'off' :
+                    (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
+                if (thermostat_mode) {
+                    await this.updateIfChanged('thermostat_mode', thermostat_mode);
+                }
             }
-            if (await this.updateIfChanged('measure_humidity', result.measurements.humidity)) {
-                this._humidityChangedTrigger.trigger(this, {humidity: result.measurements.humidity});
-            }
+            await this.updateIfChanged('measure_temperature', result.measurements.temperature);
+            await this.updateIfChanged('measure_humidity', result.measurements.humidity);
         }
     }
 
@@ -142,7 +138,9 @@ module.exports = class SensiboDevice extends Homey.Device {
             await args.device.setCapabilityValue('se_onoff', true).catch(console.error);
             let mode = args.device._sensibo.getAcState()['mode'];
             mode = (mode !== 'heat' && mode !== 'cool' && mode !== 'auto') ? 'auto' : mode;
-            await args.device.setCapabilityValue('thermostat_mode', mode).catch(console.error);
+            if (args.device.hasCapability('thermostat_mode')) {
+                await args.device.setCapabilityValue('thermostat_mode', mode).catch(console.error);
+            }
             args.device._turnedOnTrigger.trigger(args.device);
             args.device.log(`turned on OK: ${args.device._sensibo.getDeviceId()}`);
         } finally {
@@ -156,7 +154,9 @@ module.exports = class SensiboDevice extends Homey.Device {
             args.device.log(`turn off: ${args.device._sensibo.getDeviceId()}`);
             await args.device._sensibo.setAcState({on: false});
             await args.device.setCapabilityValue('se_onoff', false).catch(console.error);
-            await args.device.setCapabilityValue('thermostat_mode', 'off').catch(console.error);
+            if (args.device.hasCapability('thermostat_mode')) {
+                await args.device.setCapabilityValue('thermostat_mode', 'off').catch(console.error);
+            }
             args.device._turnedOffTrigger.trigger(args.device);
             args.device.log(`turned off OK: ${args.device._sensibo.getDeviceId()}`);
         } finally {
@@ -177,7 +177,9 @@ module.exports = class SensiboDevice extends Homey.Device {
 
     async onActionSetFanLevel(args, state) {
         await args.device.onUpdateFanlevel(args.fanLevel);
-        await args.device.setCapabilityValue('se_fanlevel', args.fanLevel).catch(console.error);
+        if (args.device.hasCapability('se_fanlevel')) {
+            await args.device.setCapabilityValue('se_fanlevel', args.fanLevel).catch(console.error);
+        }
     }
 
     async onUpdateTargetTemperature(value, opts) {

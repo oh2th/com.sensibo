@@ -15,19 +15,20 @@ To install:
 - The target temperature changed.
 - The temperature changed.
 - The humidity changed.
-- The device turned off.
-- The device turned on.
+- Sensibo turned on.
+- Sensibo turned off.
 
 #### Conditions
 
-- The device is on / off.
+- Sensibo is on.
 
 #### Actions
 
-- Set the target temperature.
-- Turn the device on.
-- Turn the device off.
-- Set the fan mode.
+- Set the temperature.
+- Set the mode (Automatic, Heat, Cool, Off)
+- Turn on.
+- Turn off.
+- Set the fan mode (Cool, Heat, Fan, Auto, Dry)
 - Set the fan level.
 
 ## Acknowledgements:
@@ -41,6 +42,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 #### 0.4.0
 
 - Possible to turn on / off, change fan mode and fan level from the app (the device must be reinstalled for this)
+- Removed duplicate triggers for temperature and humidity
 
 #### 0.3.0
 
