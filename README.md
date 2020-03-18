@@ -39,6 +39,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.0.0
+
+- Fix support and source urls
+
 #### 0.4.0
 
 - Possible to turn on / off, change fan mode and fan level from the app (the device must be reinstalled for this)
