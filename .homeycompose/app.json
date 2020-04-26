@@ -1,0 +1,53 @@
+{
+  "id": "com.sensibo",
+  "version": "1.0.1",
+  "compatibility": ">=2.0.0",
+  "sdk": 2,
+  "brandColor": "#1BB7E9",
+  "name": {
+    "en": "Sensibo"
+  },
+  "description": {
+    "en": "Make your air conditioner smart"
+  },
+  "category": [
+    "climate"
+  ],
+  "tags": {
+    "en": [
+      "sensibo",
+      "temperature control",
+      "heating",
+      "humidity",
+      "hvac"
+    ]
+  },
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "permissions": [],
+  "author": {
+    "name": "Bjørnar Almli",
+    "email": "bjornar.almli@gmail.com"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Bjørnar Almli",
+        "email": "bjornar.almli@gmail.com"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "bjornaralmli"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/balmli/com.sensibo/issues"
+  },
+  "source": "https://github.com/balmli/com.sensibo"
+}

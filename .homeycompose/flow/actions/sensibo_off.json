@@ -1,0 +1,16 @@
+{
+  "id": "sensibo_off",
+  "title": {
+    "en": "Turn off"
+  },
+  "hint": {
+    "en": "Turn of"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "sensibo_fanlevel",
+  "title": {
+    "en": "Set the fan level"
+  },
+  "hint": {
+    "en": "Set the fan level (auto, high, medium or low)"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "fanLevel",
+      "title": {
+        "en": "Fan level"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "auto",
+          "label": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "high",
+          "label": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "medium",
+          "label": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "low",
+          "label": {
+            "en": "Low"
+          }
+        }
+      ]
+    }
+  ]
+}

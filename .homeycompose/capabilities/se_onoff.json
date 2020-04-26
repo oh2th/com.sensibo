@@ -1,0 +1,13 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "State"
+  },
+  "desc": {
+    "en": "State of the device"
+  },
+  "getable": true,
+  "setable": true,
+  "uiQuickAction": true,
+  "greyout": true
+}

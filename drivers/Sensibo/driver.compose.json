@@ -1,0 +1,47 @@
+{
+  "id": "Sensibo",
+  "name": {
+    "en": "Sensibo"
+  },
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "class": "thermostat",
+  "capabilities": [
+    "se_onoff",
+    "target_temperature",
+    "thermostat_mode",
+    "se_fanlevel",
+    "measure_temperature",
+    "measure_humidity"
+  ],
+  "capabilitiesOptions": {
+    "se_onoff": {
+      "greyout": true
+    },
+    "target_temperature": {
+      "decimals": 0,
+      "min": 16,
+      "max": 30,
+      "step": 1
+    }
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_my_devices"
+      },
+      "options": {
+        "singular": true
+      }
+    },
+    {
+      "id": "add_my_devices",
+      "template": "add_devices"
+    }
+  ]
+}

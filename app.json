@@ -1,14 +1,14 @@
 {
   "id": "com.sensibo",
-  "version": "1.0.0",
-  "compatibility": ">=1.5.0",
+  "version": "1.0.1",
+  "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
   "name": {
     "en": "Sensibo"
   },
   "description": {
-    "en": "Sensibo"
+    "en": "Make your air conditioner smart"
   },
   "category": [
     "climate"
@@ -18,7 +18,8 @@
       "sensibo",
       "temperature control",
       "heating",
-      "humidity"
+      "humidity",
+      "hvac"
     ]
   },
   "images": {
@@ -52,9 +53,9 @@
   "flow": {
     "triggers": [
       {
-        "id": "se_onoff_true",
+        "id": "se_onoff_false",
         "title": {
-          "en": "Sensibo turned on"
+          "en": "Sensibo turned off"
         },
         "args": [
           {
@@ -65,9 +66,9 @@
         ]
       },
       {
-        "id": "se_onoff_false",
+        "id": "se_onoff_true",
         "title": {
-          "en": "Sensibo turned off"
+          "en": "Sensibo turned on"
         },
         "args": [
           {
@@ -95,34 +96,51 @@
     ],
     "actions": [
       {
-        "id": "sensibo_on",
+        "id": "sensibo_fanlevel",
         "title": {
-          "en": "Turn on"
+          "en": "Set the fan level"
         },
         "hint": {
-          "en": "Turn on"
+          "en": "Set the fan level (auto, high, medium or low)"
         },
         "args": [
           {
             "type": "device",
             "name": "device",
             "filter": "driver_id=Sensibo"
-          }
-        ]
-      },
-      {
-        "id": "sensibo_off",
-        "title": {
-          "en": "Turn off"
-        },
-        "hint": {
-          "en": "Turn of"
-        },
-        "args": [
+          },
           {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=Sensibo"
+            "name": "fanLevel",
+            "title": {
+              "en": "Fan level"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "auto",
+                "label": {
+                  "en": "Auto"
+                }
+              },
+              {
+                "id": "high",
+                "label": {
+                  "en": "High"
+                }
+              },
+              {
+                "id": "medium",
+                "label": {
+                  "en": "Medium"
+                }
+              },
+              {
+                "id": "low",
+                "label": {
+                  "en": "Low"
+                }
+              }
+            ]
           }
         ]
       },
@@ -182,51 +200,34 @@
         ]
       },
       {
-        "id": "sensibo_fanlevel",
+        "id": "sensibo_off",
         "title": {
-          "en": "Set the fan level"
+          "en": "Turn off"
         },
         "hint": {
-          "en": "Set the fan level (auto, high, medium or low)"
+          "en": "Turn of"
         },
         "args": [
           {
             "type": "device",
             "name": "device",
             "filter": "driver_id=Sensibo"
-          },
+          }
+        ]
+      },
+      {
+        "id": "sensibo_on",
+        "title": {
+          "en": "Turn on"
+        },
+        "hint": {
+          "en": "Turn on"
+        },
+        "args": [
           {
-            "name": "fanLevel",
-            "title": {
-              "en": "Fan level"
-            },
-            "type": "dropdown",
-            "values": [
-              {
-                "id": "auto",
-                "label": {
-                  "en": "Auto"
-                }
-              },
-              {
-                "id": "high",
-                "label": {
-                  "en": "High"
-                }
-              },
-              {
-                "id": "medium",
-                "label": {
-                  "en": "Medium"
-                }
-              },
-              {
-                "id": "low",
-                "label": {
-                  "en": "Low"
-                }
-              }
-            ]
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
           }
         ]
       }
@@ -237,6 +238,11 @@
       "id": "Sensibo",
       "name": {
         "en": "Sensibo"
+      },
+      "icon": "/drivers/Sensibo/assets/icon.svg",
+      "images": {
+        "large": "/drivers/Sensibo/assets/images/large.png",
+        "small": "/drivers/Sensibo/assets/images/small.png"
       },
       "class": "thermostat",
       "capabilities": [
@@ -258,27 +264,6 @@
           "step": 1
         }
       },
-      "mobile": {
-        "components": [
-          {
-            "id": "icon",
-            "capabilities": []
-          },
-          {
-            "id": "sensor",
-            "capabilities": [
-              "measure_humidity",
-              "measure_temperature"
-            ]
-          },
-          {
-            "id": "thermostat",
-            "capabilities": [
-              "target_temperature"
-            ]
-          }
-        ]
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -295,26 +280,10 @@
           "template": "add_devices"
         }
       ],
-      "images": {
-        "large": "/drivers/Sensibo/assets/images/large.png",
-        "small": "/drivers/Sensibo/assets/images/small.png"
-      }
+      "settings": []
     }
   ],
   "capabilities": {
-    "se_onoff": {
-      "type": "boolean",
-      "title": {
-        "en": "State"
-      },
-      "desc": {
-        "en": "State of the device"
-      },
-      "getable": true,
-      "setable": true,
-      "uiQuickAction": true,
-      "greyout": true
-    },
     "se_fanlevel": {
       "type": "enum",
       "title": {
@@ -353,6 +322,19 @@
           }
         }
       ]
+    },
+    "se_onoff": {
+      "type": "boolean",
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the device"
+      },
+      "getable": true,
+      "setable": true,
+      "uiQuickAction": true,
+      "greyout": true
     }
   }
 }

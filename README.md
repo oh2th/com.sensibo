@@ -39,6 +39,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.0.1
+
+- Use Homey compose
+
 #### 1.0.0
 
 - Fix support and source urls

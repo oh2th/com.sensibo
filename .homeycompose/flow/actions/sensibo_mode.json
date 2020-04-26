@@ -1,0 +1,55 @@
+{
+  "id": "sensibo_mode",
+  "title": {
+    "en": "Set the fan mode"
+  },
+  "hint": {
+    "en": "Set the mode (heat, cool, fan, auto or dry)"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "mode",
+      "title": {
+        "en": "Mode"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "cool",
+          "label": {
+            "en": "Cool"
+          }
+        },
+        {
+          "id": "heat",
+          "label": {
+            "en": "Heat"
+          }
+        },
+        {
+          "id": "fan",
+          "label": {
+            "en": "Fan"
+          }
+        },
+        {
+          "id": "auto",
+          "label": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "dry",
+          "label": {
+            "en": "Dry"
+          }
+        }
+      ]
+    }
+  ]
+}

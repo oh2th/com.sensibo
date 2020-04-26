@@ -1,4 +1,7 @@
 {
+  "1.0.1": {
+    "en": "Use Homey compose."
+  },
   "1.0.0": {
     "en": "Fix support and source urls."
   },
