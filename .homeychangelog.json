@@ -1,6 +1,6 @@
 {
   "1.0.1": {
-    "en": "Use Homey compose."
+    "en": "Added support for Swing modes. Use Homey compose."
   },
   "1.0.0": {
     "en": "Fix support and source urls."

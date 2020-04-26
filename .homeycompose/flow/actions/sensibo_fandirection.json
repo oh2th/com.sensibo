@@ -1,0 +1,37 @@
+{
+  "id": "sensibo_fandirection",
+  "title": {
+    "en": "Set swing"
+  },
+  "hint": {
+    "en": "Set the fan direction"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "fanDirection",
+      "title": {
+        "en": "Swing"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "stopped",
+          "label": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "rangeFull",
+          "label": {
+            "en": "Auto"
+          }
+        }
+      ]
+    }
+  ]
+}

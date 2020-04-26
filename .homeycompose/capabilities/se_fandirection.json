@@ -1,0 +1,27 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Swing"
+  },
+  "desc": {
+    "en": "Swing"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "insights": false,
+  "values": [
+    {
+      "id": "stopped",
+      "title": {
+        "en": "Off"
+      }
+    },
+    {
+      "id": "rangeFull",
+      "title": {
+        "en": "Auto"
+      }
+    }
+  ]
+}

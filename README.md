@@ -13,6 +13,7 @@ To install:
 #### Triggers
 
 - The target temperature changed.
+- Thermostat mode changed.
 - The temperature changed.
 - The humidity changed.
 - Sensibo turned on.
@@ -20,6 +21,7 @@ To install:
 
 #### Conditions
 
+- Thermostat mode is.
 - Sensibo is on.
 
 #### Actions
@@ -30,6 +32,7 @@ To install:
 - Turn off.
 - Set the fan mode (Cool, Heat, Fan, Auto, Dry)
 - Set the fan level.
+- Set Swing mode.
 
 ## Acknowledgements:
 
@@ -41,6 +44,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 #### 1.0.1
 
+- Added support for Swing modes
 - Use Homey compose
 
 #### 1.0.0

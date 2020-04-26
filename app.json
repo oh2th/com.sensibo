@@ -49,6 +49,7 @@
   "bugs": {
     "url": "https://github.com/balmli/com.sensibo/issues"
   },
+  "homeyCommunityTopicId": 28990,
   "source": "https://github.com/balmli/com.sensibo",
   "flow": {
     "triggers": [
@@ -115,6 +116,43 @@
       }
     ],
     "actions": [
+      {
+        "id": "sensibo_fandirection",
+        "title": {
+          "en": "Set swing"
+        },
+        "hint": {
+          "en": "Set the fan direction"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          },
+          {
+            "name": "fanDirection",
+            "title": {
+              "en": "Swing"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "stopped",
+                "label": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "rangeFull",
+                "label": {
+                  "en": "Auto"
+                }
+              }
+            ]
+          }
+        ]
+      },
       {
         "id": "sensibo_fanlevel",
         "title": {
@@ -270,6 +308,7 @@
         "target_temperature",
         "thermostat_mode",
         "se_fanlevel",
+        "se_fandirection",
         "measure_temperature",
         "measure_humidity"
       ],
@@ -318,6 +357,33 @@
     }
   ],
   "capabilities": {
+    "se_fandirection": {
+      "type": "enum",
+      "title": {
+        "en": "Swing"
+      },
+      "desc": {
+        "en": "Swing"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": false,
+      "values": [
+        {
+          "id": "stopped",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "rangeFull",
+          "title": {
+            "en": "Auto"
+          }
+        }
+      ]
+    },
     "se_fanlevel": {
       "type": "enum",
       "title": {
