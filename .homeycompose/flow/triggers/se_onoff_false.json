@@ -3,6 +3,16 @@
   "title": {
     "en": "Sensibo turned off"
   },
+  "tokens": [
+    {
+      "name": "state",
+      "type": "number",
+      "title": {
+        "en": "State"
+      },
+      "example": 0
+    }
+  ],
   "args": [
     {
       "name": "device",

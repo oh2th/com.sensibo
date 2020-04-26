@@ -21,19 +21,19 @@ class SensiboApp extends Homey.App {
 
         new Homey.FlowCardAction('sensibo_on')
           .register()
-          .registerRunListener((args, state) => args.device.onActionTurnOn(args, state));
+          .registerRunListener((args, state) => args.device.onActionTurnOn());
 
         new Homey.FlowCardAction('sensibo_off')
           .register()
-          .registerRunListener((args, state) => args.device.onActionTurnOff(args, state));
+          .registerRunListener((args, state) => args.device.onActionTurnOff());
 
         new Homey.FlowCardAction('sensibo_mode')
           .register()
-          .registerRunListener((args, state) => args.device.onActionSetMode(args, state));
+          .registerRunListener((args, state) => args.device.onActionSetMode(args.mode));
 
         new Homey.FlowCardAction('sensibo_fanlevel')
           .register()
-          .registerRunListener((args, state) => args.device.onActionSetFanLevel(args, state));
+          .registerRunListener((args, state) => args.device.onActionSetFanLevel(args.fanLevel));
 
     }
 

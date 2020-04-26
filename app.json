@@ -57,6 +57,16 @@
         "title": {
           "en": "Sensibo turned off"
         },
+        "tokens": [
+          {
+            "name": "state",
+            "type": "number",
+            "title": {
+              "en": "State"
+            },
+            "example": 0
+          }
+        ],
         "args": [
           {
             "name": "device",
@@ -70,6 +80,16 @@
         "title": {
           "en": "Sensibo turned on"
         },
+        "tokens": [
+          {
+            "name": "state",
+            "type": "number",
+            "title": {
+              "en": "State"
+            },
+            "example": 1
+          }
+        ],
         "args": [
           {
             "name": "device",
@@ -280,7 +300,21 @@
           "template": "add_devices"
         }
       ],
-      "settings": []
+      "settings": [
+        {
+          "id": "Polling_Interval",
+          "type": "number",
+          "label": {
+            "en": "Polling interval"
+          },
+          "value": 60,
+          "min": 30,
+          "max": 300,
+          "hint": {
+            "en": "Polling interval (seconds)"
+          }
+        }
+      ]
     }
   ],
   "capabilities": {
