@@ -1,10 +1,11 @@
 {
-  "settings": {
-    "title": "VThermo",
-    "subtitle": "Virtual thermostat."
-  },
-  "tab1": {
-    "title": "API-key",
-    "save": "Save changes"
+  "pair": {
+    "title": "Sensibo",
+    "subtitle": "Make your air conditioner smart",
+    "apikey_help": "Enter the API-key:",
+    "apikey_label": "API-key:",
+    "valid_apikey": "Enter a valid API-key",
+    "save_btn": "Save changes",
+    "confirm_message": "The API-key was saved!"
   }
 }

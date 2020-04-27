@@ -26,6 +26,7 @@ describe("Sensibo", function () {
             expect(sensibo.getAcState()['fanLevel']).to.equal('auto');
             expect(sensibo.getAcState()['targetTemperature']).to.equal(21);
             expect(sensibo.getAcState()['temperatureUnit']).to.equal('C');
+            expect(sensibo.getAcState()['swing']).to.equal('rangeFull');
         });
     });
 
@@ -106,6 +107,11 @@ describe("Sensibo", function () {
             let sensibo = new Sensibo({Homey: undefined, deviceId: '12345', logger: undefined});
             sensibo.updateAcState({temperatureUnit: 'F'});
             expect(sensibo.getAcState()['temperatureUnit']).to.equal('F');
+        });
+        it("updateAcState 6", function () {
+            let sensibo = new Sensibo({Homey: undefined, deviceId: '12345', logger: undefined});
+            sensibo.updateAcState({swing: 'stopped'});
+            expect(sensibo.getAcState()['swing']).to.equal('stopped');
         });
     });
 

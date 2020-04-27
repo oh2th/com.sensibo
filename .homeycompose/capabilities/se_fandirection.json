@@ -14,13 +14,61 @@
     {
       "id": "stopped",
       "title": {
-        "en": "Off"
+        "en": "Stopped"
+      }
+    },
+    {
+      "id": "fixedBottom",
+      "title": {
+        "en": "Fixed bottom"
+      }
+    },
+    {
+      "id": "fixedMiddleBottom",
+      "title": {
+        "en": "Fixed middle bottom"
+      }
+    },
+    {
+      "id": "fixedMiddle",
+      "title": {
+        "en": "Fixed middle"
+      }
+    },
+    {
+      "id": "fixedMiddleTop",
+      "title": {
+        "en": "Fixed middle top"
+      }
+    },
+    {
+      "id": "fixedTop",
+      "title": {
+        "en": "Fixed top"
+      }
+    },
+    {
+      "id": "rangeBottom",
+      "title": {
+        "en": "Range bottom"
+      }
+    },
+    {
+      "id": "rangeMiddle",
+      "title": {
+        "en": "Range middle"
+      }
+    },
+    {
+      "id": "rangeTop",
+      "title": {
+        "en": "Range top"
       }
     },
     {
       "id": "rangeFull",
       "title": {
-        "en": "Auto"
+        "en": "Range full"
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
@@ -140,13 +140,61 @@
               {
                 "id": "stopped",
                 "label": {
-                  "en": "Off"
+                  "en": "Stopped"
+                }
+              },
+              {
+                "id": "fixedBottom",
+                "label": {
+                  "en": "Fixed bottom"
+                }
+              },
+              {
+                "id": "fixedMiddleBottom",
+                "label": {
+                  "en": "Fixed middle bottom"
+                }
+              },
+              {
+                "id": "fixedMiddle",
+                "label": {
+                  "en": "Fixed middle"
+                }
+              },
+              {
+                "id": "fixedMiddleTop",
+                "label": {
+                  "en": "Fixed middle top"
+                }
+              },
+              {
+                "id": "fixedTop",
+                "label": {
+                  "en": "Fixed top"
+                }
+              },
+              {
+                "id": "rangeBottom",
+                "label": {
+                  "en": "Range bottom"
+                }
+              },
+              {
+                "id": "rangeMiddle",
+                "label": {
+                  "en": "Range middle"
+                }
+              },
+              {
+                "id": "rangeTop",
+                "label": {
+                  "en": "Range top"
                 }
               },
               {
                 "id": "rangeFull",
                 "label": {
-                  "en": "Auto"
+                  "en": "Range full"
                 }
               }
             ]
@@ -373,13 +421,61 @@
         {
           "id": "stopped",
           "title": {
-            "en": "Off"
+            "en": "Stopped"
+          }
+        },
+        {
+          "id": "fixedBottom",
+          "title": {
+            "en": "Fixed bottom"
+          }
+        },
+        {
+          "id": "fixedMiddleBottom",
+          "title": {
+            "en": "Fixed middle bottom"
+          }
+        },
+        {
+          "id": "fixedMiddle",
+          "title": {
+            "en": "Fixed middle"
+          }
+        },
+        {
+          "id": "fixedMiddleTop",
+          "title": {
+            "en": "Fixed middle top"
+          }
+        },
+        {
+          "id": "fixedTop",
+          "title": {
+            "en": "Fixed top"
+          }
+        },
+        {
+          "id": "rangeBottom",
+          "title": {
+            "en": "Range bottom"
+          }
+        },
+        {
+          "id": "rangeMiddle",
+          "title": {
+            "en": "Range middle"
+          }
+        },
+        {
+          "id": "rangeTop",
+          "title": {
+            "en": "Range top"
           }
         },
         {
           "id": "rangeFull",
           "title": {
-            "en": "Auto"
+            "en": "Range full"
           }
         }
       ]

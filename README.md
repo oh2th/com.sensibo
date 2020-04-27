@@ -42,9 +42,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
-#### 1.0.1
+#### 1.1.0
 
 - Added support for Swing modes
+- Fixed settings page
 - Use Homey compose
 
 #### 1.0.0

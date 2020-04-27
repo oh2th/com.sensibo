@@ -1,4 +1,7 @@
 {
+  "1.1.0": {
+    "en": "Added support for Swing modes. Fixed settings page. Use Homey compose."
+  },
   "1.0.1": {
     "en": "Added support for Swing modes. Use Homey compose."
   },

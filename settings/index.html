@@ -1,20 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
-    <script type="text/javascript" src="settings.js" data-origin="settings"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="material.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
 </head>
 <body>
-<h1 data-i18n="settings.title">-VThermo-</h1>
-<p data-i18n="settings.subtitle"></p>
 
-<fieldset>
-    <legend data-i18n="tab1.title">-API-key-</legend>
-    <div class="field row">
-        <input id="apikey" type="text" value="" maxlength="70"/>
+<div class="mdl-grid header">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone grid_center">
+    <img class="logo" src="logo.png" alt="Sensibo"/>
+  </div>
+</div>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone">
+    <span data-i18n="pair.apikey_help"></span>
+  </div>
+</div>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone">
+    <small data-i18n="pair.apikey_label"></small>
+    <div class="mdl-textfield mdl-js-textfield">
+      <input class="mdl-textfield__input input_apikey"
+             type="text"
+             id="apikey"
+             maxlength="70">
+      <span class="mdl-textfield__error" data-i18n="pair.valid_apikey"></span>
     </div>
-</fieldset>
+  </div>
+</div>
 
-<button id="save" class="right" data-i18n="tab1.save"></button>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone grid_center">
+    <button class="mdl-button mdl-js-button mdl-button--raised exec_button" id="save"
+            data-i18n="pair.save_btn" style="color: white; background-color: #00c341;">
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function onHomeyReady(homeyReady) {
+    Homey = homeyReady;
+    Homey.ready();
+
+    var apikeyElement = document.getElementById('apikey');
+    var saveElement = document.getElementById('save');
+
+    Homey.get('apikey', function (err, apikey) {
+      if (err) return Homey.alert(err);
+      apikeyElement.value = apikey;
+    });
+
+    saveElement.addEventListener('click', function (e) {
+      Homey.set('apikey', apikeyElement.value, function (err) {
+        if (err) return Homey.alert(err);
+      });
+    });
+  }
+</script>
+<script src="material.min.js"></script>
 </body>
 </html>
