@@ -16,7 +16,8 @@
     "se_fanlevel",
     "se_fandirection",
     "measure_temperature",
-    "measure_humidity"
+    "measure_humidity",
+    "se_last_seen"
   ],
   "capabilitiesOptions": {
     "se_onoff": {

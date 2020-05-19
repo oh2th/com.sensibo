@@ -15,6 +15,10 @@ class SensiboApp extends Homey.App {
     this._turnedOffTrigger
       .register();
 
+    this._offlineTrigger = new Homey.FlowCardTriggerDevice('se_offline');
+    this._offlineTrigger
+      .register();
+
     new Homey.FlowCardCondition('se_onoff_is_on')
       .register()
       .registerRunListener((args, state) => args.device.getCapabilityValue('se_onoff'));

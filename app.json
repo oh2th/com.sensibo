@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
@@ -53,6 +53,37 @@
   "source": "https://github.com/balmli/com.sensibo",
   "flow": {
     "triggers": [
+      {
+        "id": "se_offline",
+        "title": {
+          "en": "Sensibo offline"
+        },
+        "tokens": [
+          {
+            "name": "seconds_ago",
+            "type": "number",
+            "title": {
+              "en": "Last seen seconds"
+            },
+            "example": 300
+          },
+          {
+            "name": "last_seen",
+            "type": "string",
+            "title": {
+              "en": "Last seen"
+            },
+            "example": "10:01:02"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
       {
         "id": "se_onoff_false",
         "title": {
@@ -358,7 +389,8 @@
         "se_fanlevel",
         "se_fandirection",
         "measure_temperature",
-        "measure_humidity"
+        "measure_humidity",
+        "se_last_seen"
       ],
       "capabilitiesOptions": {
         "se_onoff": {
@@ -399,6 +431,19 @@
           "max": 300,
           "hint": {
             "en": "Polling interval (seconds)"
+          }
+        },
+        {
+          "id": "Delay_Offline",
+          "type": "number",
+          "label": {
+            "en": "Delay for offline"
+          },
+          "value": 300,
+          "min": 120,
+          "max": 3600,
+          "hint": {
+            "en": "Delay when checking if the Sensibo is offline (seconds)"
           }
         }
       ]
@@ -518,6 +563,33 @@
           }
         }
       ]
+    },
+    "se_last_seen": {
+      "type": "string",
+      "title": {
+        "en": "Last seen"
+      },
+      "desc": {
+        "en": "Last seen"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/clock.svg",
+      "insights": false
+    },
+    "se_last_seen_seconds": {
+      "type": "number",
+      "title": {
+        "en": "Last seen seconds ago"
+      },
+      "desc": {
+        "en": "Last seen seconds ago"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false
     },
     "se_onoff": {
       "type": "boolean",

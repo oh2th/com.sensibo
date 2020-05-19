@@ -1,0 +1,13 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Last seen seconds ago"
+  },
+  "desc": {
+    "en": "Last seen seconds ago"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false
+}

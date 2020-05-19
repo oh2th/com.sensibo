@@ -15,6 +15,12 @@ module.exports = class SensiboDevice extends Homey.Device {
       if (!this.hasCapability('se_fandirection')) {
         await this.addCapability('se_fandirection');
       }
+      if (!this.hasCapability('se_last_seen')) {
+        await this.addCapability('se_last_seen');
+      }
+      if (!this.hasCapability('se_last_seen_seconds')) {
+        await this.addCapability('se_last_seen_seconds');
+      }
     } catch (err) {
       this.log('migration failed', err);
     }
@@ -78,7 +84,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       let data = await this._sensibo.getSpecificDeviceInfo();
       await this.onDeviceInfoReceived(data);
     } catch (err) {
-      this.log('checkData error');
+      this.log('checkData error', err);
     } finally {
       this.scheduleCheckData();
     }
@@ -97,29 +103,45 @@ module.exports = class SensiboDevice extends Homey.Device {
         }
       }
       await this.updateIfChanged('target_temperature', result.acState.targetTemperature);
-      if (this.hasCapability('se_fanlevel')) {
-        await this.updateIfChanged('se_fanlevel', result.acState.fanLevel);
-      }
-      if (this.hasCapability('se_fandirection')) {
-        await this.updateIfChanged('se_fandirection', result.acState.swing);
-      }
-      if (this.hasCapability('thermostat_mode')) {
-        let thermostat_mode = result.acState.on === false ? 'off' :
-          (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
-        if (thermostat_mode) {
-          await this.updateIfChanged('thermostat_mode', thermostat_mode);
-        }
+      await this.updateIfChanged('se_fanlevel', result.acState.fanLevel);
+      await this.updateIfChanged('se_fandirection', result.acState.swing);
+      let thermostat_mode = result.acState.on === false ? 'off' :
+        (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
+      if (thermostat_mode) {
+        await this.updateIfChanged('thermostat_mode', thermostat_mode);
       }
       await this.updateIfChanged('measure_temperature', result.measurements.temperature);
       await this.updateIfChanged('measure_humidity', result.measurements.humidity);
+      if (result.measurements.time) {
+        const secondsAgo = result.measurements.time.secondsAgo;
+        const lastSeen = new Date(result.measurements.time.time).toTimeString().substr(0,8);
+
+        await this.updateIfChanged('se_last_seen_seconds', secondsAgo);
+        await this.updateIfChanged('se_last_seen', lastSeen);
+
+        let settings = await this.getSettings();
+        const limitOffline = settings.Delay_Offline || 300;
+
+        if (secondsAgo > limitOffline && !this._offlineTrigged) {
+          Homey.app._offlineTrigger.trigger(this, {
+            seconds_ago: secondsAgo,
+            last_seen: lastSeen
+          }, {});
+          this._offlineTrigged = true;
+        } else {
+          this._offlineTrigged = false;
+        }
+      }
     }
   }
 
   async updateIfChanged(cap, toValue) {
-    let capValue = this.getCapabilityValue(cap);
-    if (capValue !== toValue || capValue === undefined || capValue === null) {
-      await this.setCapabilityValue(cap, toValue).catch(err => this.log(err));
-      return true;
+    if (this.hasCapability(cap)) {
+      let capValue = this.getCapabilityValue(cap);
+      if (capValue !== toValue || capValue === undefined || capValue === null) {
+        await this.setCapabilityValue(cap, toValue).catch(err => this.log(err));
+        return true;
+      }
     }
     return false;
   }

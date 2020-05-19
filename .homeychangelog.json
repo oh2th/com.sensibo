@@ -1,4 +1,7 @@
 {
+  "1.2.0": {
+    "en": "Added 'Last seen' timestamp.  Added 'Sensibo offline' trigger."
+  },
   "1.1.0": {
     "en": "Added support for Swing modes. Fixed settings page. Use Homey compose."
   },

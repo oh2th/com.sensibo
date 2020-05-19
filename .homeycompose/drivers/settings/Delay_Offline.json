@@ -1,0 +1,13 @@
+{
+  "id": "Delay_Offline",
+  "type": "number",
+  "label": {
+    "en": "Delay for offline"
+  },
+  "value": 300,
+  "min": 120,
+  "max": 3600,
+  "hint": {
+    "en": "Delay when checking if the Sensibo is offline (seconds)"
+  }
+}

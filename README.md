@@ -18,6 +18,7 @@ To install:
 - The humidity changed.
 - Sensibo turned on.
 - Sensibo turned off.
+- Sensibo offline.
 
 #### Conditions
 
@@ -41,6 +42,11 @@ To install:
 Please report issues at the [issues section on Github](https://github.com/balmli/com.sensibo/issues).
 
 ## Release Notes:
+
+#### 1.2.0
+
+- Added 'Last seen' timestamp
+- Added 'Sensibo offline' trigger
 
 #### 1.1.0
 

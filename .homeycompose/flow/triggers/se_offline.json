@@ -1,0 +1,31 @@
+{
+  "id": "se_offline",
+  "title": {
+    "en": "Sensibo offline"
+  },
+  "tokens": [
+    {
+      "name": "seconds_ago",
+      "type": "number",
+      "title": {
+        "en": "Last seen seconds"
+      },
+      "example": 300
+    },
+    {
+      "name": "last_seen",
+      "type": "string",
+      "title": {
+        "en": "Last seen"
+      },
+      "example": "10:01:02"
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}
