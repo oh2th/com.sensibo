@@ -43,6 +43,11 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.2.1
+
+- Added support for 'Horizontal' and 'Both' swing modes
+- Added check for supported swing mode
+
 #### 1.2.0
 
 - Added 'Last seen' timestamp

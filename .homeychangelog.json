@@ -1,4 +1,7 @@
 {
+  "1.2.1": {
+    "en": "Added support for 'Horizontal' and 'Both' swing modes. Added check for supported swing mode."
+  },
   "1.2.0": {
     "en": "Added 'Last seen' timestamp.  Added 'Sensibo offline' trigger."
   },

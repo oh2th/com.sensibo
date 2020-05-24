@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
@@ -226,6 +226,18 @@
                 "id": "rangeFull",
                 "label": {
                   "en": "Range full"
+                }
+              },
+              {
+                "id": "horizontal",
+                "label": {
+                  "en": "Horizontal"
+                }
+              },
+              {
+                "id": "both",
+                "label": {
+                  "en": "Both"
                 }
               }
             ]
@@ -521,6 +533,18 @@
           "id": "rangeFull",
           "title": {
             "en": "Range full"
+          }
+        },
+        {
+          "id": "horizontal",
+          "title": {
+            "en": "Horizontal"
+          }
+        },
+        {
+          "id": "both",
+          "title": {
+            "en": "Both"
           }
         }
       ]

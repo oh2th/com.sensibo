@@ -70,6 +70,18 @@
       "title": {
         "en": "Range full"
       }
+    },
+    {
+      "id": "horizontal",
+      "title": {
+        "en": "Horizontal"
+      }
+    },
+    {
+      "id": "both",
+      "title": {
+        "en": "Both"
+      }
     }
   ]
 }

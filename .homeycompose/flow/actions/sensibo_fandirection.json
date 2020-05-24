@@ -78,6 +78,18 @@
           "label": {
             "en": "Range full"
           }
+        },
+        {
+          "id": "horizontal",
+          "label": {
+            "en": "Horizontal"
+          }
+        },
+        {
+          "id": "both",
+          "label": {
+            "en": "Both"
+          }
         }
       ]
     }

@@ -57,7 +57,8 @@ module.exports = class SensiboDevice extends Homey.Device {
       return value ? this.onActionTurnOn({ device: this }) : this.onActionTurnOff({ device: this });
     });
 
-    this.scheduleCheckData(2);
+    await this.fetchRemoteCapabilities();
+    await this.scheduleCheckData(2);
   }
 
   onAdded() {
@@ -75,6 +76,19 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
 
     callback(null, true);
+  }
+
+  async fetchRemoteCapabilities() {
+    try {
+      let data = await this._sensibo.getRemoteCapabilities();
+      if (data.data) {
+        let result = data.data.result;
+        this._sensibo._remoteCapabilities = result.remoteCapabilities;
+        this.log('fetchRemoteCapabilities', this._sensibo._remoteCapabilities);
+      }
+    } catch (err) {
+      this.log('fetchRemoteCapabilities error', err);
+    }
   }
 
   async checkData() {
@@ -266,6 +280,7 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onUpdateFanDirection(value, opts) {
     try {
       this.clearCheckData();
+      this._sensibo.checkSwingMode(value);
       this.log(`set fan direction: ${this._sensibo.getDeviceId()} -> ${value}`);
       await this._sensibo.setAcState({ swing: value });
       this.log(`set fan direction OK: ${this._sensibo.getDeviceId()} -> ${value}`);
