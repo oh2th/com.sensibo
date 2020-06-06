@@ -21,6 +21,9 @@ module.exports = class SensiboDevice extends Homey.Device {
       if (!this.hasCapability('se_last_seen_seconds')) {
         await this.addCapability('se_last_seen_seconds');
       }
+      if (!this.hasCapability('se_climate_react')) {
+        await this.addCapability('se_climate_react');
+      }
     } catch (err) {
       this.log('migration failed', err);
     }
@@ -53,6 +56,12 @@ module.exports = class SensiboDevice extends Homey.Device {
       });
     }
 
+    if (this.hasCapability('se_climate_react')) {
+      this.registerCapabilityListener('se_climate_react', (value, opts) => {
+        return this.onUpdateClimateReact(value, opts);
+      });
+    }
+
     this.registerCapabilityListener('se_onoff', async (value, opts) => {
       return value ? this.onActionTurnOn({ device: this }) : this.onActionTurnOff({ device: this });
     });
@@ -62,12 +71,12 @@ module.exports = class SensiboDevice extends Homey.Device {
   }
 
   onAdded() {
-    this.log('virtual device added:', this.getData().id);
+    this.log('device added:', this.getData().id);
   }
 
   onDeleted() {
     this.clearCheckData();
-    this.log('virtual device deleted');
+    this.log('device deleted');
   }
 
   async onSettings(oldSettingsObj, newSettingsObj, changedKeysArr, callback) {
@@ -97,6 +106,10 @@ module.exports = class SensiboDevice extends Homey.Device {
       this.log(`Fetching AC state for: ${this._sensibo.getDeviceId()}`);
       let data = await this._sensibo.getSpecificDeviceInfo();
       await this.onDeviceInfoReceived(data);
+      if (this.hasCapability('se_climate_react')) {
+        let climateReactSettings = await this._sensibo.getClimateReactSettings();
+        await this.onClimateReactSettingsReceived(climateReactSettings);
+      }
     } catch (err) {
       this.log('checkData error', err);
     } finally {
@@ -128,7 +141,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       await this.updateIfChanged('measure_humidity', result.measurements.humidity);
       if (result.measurements.time) {
         const secondsAgo = result.measurements.time.secondsAgo;
-        const lastSeen = new Date(result.measurements.time.time).toTimeString().substr(0,8);
+        const lastSeen = new Date(result.measurements.time.time).toTimeString().substr(0, 8);
 
         await this.updateIfChanged('se_last_seen_seconds', secondsAgo);
         await this.updateIfChanged('se_last_seen', lastSeen);
@@ -146,6 +159,14 @@ module.exports = class SensiboDevice extends Homey.Device {
           this._offlineTrigged = false;
         }
       }
+    }
+  }
+
+  async onClimateReactSettingsReceived(data) {
+    if (data.data) {
+      let result = data.data.result;
+      this.log(`Climate React settings for: ${this._sensibo.getDeviceId()}: enabled: ${result.enabled}`);
+      await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
     }
   }
 
@@ -236,6 +257,13 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
   }
 
+  async onActionClimateReact(enabled) {
+    await this.onUpdateClimateReact(enabled);
+    if (this.hasCapability('se_climate_react')) {
+      await this.setCapabilityValue('se_climate_react', enabled).catch(err => this.log(err));
+    }
+  }
+
   async onUpdateTargetTemperature(value, opts) {
     try {
       this.clearCheckData();
@@ -284,6 +312,17 @@ module.exports = class SensiboDevice extends Homey.Device {
       this.log(`set fan direction: ${this._sensibo.getDeviceId()} -> ${value}`);
       await this._sensibo.setAcState({ swing: value });
       this.log(`set fan direction OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+    } finally {
+      this.scheduleCheckData();
+    }
+  }
+
+  async onUpdateClimateReact(value, opts) {
+    try {
+      this.clearCheckData();
+      this.log(`enable/disable Climate React: ${this._sensibo.getDeviceId()} -> ${value}`);
+      await this._sensibo.enableClimateReact(value === 'on');
+      this.log(`enable/disable Climate React OK: ${this._sensibo.getDeviceId()} -> ${value}`);
     } finally {
       this.scheduleCheckData();
     }

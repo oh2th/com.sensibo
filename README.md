@@ -34,6 +34,7 @@ To install:
 - Set the fan mode (Cool, Heat, Fan, Auto, Dry)
 - Set the fan level.
 - Set Swing mode.
+- Control Climate React.
 
 ## Acknowledgements:
 
@@ -42,6 +43,10 @@ To install:
 Please report issues at the [issues section on Github](https://github.com/balmli/com.sensibo/issues).
 
 ## Release Notes:
+
+#### 1.3.0
+
+- Added support for Climate React
 
 #### 1.2.1
 

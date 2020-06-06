@@ -1,4 +1,7 @@
 {
+  "1.3.0": {
+    "en": "Added support for Climate React."
+  },
   "1.2.1": {
     "en": "Added support for 'Horizontal' and 'Both' swing modes. Added check for supported swing mode."
   },

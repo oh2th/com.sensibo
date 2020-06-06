@@ -43,6 +43,10 @@ class SensiboApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => args.device.onActionSetFanDirection(args.fanDirection));
 
+    new Homey.FlowCardAction('sensibo_cr')
+      .register()
+      .registerRunListener((args, state) => args.device.onActionClimateReact(args.enabled));
+
   }
 
 }

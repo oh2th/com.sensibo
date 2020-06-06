@@ -1,0 +1,37 @@
+{
+  "id": "sensibo_cr",
+  "title": {
+    "en": "Control Climate React"
+  },
+  "hint": {
+    "en": "Enable or disable Climate React"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "enabled",
+      "title": {
+        "en": "Enabled"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "off",
+          "label": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On"
+          }
+        }
+      ]
+    }
+  ]
+}

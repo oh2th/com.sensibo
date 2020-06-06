@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
@@ -147,6 +147,43 @@
       }
     ],
     "actions": [
+      {
+        "id": "sensibo_cr",
+        "title": {
+          "en": "Control Climate React"
+        },
+        "hint": {
+          "en": "Enable or disable Climate React"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          },
+          {
+            "name": "enabled",
+            "title": {
+              "en": "Enabled"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "off",
+                "label": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "on",
+                "label": {
+                  "en": "On"
+                }
+              }
+            ]
+          }
+        ]
+      },
       {
         "id": "sensibo_fandirection",
         "title": {
@@ -462,6 +499,33 @@
     }
   ],
   "capabilities": {
+    "se_climate_react": {
+      "type": "enum",
+      "title": {
+        "en": "Climate React"
+      },
+      "desc": {
+        "en": "Climate React"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": false,
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "on",
+          "title": {
+            "en": "On"
+          }
+        }
+      ]
+    },
     "se_fandirection": {
       "type": "enum",
       "title": {
