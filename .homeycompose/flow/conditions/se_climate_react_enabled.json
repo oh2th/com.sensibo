@@ -1,0 +1,13 @@
+{
+  "id": "se_climate_react_enabled",
+  "title": {
+    "en": "Climate React is !{{enabled|disabled}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}

@@ -23,6 +23,10 @@ class SensiboApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => args.device.getCapabilityValue('se_onoff'));
 
+    new Homey.FlowCardCondition('se_climate_react_enabled')
+      .register()
+      .registerRunListener((args, state) => args.device.getCapabilityValue('se_climate_react') === 'on');
+
     new Homey.FlowCardAction('sensibo_on')
       .register()
       .registerRunListener((args, state) => args.device.onActionTurnOn());

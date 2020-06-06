@@ -5,7 +5,7 @@
     "en": "Polling interval"
   },
   "value": 60,
-  "min": 30,
+  "min": 15,
   "max": 300,
   "hint": {
     "en": "Polling interval (seconds)"

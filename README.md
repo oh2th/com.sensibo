@@ -24,6 +24,7 @@ To install:
 
 - Thermostat mode is.
 - Sensibo is on.
+- Climate React is enabled / disabled.
 
 #### Actions
 
@@ -43,6 +44,11 @@ To install:
 Please report issues at the [issues section on Github](https://github.com/balmli/com.sensibo/issues).
 
 ## Release Notes:
+
+#### 1.3.1
+
+- Added condition for 'Climate React is enabled / disabled'
+- Changed minimum polling interval to 15 seconds
 
 #### 1.3.0
 
