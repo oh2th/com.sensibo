@@ -1,0 +1,16 @@
+{
+  "id": "sensibo_delete_timer",
+  "title": {
+    "en": "Delete timer"
+  },
+  "hint": {
+    "en": "Delete the current timer"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}

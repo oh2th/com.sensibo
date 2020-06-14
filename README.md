@@ -45,6 +45,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.4.0
+
+- Added support for timers
+
 #### 1.3.1
 
 - Added condition for 'Climate React is enabled / disabled'

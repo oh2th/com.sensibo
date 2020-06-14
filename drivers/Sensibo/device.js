@@ -264,6 +264,44 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
   }
 
+  isTimerEnabled() {
+    return this._sensibo.isTimerEnabled();
+  }
+
+  async onDeleteTimer() {
+    try {
+      this.clearCheckData();
+      await this._sensibo.deleteCurrentTimer();
+    } finally {
+      this.scheduleCheckData();
+    }
+  }
+
+  async onSetTimer(minutesFromNow, on, mode, fanLevel, targetTemperature) {
+    try {
+      this.log('onSetTimer', minutesFromNow, on, on === 'on', mode, fanLevel, targetTemperature);
+      this.clearCheckData();
+      const newAcState = {
+        on: on !== 'nop' ? on === 'on' : undefined,
+        mode: mode !== 'nop' ? mode : undefined,
+        fanLevel: fanLevel !== 'nop' ? fanLevel : undefined,
+        targetTemperature: targetTemperature >= 16 ? targetTemperature : undefined,
+      };
+      if (minutesFromNow <= 0) {
+        throw new Error('Minutes from now must be specified.');
+      }
+      if (newAcState.on === undefined &&
+        newAcState.mode === undefined &&
+        newAcState.fanLevel === undefined &&
+        newAcState.targetTemperature === undefined) {
+        throw new Error('At least one parameter must be specified.');
+      }
+      await this._sensibo.setCurrentTimer(minutesFromNow, newAcState);
+    } finally {
+      this.scheduleCheckData();
+    }
+  }
+
   async onUpdateTargetTemperature(value, opts) {
     try {
       this.clearCheckData();

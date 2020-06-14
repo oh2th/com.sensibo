@@ -1,0 +1,13 @@
+{
+  "id": "se_timer_enabled",
+  "title": {
+    "en": "Timer is !{{enabled|disabled}}"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}

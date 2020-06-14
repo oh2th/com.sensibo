@@ -27,6 +27,10 @@ class SensiboApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => args.device.getCapabilityValue('se_climate_react') === 'on');
 
+    new Homey.FlowCardCondition('se_timer_enabled')
+      .register()
+      .registerRunListener((args, state) => args.device.isTimerEnabled());
+
     new Homey.FlowCardAction('sensibo_on')
       .register()
       .registerRunListener((args, state) => args.device.onActionTurnOn());
@@ -50,6 +54,14 @@ class SensiboApp extends Homey.App {
     new Homey.FlowCardAction('sensibo_cr')
       .register()
       .registerRunListener((args, state) => args.device.onActionClimateReact(args.enabled));
+
+    new Homey.FlowCardAction('sensibo_delete_timer')
+      .register()
+      .registerRunListener((args, state) => args.device.onDeleteTimer());
+
+    new Homey.FlowCardAction('sensibo_set_timer')
+      .register()
+      .registerRunListener((args, state) => args.device.onSetTimer(args.minutesFromNow, args.on, args.mode, args.fanLevel, args.targetTemperature));
 
   }
 
