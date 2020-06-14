@@ -54,6 +54,29 @@
   "flow": {
     "triggers": [
       {
+        "id": "se_climate_react_changed",
+        "title": {
+          "en": "Climate React changed"
+        },
+        "tokens": [
+          {
+            "name": "climate_react",
+            "type": "boolean",
+            "title": {
+              "en": "Climate React"
+            },
+            "example": true
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
+      {
         "id": "se_offline",
         "title": {
           "en": "Sensibo offline"

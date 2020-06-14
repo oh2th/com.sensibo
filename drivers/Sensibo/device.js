@@ -167,6 +167,12 @@ module.exports = class SensiboDevice extends Homey.Device {
       let result = data.data.result;
       this.log(`Climate React settings for: ${this._sensibo.getDeviceId()}: enabled: ${result.enabled}`);
       await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
+      if (this._lastClimateReact !== undefined && this._lastClimateReact !== result.enabled) {
+        Homey.app._climateReactChangedTrigger.trigger(this, {
+          climate_react: result.enabled
+        }, {});
+      }
+      this._lastClimateReact = result.enabled;
     }
   }
 

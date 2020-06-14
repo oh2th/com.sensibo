@@ -1,6 +1,6 @@
 {
   "1.4.0": {
-    "en": "Added support for timers."
+    "en": "Added support for timers. Added trigger for Climate React changed. "
   },
   "1.3.1": {
     "en": "Added support for Climate React. Added condition for 'Climate React is enabled / disabled'. Changed minimum polling interval to 15 seconds."

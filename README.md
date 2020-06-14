@@ -48,6 +48,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 #### 1.4.0
 
 - Added support for timers
+- Added trigger for Climate React changed
 
 #### 1.3.1
 
