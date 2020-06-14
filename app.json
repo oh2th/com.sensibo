@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
@@ -60,12 +60,20 @@
         },
         "tokens": [
           {
-            "name": "climate_react",
+            "name": "climate_react_enabled",
             "type": "boolean",
+            "title": {
+              "en": "Climate React enabled"
+            },
+            "example": true
+          },
+          {
+            "name": "climate_react",
+            "type": "string",
             "title": {
               "en": "Climate React"
             },
-            "example": true
+            "example": "enabled"
           }
         ],
         "args": [
@@ -498,13 +506,11 @@
           },
           {
             "name": "minutesFromNow",
-            "type": "range",
+            "type": "number",
             "min": 1,
             "max": 1440,
             "step": 1,
-            "label": " minutes",
-            "labelDecimals": 0,
-            "title": {
+            "placeholder": {
               "en": "Minutes from now"
             }
           },

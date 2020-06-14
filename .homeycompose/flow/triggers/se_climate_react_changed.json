@@ -5,12 +5,20 @@
   },
   "tokens": [
     {
-      "name": "climate_react",
+      "name": "climate_react_enabled",
       "type": "boolean",
+      "title": {
+        "en": "Climate React enabled"
+      },
+      "example": true
+    },
+    {
+      "name": "climate_react",
+      "type": "string",
       "title": {
         "en": "Climate React"
       },
-      "example": true
+      "example": "enabled"
     }
   ],
   "args": [

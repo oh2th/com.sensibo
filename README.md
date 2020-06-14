@@ -49,6 +49,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.4.1
+
+- Fixed client for timers
+
 #### 1.4.0
 
 - Added support for timers

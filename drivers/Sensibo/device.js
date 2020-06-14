@@ -169,7 +169,8 @@ module.exports = class SensiboDevice extends Homey.Device {
       await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
       if (this._lastClimateReact !== undefined && this._lastClimateReact !== result.enabled) {
         Homey.app._climateReactChangedTrigger.trigger(this, {
-          climate_react: result.enabled
+          climate_react_enabled: result.enabled,
+          climate_react: result.enabled ? 'enabled' : 'disabled',
         }, {});
       }
       this._lastClimateReact = result.enabled;
@@ -270,7 +271,7 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
   }
 
-  isTimerEnabled() {
+  async isTimerEnabled() {
     return this._sensibo.isTimerEnabled();
   }
 
@@ -278,6 +279,9 @@ module.exports = class SensiboDevice extends Homey.Device {
     try {
       this.clearCheckData();
       await this._sensibo.deleteCurrentTimer();
+    } catch (err) {
+      this.log('onDeleteTimer error', err);
+      throw err;
     } finally {
       this.scheduleCheckData();
     }
@@ -296,6 +300,9 @@ module.exports = class SensiboDevice extends Homey.Device {
       if (minutesFromNow <= 0) {
         throw new Error('Minutes from now must be specified.');
       }
+      if (minutesFromNow > 1440) {
+        throw new Error('Minutes from now cannot be larger than 1440.');
+      }
       if (newAcState.on === undefined &&
         newAcState.mode === undefined &&
         newAcState.fanLevel === undefined &&
@@ -303,6 +310,9 @@ module.exports = class SensiboDevice extends Homey.Device {
         throw new Error('At least one parameter must be specified.');
       }
       await this._sensibo.setCurrentTimer(minutesFromNow, newAcState);
+    } catch (err) {
+      this.log('onSetTimer error', err);
+      throw err;
     } finally {
       this.scheduleCheckData();
     }

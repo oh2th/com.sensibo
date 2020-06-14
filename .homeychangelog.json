@@ -1,4 +1,7 @@
 {
+  "1.4.1": {
+    "en": "Added support for timers. Added trigger for Climate React changed. "
+  },
   "1.4.0": {
     "en": "Added support for timers. Added trigger for Climate React changed. "
   },
