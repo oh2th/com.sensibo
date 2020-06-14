@@ -19,12 +19,14 @@ To install:
 - Sensibo turned on.
 - Sensibo turned off.
 - Sensibo offline.
+- Climate React changed.
 
 #### Conditions
 
 - Thermostat mode is.
 - Sensibo is on.
 - Climate React is enabled / disabled.
+- Timer is enabled / disabled.
 
 #### Actions
 
@@ -36,6 +38,8 @@ To install:
 - Set the fan level.
 - Set Swing mode.
 - Control Climate React.
+- Set timer.
+- Delete timer.
 
 ## Acknowledgements:
 
