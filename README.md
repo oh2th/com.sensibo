@@ -49,7 +49,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
-#### 1.5.0
+#### 1.5.1
 
 - Added trigger for AC state changes
 - Fixed minor bug when deleting devices

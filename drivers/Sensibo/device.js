@@ -180,12 +180,12 @@ module.exports = class SensiboDevice extends Homey.Device {
           const payload = {
             status: anAcState.status,
             reason: anAcState.reason,
-            on: anAcState.changedProperties.includes('on') ? anAcState.acState.on : undefined,
-            fanLevel: anAcState.changedProperties.includes('fanLevel') ? anAcState.acState.fanLevel : undefined,
-            targetTemperature: anAcState.changedProperties.includes('targetTemperature') ? anAcState.acState.targetTemperature : undefined,
-            mode: anAcState.changedProperties.includes('mode') ? anAcState.acState.mode : undefined,
-            swing: anAcState.changedProperties.includes('swing') ? anAcState.acState.swing : undefined,
-            failureReason: anAcState.failureReason ? anAcState.failureReason : undefined,
+            on: anAcState.acState.on,
+            fanLevel: anAcState.acState.fanLevel ? anAcState.acState.fanLevel : '',
+            targetTemperature: anAcState.acState.targetTemperature,
+            mode: anAcState.acState.mode ? anAcState.acState.mode : '',
+            swing: anAcState.acState.swing ? anAcState.acState.swing : '',
+            failureReason: anAcState.failureReason ? anAcState.failureReason : '',
           };
           Homey.app._acStateChangedTrigger.trigger(this, payload, {});
           this.log(`AC State change triggered: ${this._sensibo.getDeviceId()}`, anAcState.id, payload);
