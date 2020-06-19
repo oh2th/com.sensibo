@@ -1,4 +1,7 @@
 {
+  "1.5.0": {
+    "en": "Added trigger for AC state changes. Fixed minor bug when deleting devices. "
+  },
   "1.4.1": {
     "en": "Added support for timers. Added trigger for Climate React changed. "
   },

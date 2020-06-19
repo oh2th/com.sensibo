@@ -75,6 +75,7 @@ module.exports = class SensiboDevice extends Homey.Device {
   }
 
   onDeleted() {
+    this._deleted = true;
     this.clearCheckData();
     this.log('device deleted');
   }
@@ -101,11 +102,16 @@ module.exports = class SensiboDevice extends Homey.Device {
   }
 
   async checkData() {
+    if (this._deleted) {
+      return;
+    }
     try {
       this.clearCheckData();
       this.log(`Fetching AC state for: ${this._sensibo.getDeviceId()}`);
       let data = await this._sensibo.getSpecificDeviceInfo();
       await this.onDeviceInfoReceived(data);
+      let acStatesData = await this._sensibo.getAcStates();
+      await this.onAcStatesReceived(acStatesData);
       if (this.hasCapability('se_climate_react')) {
         let climateReactSettings = await this._sensibo.getClimateReactSettings();
         await this.onClimateReactSettingsReceived(climateReactSettings);
@@ -162,6 +168,36 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
   }
 
+  async onAcStatesReceived(data) {
+    if (data.data) {
+      let curAcStates = data.data.result;
+      this.log(`AC States for: ${this._sensibo.getDeviceId()}`, curAcStates.length, curAcStates.map(acs => acs.id));
+      if (this._lastAcStatesIds) {
+        for (let anAcState of curAcStates) {
+          if (this._lastAcStatesIds[anAcState.id]) {
+            break;
+          }
+          const payload = {
+            status: anAcState.status,
+            reason: anAcState.reason,
+            on: anAcState.changedProperties.includes('on') ? anAcState.acState.on : undefined,
+            fanLevel: anAcState.changedProperties.includes('fanLevel') ? anAcState.acState.fanLevel : undefined,
+            targetTemperature: anAcState.changedProperties.includes('targetTemperature') ? anAcState.acState.targetTemperature : undefined,
+            mode: anAcState.changedProperties.includes('mode') ? anAcState.acState.mode : undefined,
+            swing: anAcState.changedProperties.includes('swing') ? anAcState.acState.swing : undefined,
+            failureReason: anAcState.failureReason ? anAcState.failureReason : undefined,
+          };
+          Homey.app._acStateChangedTrigger.trigger(this, payload, {});
+          this.log(`AC State change triggered: ${this._sensibo.getDeviceId()}`, anAcState.id, payload);
+        }
+      }
+      this._lastAcStatesIds = curAcStates.reduce(function (map, obj) {
+        map[obj.id] = obj.id;
+        return map;
+      }, {});
+    }
+  }
+
   async onClimateReactSettingsReceived(data) {
     if (data.data) {
       let result = data.data.result;
@@ -196,6 +232,9 @@ module.exports = class SensiboDevice extends Homey.Device {
   }
 
   async scheduleCheckData(seconds) {
+    if (this._deleted) {
+      return;
+    }
     this.clearCheckData();
     let interval = seconds;
     if (!interval) {

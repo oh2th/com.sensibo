@@ -1,0 +1,79 @@
+{
+  "id": "se_ac_state_changed",
+  "title": {
+    "en": "AC state changed"
+  },
+  "tokens": [
+    {
+      "name": "status",
+      "type": "string",
+      "title": {
+        "en": "Status"
+      },
+      "example": "Success"
+    },
+    {
+      "name": "reason",
+      "type": "string",
+      "title": {
+        "en": "Reason"
+      },
+      "example": "ScheduledCommand"
+    },
+    {
+      "name": "failureReason",
+      "type": "string",
+      "title": {
+        "en": "Failure reason"
+      },
+      "example": "Some reason"
+    },
+    {
+      "name": "on",
+      "type": "boolean",
+      "title": {
+        "en": "On"
+      },
+      "example": true
+    },
+    {
+      "name": "fanLevel",
+      "type": "string",
+      "title": {
+        "en": "Fan level"
+      },
+      "example": "low"
+    },
+    {
+      "name": "targetTemperature",
+      "type": "number",
+      "title": {
+        "en": "Target temperature"
+      },
+      "example": 23
+    },
+    {
+      "name": "mode",
+      "type": "string",
+      "title": {
+        "en": "Mode"
+      },
+      "example": "cool"
+    },
+    {
+      "name": "swing",
+      "type": "string",
+      "title": {
+        "en": "Swing"
+      },
+      "example": "stopped"
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}
