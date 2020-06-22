@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
@@ -221,6 +221,29 @@
         "id": "se_onoff_true",
         "title": {
           "en": "Sensibo turned on"
+        },
+        "tokens": [
+          {
+            "name": "state",
+            "type": "number",
+            "title": {
+              "en": "State"
+            },
+            "example": 1
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo"
+          }
+        ]
+      },
+      {
+        "id": "se_timer_fired",
+        "title": {
+          "en": "Timer fired"
         },
         "tokens": [
           {

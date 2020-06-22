@@ -49,6 +49,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.6.0
+
+- Added trigger for timers
+
 #### 1.5.1
 
 - Added trigger for AC state changes

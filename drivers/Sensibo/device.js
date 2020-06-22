@@ -77,6 +77,7 @@ module.exports = class SensiboDevice extends Homey.Device {
   onDeleted() {
     this._deleted = true;
     this.clearCheckData();
+    this.clearTimer();
     this.log('device deleted');
   }
 
@@ -145,6 +146,11 @@ module.exports = class SensiboDevice extends Homey.Device {
       }
       await this.updateIfChanged('measure_temperature', result.measurements.temperature);
       await this.updateIfChanged('measure_humidity', result.measurements.humidity);
+      if (result.timer && result.timer.isEnabled && result.timer.targetTimeSecondsFromNow >= 0) {
+        this.scheduleTimer(result.timer.targetTimeSecondsFromNow);
+      } else {
+        this.clearTimer();
+      }
       if (result.measurements.time) {
         const secondsAgo = result.measurements.time.secondsAgo;
         const lastSeen = new Date(result.measurements.time.time).toTimeString().substr(0, 8);
@@ -242,6 +248,34 @@ module.exports = class SensiboDevice extends Homey.Device {
       interval = settings.Polling_Interval || 30;
     }
     this.curTimeout = setTimeout(this.checkData.bind(this), interval * 1000);
+  }
+
+  clearTimer() {
+    if (this.curTimer) {
+      clearTimeout(this.curTimer);
+      this.curTimer = undefined;
+    }
+  }
+
+  async scheduleTimer(seconds) {
+    if (this._deleted) {
+      return;
+    }
+    this.clearTimer();
+    this.curTimer = setTimeout(this.onTimerFired.bind(this), seconds * 1000 + 1);
+  }
+
+  async onTimerFired() {
+    if (this._deleted) {
+      return;
+    }
+    try {
+      this.clearTimer();
+      Homey.app._timerFiredTrigger.trigger(this, { state: 1 }, {});
+      this.log(`Timer fired for: ${this._sensibo.getDeviceId()}`);
+    } catch (err) {
+      this.log('onTimerFired error', err);
+    }
   }
 
   async onActionTurnOn() {

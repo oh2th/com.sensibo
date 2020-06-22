@@ -1,0 +1,23 @@
+{
+  "id": "se_timer_fired",
+  "title": {
+    "en": "Timer fired"
+  },
+  "tokens": [
+    {
+      "name": "state",
+      "type": "number",
+      "title": {
+        "en": "State"
+      },
+      "example": 1
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}

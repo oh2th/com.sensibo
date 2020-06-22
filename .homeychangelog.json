@@ -1,4 +1,7 @@
 {
+  "1.6.0": {
+    "en": "Added trigger for timers. "
+  },
   "1.5.1": {
     "en": "Added trigger for AC state changes. Fixed minor bug when deleting devices. "
   },

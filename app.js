@@ -27,6 +27,10 @@ class SensiboApp extends Homey.App {
     this._climateReactChangedTrigger
       .register();
 
+    this._timerFiredTrigger = new Homey.FlowCardTriggerDevice('se_timer_fired');
+    this._timerFiredTrigger
+      .register();
+
     new Homey.FlowCardCondition('se_onoff_is_on')
       .register()
       .registerRunListener((args, state) => args.device.getCapabilityValue('se_onoff'));
