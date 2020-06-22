@@ -151,6 +151,15 @@ module.exports = class SensiboDevice extends Homey.Device {
       } else {
         this.clearTimer();
       }
+      const hasTimer = !!result.timer;
+      const hasTimerEnabled = !!(result.timer && result.timer.isEnabled);
+      if (this._hasTimerEnabled === false && hasTimerEnabled === true) {
+        Homey.app._timerCreatedTrigger.trigger(this, { homey: false }, {});
+      } else if (this._hasTimer === true && hasTimer === false) {
+        Homey.app._timerDeletedTrigger.trigger(this, { homey: false }, {});
+      }
+      this._hasTimer = hasTimer;
+      this._hasTimerEnabled = hasTimerEnabled;
       if (result.measurements.time) {
         const secondsAgo = result.measurements.time.secondsAgo;
         const lastSeen = new Date(result.measurements.time.time).toTimeString().substr(0, 8);
@@ -352,6 +361,9 @@ module.exports = class SensiboDevice extends Homey.Device {
     try {
       this.clearCheckData();
       await this._sensibo.deleteCurrentTimer();
+      this._hasTimer = false;
+      this._hasTimerEnabled = false;
+      Homey.app._timerDeletedTrigger.trigger(this, { homey: true }, {});
     } catch (err) {
       this.log('onDeleteTimer error', err);
       throw err;
@@ -383,6 +395,9 @@ module.exports = class SensiboDevice extends Homey.Device {
         throw new Error('At least one parameter must be specified.');
       }
       await this._sensibo.setCurrentTimer(minutesFromNow, newAcState);
+      this._hasTimer = true;
+      this._hasTimerEnabled = true;
+      Homey.app._timerCreatedTrigger.trigger(this, { homey: true }, {});
     } catch (err) {
       this.log('onSetTimer error', err);
       throw err;

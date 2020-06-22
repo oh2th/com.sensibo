@@ -1,0 +1,23 @@
+{
+  "id": "se_timer_deleted",
+  "title": {
+    "en": "Timer deleted"
+  },
+  "tokens": [
+    {
+      "name": "homey",
+      "type": "boolean",
+      "title": {
+        "en": "From Homey flow"
+      },
+      "example": true
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Sensibo"
+    }
+  ]
+}

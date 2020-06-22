@@ -19,6 +19,10 @@ To install:
 - Sensibo turned on.
 - Sensibo turned off.
 - Sensibo offline.
+- Timer created.
+- Timer fired.
+- Timer deleted.
+- AC state changed.
 - Climate React changed.
 
 #### Conditions
@@ -49,9 +53,9 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
-#### 1.6.0
+#### 1.6.1
 
-- Added trigger for timers
+- Added triggers for timers
 
 #### 1.5.1
 
