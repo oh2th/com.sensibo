@@ -332,11 +332,37 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
   }
 
+  async onModeAutocomplete(query, args) {
+    const modes = this._sensibo.getModes() || ['cool', 'heat', 'fan', 'auto', 'dry'];
+    return Promise.resolve((modes).map(mode => {
+      return {
+        id: mode,
+        name: mode[0].toUpperCase() + mode.substr(1).toLowerCase()
+      };
+    }).filter(result => {
+      return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    }));
+  }
+
   async onActionSetFanLevel(fanLevel) {
     await this.onUpdateFanlevel(fanLevel);
     if (this.hasCapability('se_fanlevel')) {
       await this.setCapabilityValue('se_fanlevel', fanLevel).catch(err => this.log(err));
     }
+  }
+
+  async onFanLevelAutocomplete(query, args) {
+    const fanLevels = this._sensibo.getAllFanLevels() || ['auto', 'high', 'medium', 'low'];
+    return Promise.resolve((fanLevels).map(fanLevel => {
+      let name = fanLevel[0].toUpperCase() + fanLevel.substr(1).toLowerCase();
+      name = name.replace('_', ' ');
+      return {
+        id: fanLevel,
+        name: name
+      };
+    }).filter(result => {
+      return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    }));
   }
 
   async onActionSetFanDirection(fanDirection) {
@@ -420,17 +446,19 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onUpdateThermostatMode(value, opts) {
     try {
       this.clearCheckData();
-      this.log(`set thermostat mode: ${this._sensibo.getDeviceId()} -> ${value}`);
-      if (value === 'off') {
-        await this._sensibo.setAcState({ on: false });
-        await this.setCapabilityValue('se_onoff', false).catch(err => this.log(err));
-        Homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
-      } else {
-        await this._sensibo.setAcState({ on: true, mode: value });
-        await this.setCapabilityValue('se_onoff', true).catch(err => this.log(err));
-        Homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
+      if (value === 'off' || this._sensibo.checkMode(value, false)) {
+        this.log(`set thermostat mode: ${this._sensibo.getDeviceId()} -> ${value}`);
+        if (value === 'off') {
+          await this._sensibo.setAcState({ on: false });
+          await this.setCapabilityValue('se_onoff', false).catch(err => this.log(err));
+          Homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
+        } else {
+          await this._sensibo.setAcState({ on: true, mode: value });
+          await this.setCapabilityValue('se_onoff', true).catch(err => this.log(err));
+          Homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
+        }
+        this.log(`set thermostat OK: ${this._sensibo.getDeviceId()} -> ${value}`);
       }
-      this.log(`set thermostat OK: ${this._sensibo.getDeviceId()} -> ${value}`);
     } finally {
       this.scheduleCheckData();
     }
@@ -439,9 +467,11 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onUpdateFanlevel(value, opts) {
     try {
       this.clearCheckData();
-      this.log(`set fan level: ${this._sensibo.getDeviceId()} -> ${value}`);
-      await this._sensibo.setAcState({ fanLevel: value });
-      this.log(`set fan level OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+      if (this._sensibo.checkFanLevel(value, false)) {
+        this.log(`set fan level: ${this._sensibo.getDeviceId()} -> ${value}`);
+        await this._sensibo.setAcState({ fanLevel: value });
+        this.log(`set fan level OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+      }
     } finally {
       this.scheduleCheckData();
     }

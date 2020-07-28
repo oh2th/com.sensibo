@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "brandColor": "#1BB7E9",
@@ -504,6 +504,7 @@
       },
       {
         "id": "sensibo_fanlevel",
+        "deprecated": true,
         "title": {
           "en": "Set the fan level"
         },
@@ -552,7 +553,34 @@
         ]
       },
       {
+        "id": "sensibo_fanlevel2",
+        "title": {
+          "en": "Set the fan level"
+        },
+        "hint": {
+          "en": "Set the fan level"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          },
+          {
+            "name": "fanLevel",
+            "label": {
+              "en": "Fan level"
+            },
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Fan level..."
+            }
+          }
+        ]
+      },
+      {
         "id": "sensibo_mode",
+        "deprecated": true,
         "title": {
           "en": "Set the fan mode"
         },
@@ -603,6 +631,32 @@
                 }
               }
             ]
+          }
+        ]
+      },
+      {
+        "id": "sensibo_mode2",
+        "title": {
+          "en": "Set the fan mode"
+        },
+        "hint": {
+          "en": "Set the mode"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Sensibo"
+          },
+          {
+            "name": "mode",
+            "label": {
+              "en": "Mode"
+            },
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Mode..."
+            }
           }
         ]
       },

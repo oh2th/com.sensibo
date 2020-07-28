@@ -63,9 +63,21 @@ class SensiboApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => args.device.onActionSetMode(args.mode));
 
+    new Homey.FlowCardAction('sensibo_mode2')
+      .register()
+      .registerRunListener((args, state) => args.device.onActionSetMode(args.mode))
+      .getArgument('mode')
+      .registerAutocompleteListener((query, args) => args.device.onModeAutocomplete(query, args));
+
     new Homey.FlowCardAction('sensibo_fanlevel')
       .register()
       .registerRunListener((args, state) => args.device.onActionSetFanLevel(args.fanLevel));
+
+    new Homey.FlowCardAction('sensibo_fanlevel2')
+      .register()
+      .registerRunListener((args, state) => args.device.onActionSetFanLevel(args.fanLevel))
+      .getArgument('fanLevel')
+      .registerAutocompleteListener((query, args) => args.device.onFanLevelAutocomplete(query, args));
 
     new Homey.FlowCardAction('sensibo_fandirection')
       .register()

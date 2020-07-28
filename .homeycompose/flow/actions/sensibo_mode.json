@@ -1,5 +1,6 @@
 {
   "id": "sensibo_mode",
+  "deprecated": true,
   "title": {
     "en": "Set the fan mode"
   },

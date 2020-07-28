@@ -1,0 +1,26 @@
+{
+  "id": "sensibo_fanlevel2",
+  "title": {
+    "en": "Set the fan level"
+  },
+  "hint": {
+    "en": "Set the fan level"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "fanLevel",
+      "label": {
+        "en": "Fan level"
+      },
+      "type": "autocomplete",
+      "placeholder": {
+        "en": "Fan level..."
+      }
+    }
+  ]
+}

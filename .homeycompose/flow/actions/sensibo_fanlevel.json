@@ -1,5 +1,6 @@
 {
   "id": "sensibo_fanlevel",
+  "deprecated": true,
   "title": {
     "en": "Set the fan level"
   },

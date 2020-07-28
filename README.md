@@ -38,7 +38,7 @@ To install:
 - Set the mode (Automatic, Heat, Cool, Off)
 - Turn on.
 - Turn off.
-- Set the fan mode (Cool, Heat, Fan, Auto, Dry)
+- Set the fan mode.
 - Set the fan level.
 - Set Swing mode.
 - Control Climate React.
@@ -52,6 +52,10 @@ To install:
 Please report issues at the [issues section on Github](https://github.com/balmli/com.sensibo/issues).
 
 ## Release Notes:
+
+#### 1.7.0
+
+- Dynamic list of modes and fan levels when setting from flows
 
 #### 1.6.1
 

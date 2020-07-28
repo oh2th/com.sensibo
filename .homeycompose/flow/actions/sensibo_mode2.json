@@ -1,0 +1,26 @@
+{
+  "id": "sensibo_mode2",
+  "title": {
+    "en": "Set the fan mode"
+  },
+  "hint": {
+    "en": "Set the mode"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "mode",
+      "label": {
+        "en": "Mode"
+      },
+      "type": "autocomplete",
+      "placeholder": {
+        "en": "Mode..."
+      }
+    }
+  ]
+}
