@@ -324,9 +324,11 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onActionSetMode(mode) {
     try {
       this.clearCheckData();
-      this.log(`set fan mode: ${this._sensibo.getDeviceId()} -> ${mode}`);
-      await this._sensibo.setAcState({ mode: mode });
-      this.log(`set fan mode OK: ${this._sensibo.getDeviceId()} -> ${mode}`);
+      if (this._sensibo.checkMode(mode, false)) {
+        this.log(`set fan mode: ${this._sensibo.getDeviceId()} -> ${mode}`);
+        await this._sensibo.setAcState({ mode: mode });
+        this.log(`set fan mode OK: ${this._sensibo.getDeviceId()} -> ${mode}`);
+      }
     } finally {
       this.scheduleCheckData();
     }

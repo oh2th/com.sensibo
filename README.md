@@ -53,6 +53,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.7.1
+
+- Minor bug fix
+
 #### 1.7.0
 
 - Dynamic list of modes and fan levels when setting from flows
