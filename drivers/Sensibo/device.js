@@ -408,7 +408,7 @@ module.exports = class SensiboDevice extends Homey.Device {
         on: on !== 'nop' ? on === 'on' : undefined,
         mode: mode !== 'nop' ? mode : undefined,
         fanLevel: fanLevel !== 'nop' ? fanLevel : undefined,
-        targetTemperature: targetTemperature >= 16 ? targetTemperature : undefined,
+        targetTemperature: targetTemperature >= 16 or targetTemperature == 10 ? targetTemperature : undefined,
       };
       if (minutesFromNow <= 0) {
         throw new Error('Minutes from now must be specified.');
