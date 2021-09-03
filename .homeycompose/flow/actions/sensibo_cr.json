@@ -3,6 +3,9 @@
   "title": {
     "en": "Control Climate React"
   },
+  "titleFormatted": {
+    "en": "Climate React [[enabled]]"
+  },
   "hint": {
     "en": "Enable or disable Climate React"
   },

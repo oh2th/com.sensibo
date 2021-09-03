@@ -3,6 +3,9 @@
   "title": {
     "en": "Set timer"
   },
+  "titleFormatted": {
+    "en": "Set timer [[minutesFromNow]], [[on]], [[mode]], [[fanLevel]], [[targetTemperature]]"
+  },
   "hint": {
     "en": "Set minutes from now and select one or more parameters to be changed when the timer fires."
   },

@@ -53,6 +53,11 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.8.0
+
+- Changed minimum temperature to 10 deg. C
+- Updated to SDK 3
+
 #### 1.7.1
 
 - Minor bug fix

@@ -4,6 +4,9 @@
   "title": {
     "en": "Set the fan mode"
   },
+  "titleFormatted": {
+    "en": "Set the fan mode to [[mode]]"
+  },
   "hint": {
     "en": "Set the mode (heat, cool, fan, auto or dry)"
   },

@@ -3,6 +3,9 @@
   "title": {
     "en": "Set swing"
   },
+  "titleFormatted": {
+    "en": "Set swing to [[fanDirection]]"
+  },
   "hint": {
     "en": "Set the fan direction"
   },

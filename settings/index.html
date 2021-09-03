@@ -56,6 +56,7 @@
     saveElement.addEventListener('click', function (e) {
       Homey.set('apikey', apikeyElement.value, function (err) {
         if (err) return Homey.alert(err);
+        Homey.alert(Homey.__('pair.confirm_message'), 'info');
       });
     });
   }

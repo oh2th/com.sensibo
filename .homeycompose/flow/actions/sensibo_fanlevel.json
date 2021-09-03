@@ -4,6 +4,9 @@
   "title": {
     "en": "Set the fan level"
   },
+  "titleFormatted": {
+    "en": "Set fan level to [[fanLevel]]"
+  },
   "hint": {
     "en": "Set the fan level (auto, high, medium or low)"
   },

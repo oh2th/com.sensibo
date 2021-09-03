@@ -29,7 +29,7 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
 
     this._sensibo = new Sensibo({
-      Homey: Homey,
+      homey: this.homey,
       deviceId: this.getData().id,
       logger: this.log
     });
@@ -131,9 +131,9 @@ module.exports = class SensiboDevice extends Homey.Device {
       this._sensibo.updateAcState(result.acState);
       if (await this.updateIfChanged('se_onoff', result.acState.on)) {
         if (result.acState.on) {
-          Homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
+          this.homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
         } else {
-          Homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
+          this.homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
         }
       }
       await this.updateIfChanged('target_temperature', result.acState.targetTemperature);
@@ -154,9 +154,9 @@ module.exports = class SensiboDevice extends Homey.Device {
       const hasTimer = !!result.timer;
       const hasTimerEnabled = !!(result.timer && result.timer.isEnabled);
       if (this._hasTimerEnabled === false && hasTimerEnabled === true) {
-        Homey.app._timerCreatedTrigger.trigger(this, { homey: false }, {});
+        this.homey.app._timerCreatedTrigger.trigger(this, { homey: false }, {});
       } else if (this._hasTimer === true && hasTimer === false) {
-        Homey.app._timerDeletedTrigger.trigger(this, { homey: false }, {});
+        this.homey.app._timerDeletedTrigger.trigger(this, { homey: false }, {});
       }
       this._hasTimer = hasTimer;
       this._hasTimerEnabled = hasTimerEnabled;
@@ -171,7 +171,7 @@ module.exports = class SensiboDevice extends Homey.Device {
         const limitOffline = settings.Delay_Offline || 300;
 
         if (secondsAgo > limitOffline && !this._offlineTrigged) {
-          Homey.app._offlineTrigger.trigger(this, {
+          this.homey.app._offlineTrigger.trigger(this, {
             seconds_ago: secondsAgo,
             last_seen: lastSeen
           }, {});
@@ -202,7 +202,7 @@ module.exports = class SensiboDevice extends Homey.Device {
             swing: anAcState.acState.swing ? anAcState.acState.swing : '',
             failureReason: anAcState.failureReason ? anAcState.failureReason : '',
           };
-          Homey.app._acStateChangedTrigger.trigger(this, payload, {});
+          this.homey.app._acStateChangedTrigger.trigger(this, payload, {});
           this.log(`AC State change triggered: ${this._sensibo.getDeviceId()}`, anAcState.id, payload);
         }
       }
@@ -219,7 +219,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       this.log(`Climate React settings for: ${this._sensibo.getDeviceId()}: enabled: ${result.enabled}`);
       await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
       if (this._lastClimateReact !== undefined && this._lastClimateReact !== result.enabled) {
-        Homey.app._climateReactChangedTrigger.trigger(this, {
+        this.homey.app._climateReactChangedTrigger.trigger(this, {
           climate_react_enabled: result.enabled,
           climate_react: result.enabled ? 'enabled' : 'disabled',
         }, {});
@@ -256,7 +256,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       let settings = await this.getSettings();
       interval = settings.Polling_Interval || 30;
     }
-    this.curTimeout = setTimeout(this.checkData.bind(this), interval * 1000);
+    this.curTimeout = this.homey.setTimeout(this.checkData.bind(this), interval * 1000);
   }
 
   clearTimer() {
@@ -271,7 +271,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       return;
     }
     this.clearTimer();
-    this.curTimer = setTimeout(this.onTimerFired.bind(this), seconds * 1000 + 1);
+    this.curTimer = this.homey.setTimeout(this.onTimerFired.bind(this), seconds * 1000 + 1);
   }
 
   async onTimerFired() {
@@ -280,7 +280,7 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
     try {
       this.clearTimer();
-      Homey.app._timerFiredTrigger.trigger(this, { state: 1 }, {});
+      this.homey.app._timerFiredTrigger.trigger(this, { state: 1 }, {});
       this.log(`Timer fired for: ${this._sensibo.getDeviceId()}`);
     } catch (err) {
       this.log('onTimerFired error', err);
@@ -298,7 +298,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       if (this.hasCapability('thermostat_mode')) {
         await this.setCapabilityValue('thermostat_mode', mode).catch(err => this.log(err));
       }
-      Homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
+      this.homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
       this.log(`turned on OK: ${this._sensibo.getDeviceId()}`);
     } finally {
       this.scheduleCheckData();
@@ -314,7 +314,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       if (this.hasCapability('thermostat_mode')) {
         await this.setCapabilityValue('thermostat_mode', 'off').catch(err => this.log(err));
       }
-      Homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
+      this.homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
       this.log(`turned off OK: ${this._sensibo.getDeviceId()}`);
     } finally {
       this.scheduleCheckData();
@@ -391,7 +391,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       await this._sensibo.deleteCurrentTimer();
       this._hasTimer = false;
       this._hasTimerEnabled = false;
-      Homey.app._timerDeletedTrigger.trigger(this, { homey: true }, {});
+      this.homey.app._timerDeletedTrigger.trigger(this, { homey: true }, {});
     } catch (err) {
       this.log('onDeleteTimer error', err);
       throw err;
@@ -425,7 +425,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       await this._sensibo.setCurrentTimer(minutesFromNow, newAcState);
       this._hasTimer = true;
       this._hasTimerEnabled = true;
-      Homey.app._timerCreatedTrigger.trigger(this, { homey: true }, {});
+      this.homey.app._timerCreatedTrigger.trigger(this, { homey: true }, {});
     } catch (err) {
       this.log('onSetTimer error', err);
       throw err;
@@ -453,11 +453,11 @@ module.exports = class SensiboDevice extends Homey.Device {
         if (value === 'off') {
           await this._sensibo.setAcState({ on: false });
           await this.setCapabilityValue('se_onoff', false).catch(err => this.log(err));
-          Homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
+          this.homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
         } else {
           await this._sensibo.setAcState({ on: true, mode: value });
           await this.setCapabilityValue('se_onoff', true).catch(err => this.log(err));
-          Homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
+          this.homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
         }
         this.log(`set thermostat OK: ${this._sensibo.getDeviceId()} -> ${value}`);
       }

@@ -1,8 +1,9 @@
 {
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.sensibo",
-  "version": "1.7.1",
-  "compatibility": ">=2.0.0",
-  "sdk": 2,
+  "version": "1.8.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
   "brandColor": "#1BB7E9",
   "name": {
     "en": "Sensibo"
@@ -357,6 +358,9 @@
         "title": {
           "en": "Control Climate React"
         },
+        "titleFormatted": {
+          "en": "Climate React [[enabled]]"
+        },
         "hint": {
           "en": "Enable or disable Climate React"
         },
@@ -409,6 +413,9 @@
         "id": "sensibo_fandirection",
         "title": {
           "en": "Set swing"
+        },
+        "titleFormatted": {
+          "en": "Set swing to [[fanDirection]]"
         },
         "hint": {
           "en": "Set the fan direction"
@@ -508,6 +515,9 @@
         "title": {
           "en": "Set the fan level"
         },
+        "titleFormatted": {
+          "en": "Set fan level to [[fanLevel]]"
+        },
         "hint": {
           "en": "Set the fan level (auto, high, medium or low)"
         },
@@ -557,6 +567,9 @@
         "title": {
           "en": "Set the fan level"
         },
+        "titleFormatted": {
+          "en": "Set the fan level to [[fanLevel]]"
+        },
         "hint": {
           "en": "Set the fan level"
         },
@@ -583,6 +596,9 @@
         "deprecated": true,
         "title": {
           "en": "Set the fan mode"
+        },
+        "titleFormatted": {
+          "en": "Set the fan mode to [[mode]]"
         },
         "hint": {
           "en": "Set the mode (heat, cool, fan, auto or dry)"
@@ -638,6 +654,9 @@
         "id": "sensibo_mode2",
         "title": {
           "en": "Set the fan mode"
+        },
+        "titleFormatted": {
+          "en": "Set the fan mode to [[mode]]"
         },
         "hint": {
           "en": "Set the mode"
@@ -696,6 +715,9 @@
         "id": "sensibo_set_timer",
         "title": {
           "en": "Set timer"
+        },
+        "titleFormatted": {
+          "en": "Set timer [[minutesFromNow]], [[on]], [[mode]], [[fanLevel]], [[targetTemperature]]"
         },
         "hint": {
           "en": "Set minutes from now and select one or more parameters to be changed when the timer fires."
@@ -855,6 +877,9 @@
         "small": "/drivers/Sensibo/assets/images/small.png"
       },
       "class": "thermostat",
+      "connectivity": [
+        "cloud"
+      ],
       "capabilities": [
         "se_onoff",
         "target_temperature",
@@ -871,7 +896,7 @@
         },
         "target_temperature": {
           "decimals": 0,
-          "min": 16,
+          "min": 10,
           "max": 30,
           "step": 1
         }
