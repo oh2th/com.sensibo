@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#1BB7E9",
@@ -46,9 +46,5 @@
       }
     }
   },
-  "bugs": {
-    "url": "https://github.com/balmli/com.sensibo/issues"
-  },
-  "homeyCommunityTopicId": 28990,
-  "source": "https://github.com/balmli/com.sensibo"
+  "homeyCommunityTopicId": 28990
 }
