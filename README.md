@@ -5,8 +5,7 @@ For https://sensibo.com/ air condition controllers.
 To install:
 
 1. Get an API-key from https://home.sensibo.com/me/api
-2. Install the app
-3. Configure the API-key in the Configure app menu.  This must be done before adding the Sensibo device.
+2. Set the API-key during pairing of the Sensibo device
 
 ## Device: Sensibo
 
@@ -41,15 +40,13 @@ To install:
 - Set the fan mode.
 - Set the fan level.
 - Set Swing mode.
+- Set Horizontal swing mode.
 - Control Climate React.
+- Control Pure Boost.
+- Control light.
+- Sync power state.
 - Set timer.
 - Delete timer.
-
-## Acknowledgements:
-
-## Feedback:
-
-Please report issues at the [issues section on Github](https://github.com/balmli/com.sensibo/issues).
 
 ## Release Notes:
 
