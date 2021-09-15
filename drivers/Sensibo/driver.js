@@ -13,16 +13,23 @@ module.exports = class SensiboDriver extends Homey.Driver {
     let apikey;
     let sensibo;
 
-    session.setHandler("enter_api_key", async (data) => {
+    session.setHandler("apikey_input", async (data) => {
       apikey = data.apikey;
       sensibo = new Sensibo({
         apikey: apikey,
         logger: this.log
       });
+      await session.showView('list_devices');
     });
 
     session.setHandler("list_devices", async () => {
-      const devices = await sensibo.getAllDevices();
+      let devices;
+      try {
+        devices = await sensibo.getAllDevices();
+      } catch (err) {
+        this.log('onPair getAllDevices failed:', err);
+        throw new Error(this.homey.__('errors.failed_to_retrieve_devices'));
+      }
       if (!devices.data || !devices.data.result) {
         throw new Error(this.homey.__('errors.failed_to_retrieve_devices'));
       }
@@ -31,9 +38,12 @@ module.exports = class SensiboDriver extends Homey.Driver {
       }
       return devices.data.result
         .map(device => ({
-          "name": `Sensibo ${device.room.name}`,
-          "data": {
-            "id": device.id
+          name: `Sensibo ${device.room.name}`,
+          data: {
+            id: device.id
+          },
+          store: {
+            apikey: apikey
           }
         }));
     });
@@ -43,14 +53,20 @@ module.exports = class SensiboDriver extends Homey.Driver {
     let apikey;
     let sensibo;
 
-    session.setHandler("enter_api_key", async (data) => {
+    session.setHandler("apikey_input", async (data) => {
       apikey = data.apikey;
       sensibo = new Sensibo({
         apikey: apikey,
         logger: this.log
       });
 
-      const devices = await sensibo.getAllDevices();
+      let devices;
+      try {
+        devices = await sensibo.getAllDevices();
+      } catch (err) {
+        this.log('onRepair getAllDevices failed:', err);
+        throw new Error(this.homey.__('errors.failed_to_retrieve_devices'));
+      }
       if (!devices.data || !devices.data.result) {
         throw new Error(this.homey.__('errors.failed_to_retrieve_devices'));
       }
@@ -59,6 +75,7 @@ module.exports = class SensiboDriver extends Homey.Driver {
       }
       await device.setStoreValue('apikey', apikey);
       await device.setAvailable();
+      this.log('onRepair OK');
       await session.done();
       return true;
     });
