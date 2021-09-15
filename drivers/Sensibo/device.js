@@ -437,6 +437,10 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
   }
 
+  async onActionPureBoost(enabled) {
+    await this.onUpdatePureBoost(enabled);
+  }
+
   async isTimerEnabled() {
     return this._sensibo.isTimerEnabled();
   }
@@ -593,6 +597,17 @@ module.exports = class SensiboDevice extends Homey.Device {
       this.log(`enable/disable Climate React: ${this._sensibo.getDeviceId()} -> ${value}`);
       await this._sensibo.enableClimateReact(value === 'on');
       this.log(`enable/disable Climate React OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+    } finally {
+      this.scheduleCheckData();
+    }
+  }
+
+  async onUpdatePureBoost(value, opts) {
+    try {
+      this.clearCheckData();
+      this.log(`enable/disable Pure Boost: ${this._sensibo.getDeviceId()} -> ${value}`);
+      await this._sensibo.enablePureBoost(value === 'on');
+      this.log(`enable/disable Pure Boost OK: ${this._sensibo.getDeviceId()} -> ${value}`);
     } finally {
       this.scheduleCheckData();
     }

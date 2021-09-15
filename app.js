@@ -66,6 +66,9 @@ class SensiboApp extends Homey.App {
     this.homey.flow.getActionCard('sensibo_cr')
       .registerRunListener((args, state) => args.device.onActionClimateReact(args.enabled));
 
+    this.homey.flow.getActionCard('sensibo_pureboost')
+      .registerRunListener((args, state) => args.device.onActionPureBoost(args.enabled));
+
     this.homey.flow.getActionCard('sensibo_delete_timer')
       .registerRunListener((args, state) => args.device.onDeleteTimer());
 

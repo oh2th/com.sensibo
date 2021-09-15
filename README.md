@@ -57,6 +57,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 - Added horizontal swing (capability and action card)
 - Added action to sync the power state
+- Added action to control Pure Boost
 - Added action to control the AC light
 - Added fan levels (Medium high,  Medium low, Quiet)
 - Fixes for pairing

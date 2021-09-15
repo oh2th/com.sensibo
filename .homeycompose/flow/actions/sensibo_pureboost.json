@@ -1,0 +1,40 @@
+{
+  "id": "sensibo_pureboost",
+  "title": {
+    "en": "Control Pure Boost"
+  },
+  "titleFormatted": {
+    "en": "Pure Boost [[enabled]]"
+  },
+  "hint": {
+    "en": "Enable or disable Pure Boost"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "enabled",
+      "title": {
+        "en": "Enabled"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "off",
+          "label": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On"
+          }
+        }
+      ]
+    }
+  ]
+}
