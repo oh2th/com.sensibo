@@ -52,36 +52,6 @@ describe("Sensibo", function () {
         });
     });
 
-    describe("getAllDevicesUri", function () {
-        it("getAllDevicesUri 1", function () {
-            let sensibo = new Sensibo({
-                homey: {
-                    ManagerSettings: {
-                        get: function () {
-                            return 'some-api-key1'
-                        }
-                    }
-                }, deviceId: '12345'
-            });
-            expect(sensibo.getAllDevicesUri()).to.equal('https://home.sensibo.com/api/v2/users/me/pods?fields=id,room&apiKey=some-api-key1');
-        });
-    });
-
-    describe("getSpecificDeviceInfoUri", function () {
-        it("getSpecificDeviceInfoUri 1", function () {
-            let sensibo = new Sensibo({
-                homey: {
-                    ManagerSettings: {
-                        get: function () {
-                            return 'some-api-key2'
-                        }
-                    }
-                }, deviceId: '12345'
-            });
-            expect(sensibo.getSpecificDeviceInfoUri()).to.equal('https://home.sensibo.com/api/v2/pods/12345?fields=measurements,acState&apiKey=some-api-key2');
-        });
-    });
-
     describe("updateAcState", function () {
         it("updateAcState 1", function () {
             let sensibo = new Sensibo({homey: undefined, deviceId: '12345', logger: undefined});
@@ -114,21 +84,5 @@ describe("Sensibo", function () {
             expect(sensibo.getAcState()['swing']).to.equal('stopped');
         });
     });
-
-    describe("setAcStateUri", function () {
-        it("setAcStateUri 1", function () {
-            let sensibo = new Sensibo({
-                homey: {
-                    ManagerSettings: {
-                        get: function () {
-                            return 'some-api-key3'
-                        }
-                    }
-                }, deviceId: '12345'
-            });
-            expect(sensibo.setAcStateUri()).to.equal('https://home.sensibo.com/api/v2/pods/12345/acStates?apiKey=some-api-key3');
-        });
-    });
-
 
 });

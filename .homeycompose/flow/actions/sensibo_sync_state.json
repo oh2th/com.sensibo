@@ -1,0 +1,40 @@
+{
+  "id": "sensibo_sync_state",
+  "title": {
+    "en": "Sync power state"
+  },
+  "titleFormatted": {
+    "en": "Sync power state [[state]]"
+  },
+  "hint": {
+    "en": "Sync the power state of the Sensibo"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "state",
+      "title": {
+        "en": "Power state"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "off",
+          "label": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On"
+          }
+        }
+      ]
+    }
+  ]
+}

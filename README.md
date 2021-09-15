@@ -53,6 +53,14 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ## Release Notes:
 
+#### 1.9.0
+
+- Added horizontal swing (capability and action card)
+- Added action to sync the power state
+- Added action to control the AC light
+- Added fan levels (Medium high,  Medium low, Quiet)
+- Fixes for pairing
+
 #### 1.8.0
 
 - Changed minimum temperature to 10 deg. C

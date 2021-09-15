@@ -5,7 +5,7 @@
     "apikey_help": "Enter the API-key:",
     "apikey_label": "API-key:",
     "valid_apikey": "Enter a valid API-key",
-    "save_btn": "Save changes",
+    "submit": "Submit",
     "confirm_message": "The API-key was saved!"
   },
   "errors": {

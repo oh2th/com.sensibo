@@ -1,0 +1,29 @@
+{
+  "id": "sensibo_horizontal_swing",
+  "title": {
+    "en": "Set horizontal swing"
+  },
+  "titleFormatted": {
+    "en": "Set horizontal swing to [[horizontalSwing]]"
+  },
+  "hint": {
+    "en": "Set the horizontal swing"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "horizontalSwing",
+      "label": {
+        "en": "Horizontal swing"
+      },
+      "type": "autocomplete",
+      "placeholder": {
+        "en": "Horizontal swing..."
+      }
+    }
+  ]
+}

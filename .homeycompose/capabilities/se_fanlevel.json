@@ -24,15 +24,33 @@
       }
     },
     {
+      "id": "medium_high",
+      "title": {
+        "en": "Medium high"
+      }
+    },
+    {
       "id": "medium",
       "title": {
         "en": "Medium"
       }
     },
     {
+      "id": "medium_low",
+      "title": {
+        "en": "Medium low"
+      }
+    },
+    {
       "id": "low",
       "title": {
         "en": "Low"
+      }
+    },
+    {
+      "id": "quiet",
+      "title": {
+        "en": "Quiet"
       }
     }
   ]

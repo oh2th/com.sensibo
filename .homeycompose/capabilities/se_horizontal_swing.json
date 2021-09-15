@@ -1,0 +1,69 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Horizontal swing"
+  },
+  "desc": {
+    "en": "Horizontal swing"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "insights": false,
+  "values": [
+    {
+      "id": "stopped",
+      "title": {
+        "en": "Stopped"
+      }
+    },
+    {
+      "id": "fixedLeft",
+      "title": {
+        "en": "Fixed left"
+      }
+    },
+    {
+      "id": "fixedCenterLeft",
+      "title": {
+        "en": "Fixed center left"
+      }
+    },
+    {
+      "id": "fixedCenter",
+      "title": {
+        "en": "Fixed center"
+      }
+    },
+    {
+      "id": "fixedCenterRight",
+      "title": {
+        "en": "Fixed center right"
+      }
+    },
+    {
+      "id": "fixedRight",
+      "title": {
+        "en": "Fixed right"
+      }
+    },
+    {
+      "id": "fixedLeftRight",
+      "title": {
+        "en": "Fixed left right"
+      }
+    },
+    {
+      "id": "rangeCenter",
+      "title": {
+        "en": "Range center"
+      }
+    },
+    {
+      "id": "rangeFull",
+      "title": {
+        "en": "Range full"
+      }
+    }
+  ]
+}

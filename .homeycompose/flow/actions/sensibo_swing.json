@@ -1,0 +1,29 @@
+{
+  "id": "sensibo_swing",
+  "title": {
+    "en": "Set swing"
+  },
+  "titleFormatted": {
+    "en": "Set swing to [[swing]]"
+  },
+  "hint": {
+    "en": "Set the swing"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "swing",
+      "label": {
+        "en": "Swing"
+      },
+      "type": "autocomplete",
+      "placeholder": {
+        "en": "Swing..."
+      }
+    }
+  ]
+}

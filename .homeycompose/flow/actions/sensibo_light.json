@@ -1,0 +1,40 @@
+{
+  "id": "sensibo_light",
+  "title": {
+    "en": "Control light"
+  },
+  "titleFormatted": {
+    "en": "Turn light [[state]]"
+  },
+  "hint": {
+    "en": "Control light"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=Sensibo"
+    },
+    {
+      "name": "state",
+      "title": {
+        "en": "Light state"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "off",
+          "label": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On"
+          }
+        }
+      ]
+    }
+  ]
+}

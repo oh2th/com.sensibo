@@ -51,7 +51,17 @@ class SensiboApp extends Homey.App {
       .registerAutocompleteListener((query, args) => args.device.onFanLevelAutocomplete(query, args));
 
     this.homey.flow.getActionCard('sensibo_fandirection')
-      .registerRunListener((args, state) => args.device.onActionSetFanDirection(args.fanDirection));
+      .registerRunListener((args, state) => args.device.onActionSetSwing(args.fanDirection));
+
+    this.homey.flow.getActionCard('sensibo_swing')
+      .registerRunListener((args, state) => args.device.onActionSetSwing(args.swing.id))
+      .getArgument('swing')
+      .registerAutocompleteListener((query, args) => args.device.onSwingAutocomplete(query, args));
+
+    this.homey.flow.getActionCard('sensibo_horizontal_swing')
+      .registerRunListener((args, state) => args.device.onActionSetHorizontalSwing(args.horizontalSwing.id))
+      .getArgument('horizontalSwing')
+      .registerAutocompleteListener((query, args) => args.device.onHorizontalSwingAutocomplete(query, args));
 
     this.homey.flow.getActionCard('sensibo_cr')
       .registerRunListener((args, state) => args.device.onActionClimateReact(args.enabled));
@@ -61,6 +71,12 @@ class SensiboApp extends Homey.App {
 
     this.homey.flow.getActionCard('sensibo_set_timer')
       .registerRunListener((args, state) => args.device.onSetTimer(args.minutesFromNow, args.on, args.mode, args.fanLevel, args.targetTemperature));
+
+    this.homey.flow.getActionCard('sensibo_light')
+      .registerRunListener((args, state) => args.device.onControlLight(args.state));
+
+    this.homey.flow.getActionCard('sensibo_sync_state')
+      .registerRunListener((args, state) => args.device.onSyncPowerState(args.state));
 
   }
 

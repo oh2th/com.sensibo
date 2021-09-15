@@ -6,7 +6,15 @@ const Sensibo = require('../../lib/sensibo');
 module.exports = class SensiboDevice extends Homey.Device {
 
   async onInit() {
-    this.log('virtual device initialized');
+    try {
+      if (!this.getStoreValue('apikey')) {
+        const apikey = this.homey.settings.get('apikey');
+        await this.setStoreValue('apikey', apikey);
+        this.log('Copied the apikey to device store');
+      }
+    } catch (err) {
+      this.log('Copying of the apikey failed', err);
+    }
 
     try {
       if (!this.hasCapability('se_fanlevel')) {
@@ -24,12 +32,16 @@ module.exports = class SensiboDevice extends Homey.Device {
       if (!this.hasCapability('se_climate_react')) {
         await this.addCapability('se_climate_react');
       }
+      if (!this.hasCapability('se_horizontal_swing')) {
+        await this.addCapability('se_horizontal_swing');
+      }
+      this.log('Migration OK');
     } catch (err) {
-      this.log('migration failed', err);
+      this.log('Migration failed', err);
     }
 
     this._sensibo = new Sensibo({
-      homey: this.homey,
+      apikey: this.getStoreValue('apikey'),
       deviceId: this.getData().id,
       logger: this.log
     });
@@ -52,7 +64,13 @@ module.exports = class SensiboDevice extends Homey.Device {
 
     if (this.hasCapability('se_fandirection')) {
       this.registerCapabilityListener('se_fandirection', (value, opts) => {
-        return this.onUpdateFanDirection(value, opts);
+        return this.onUpdateSwing(value, opts);
+      });
+    }
+
+    if (this.hasCapability('se_horizontal_swing')) {
+      this.registerCapabilityListener('se_horizontal_swing', (value, opts) => {
+        return this.onUpdateHorizontalSwing(value, opts);
       });
     }
 
@@ -68,6 +86,8 @@ module.exports = class SensiboDevice extends Homey.Device {
 
     await this.fetchRemoteCapabilities();
     await this.scheduleCheckData(2);
+
+    this.log('Sensibo device initialized');
   }
 
   onAdded() {
@@ -139,6 +159,7 @@ module.exports = class SensiboDevice extends Homey.Device {
       await this.updateIfChanged('target_temperature', result.acState.targetTemperature);
       await this.updateIfChanged('se_fanlevel', result.acState.fanLevel);
       await this.updateIfChanged('se_fandirection', result.acState.swing);
+      await this.updateIfChanged('se_horizontal_swing', result.acState.horizontalSwing);
       let thermostat_mode = result.acState.on === false ? 'off' :
         (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
       if (thermostat_mode) {
@@ -367,11 +388,46 @@ module.exports = class SensiboDevice extends Homey.Device {
     }));
   }
 
-  async onActionSetFanDirection(fanDirection) {
-    await this.onUpdateFanDirection(fanDirection);
+  async onActionSetSwing(swing) {
+    await this.onUpdateSwing(swing);
     if (this.hasCapability('se_fandirection')) {
-      await this.setCapabilityValue('se_fandirection', fanDirection).catch(err => this.log(err));
+      await this.setCapabilityValue('se_fandirection', swing).catch(err => this.log(err));
     }
+  }
+
+  async onSwingAutocomplete(query, args) {
+    const items = this._sensibo.getAllSwings() || ['stopped', 'fixedBottom', 'fixedTop', 'rangeTop', 'rangeFull'];
+    return Promise.resolve((items).map(item => {
+      let name = item[0].toUpperCase() + item.substr(1).toLowerCase();
+      name = name.replace('_', ' ');
+      return {
+        id: item,
+        name: name
+      };
+    }).filter(result => {
+      return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    }));
+  }
+
+  async onActionSetHorizontalSwing(horizontalSwing) {
+    await this.onUpdateHorizontalSwing(horizontalSwing);
+    if (this.hasCapability('se_horizontal_swing')) {
+      await this.setCapabilityValue('se_horizontal_swing', horizontalSwing).catch(err => this.log(err));
+    }
+  }
+
+  async onHorizontalSwingAutocomplete(query, args) {
+    const items = this._sensibo.getAllHorizontalSwings() || ['stopped', 'fixedLeft', 'fixedRight', 'rangeCenter', 'rangeFull'];
+    return Promise.resolve((items).map(item => {
+      let name = item[0].toUpperCase() + item.substr(1).toLowerCase();
+      name = name.replace('_', ' ');
+      return {
+        id: item,
+        name: name
+      };
+    }).filter(result => {
+      return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    }));
   }
 
   async onActionClimateReact(enabled) {
@@ -408,7 +464,7 @@ module.exports = class SensiboDevice extends Homey.Device {
         on: on !== 'nop' ? on === 'on' : undefined,
         mode: mode !== 'nop' ? mode : undefined,
         fanLevel: fanLevel !== 'nop' ? fanLevel : undefined,
-        targetTemperature: targetTemperature >= 16 ? targetTemperature : undefined,
+        targetTemperature: targetTemperature >= 10 ? targetTemperature : undefined,
       };
       if (minutesFromNow <= 0) {
         throw new Error('Minutes from now must be specified.');
@@ -428,6 +484,34 @@ module.exports = class SensiboDevice extends Homey.Device {
       this.homey.app._timerCreatedTrigger.trigger(this, { homey: true }, {});
     } catch (err) {
       this.log('onSetTimer error', err);
+      throw err;
+    } finally {
+      this.scheduleCheckData();
+    }
+  }
+
+
+  async onControlLight(state) {
+    try {
+      this.clearCheckData();
+      this.log(`set light: ${this._sensibo.getDeviceId()} -> ${state}`);
+      await this._sensibo.setAcState({ light: state === 'on' });
+      this.log(`set light OK: ${this._sensibo.getDeviceId()} -> ${state}`);
+    } catch (err) {
+      this.log('onControlLight error', err);
+      throw err;
+    } finally {
+      this.scheduleCheckData();
+    }
+  }
+
+  async onSyncPowerState(state) {
+    try {
+      this.clearCheckData();
+      this.log('onSyncPowerState', state);
+      await this._sensibo.syncDeviceState(state === 'on');
+    } catch (err) {
+      this.log('onSyncPowerState error', err);
       throw err;
     } finally {
       this.scheduleCheckData();
@@ -479,13 +563,25 @@ module.exports = class SensiboDevice extends Homey.Device {
     }
   }
 
-  async onUpdateFanDirection(value, opts) {
+  async onUpdateSwing(value, opts) {
     try {
       this.clearCheckData();
       this._sensibo.checkSwingMode(value);
-      this.log(`set fan direction: ${this._sensibo.getDeviceId()} -> ${value}`);
+      this.log(`set swing: ${this._sensibo.getDeviceId()} -> ${value}`);
       await this._sensibo.setAcState({ swing: value });
-      this.log(`set fan direction OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+      this.log(`set swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+    } finally {
+      this.scheduleCheckData();
+    }
+  }
+
+  async onUpdateHorizontalSwing(value, opts) {
+    try {
+      this.clearCheckData();
+      this._sensibo.checkHorizontalSwingMode(value);
+      this.log(`set horizontal swing: ${this._sensibo.getDeviceId()} -> ${value}`);
+      await this._sensibo.setAcState({ horizontalSwing: value });
+      this.log(`set horizontal swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
     } finally {
       this.scheduleCheckData();
     }

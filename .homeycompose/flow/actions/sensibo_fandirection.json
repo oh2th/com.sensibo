@@ -1,5 +1,6 @@
 {
   "id": "sensibo_fandirection",
+  "deprecated": true,
   "title": {
     "en": "Set swing"
   },
