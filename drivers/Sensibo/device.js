@@ -499,7 +499,7 @@ module.exports = class SensiboDevice extends Homey.Device {
     try {
       this.clearCheckData();
       this.log(`set light: ${this._sensibo.getDeviceId()} -> ${state}`);
-      await this._sensibo.setAcState({ light: state === 'on' });
+      await this._sensibo.setAcState({ light: state });
       this.log(`set light OK: ${this._sensibo.getDeviceId()} -> ${state}`);
     } catch (err) {
       this.log('onControlLight error', err);
