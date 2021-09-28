@@ -345,7 +345,7 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onActionSetMode(mode) {
     try {
       this.clearCheckData();
-      if (this._sensibo.checkMode(mode, false)) {
+      if (this._sensibo.checkMode(mode)) {
         this.log(`set fan mode: ${this._sensibo.getDeviceId()} -> ${mode}`);
         await this._sensibo.setAcState({ mode: mode });
         this.log(`set fan mode OK: ${this._sensibo.getDeviceId()} -> ${mode}`);
@@ -536,7 +536,7 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onUpdateThermostatMode(value, opts) {
     try {
       this.clearCheckData();
-      if (value === 'off' || this._sensibo.checkMode(value, false)) {
+      if (value === 'off' || this._sensibo.checkMode(value)) {
         this.log(`set thermostat mode: ${this._sensibo.getDeviceId()} -> ${value}`);
         if (value === 'off') {
           await this._sensibo.setAcState({ on: false });
@@ -557,7 +557,7 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onUpdateFanlevel(value, opts) {
     try {
       this.clearCheckData();
-      if (this._sensibo.checkFanLevel(value, false)) {
+      if (this._sensibo.checkFanLevel(value)) {
         this.log(`set fan level: ${this._sensibo.getDeviceId()} -> ${value}`);
         await this._sensibo.setAcState({ fanLevel: value });
         this.log(`set fan level OK: ${this._sensibo.getDeviceId()} -> ${value}`);
@@ -570,10 +570,11 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onUpdateSwing(value, opts) {
     try {
       this.clearCheckData();
-      this._sensibo.checkSwingMode(value);
-      this.log(`set swing: ${this._sensibo.getDeviceId()} -> ${value}`);
-      await this._sensibo.setAcState({ swing: value });
-      this.log(`set swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+      if (this._sensibo.checkSwingMode(value)) {
+        this.log(`set swing: ${this._sensibo.getDeviceId()} -> ${value}`);
+        await this._sensibo.setAcState({ swing: value });
+        this.log(`set swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+      }
     } finally {
       this.scheduleCheckData();
     }
@@ -582,10 +583,11 @@ module.exports = class SensiboDevice extends Homey.Device {
   async onUpdateHorizontalSwing(value, opts) {
     try {
       this.clearCheckData();
-      this._sensibo.checkHorizontalSwingMode(value);
-      this.log(`set horizontal swing: ${this._sensibo.getDeviceId()} -> ${value}`);
-      await this._sensibo.setAcState({ horizontalSwing: value });
-      this.log(`set horizontal swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+      if (this._sensibo.checkHorizontalSwingMode(value)) {
+        this.log(`set horizontal swing: ${this._sensibo.getDeviceId()} -> ${value}`);
+        await this._sensibo.setAcState({ horizontalSwing: value });
+        this.log(`set horizontal swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+      }
     } finally {
       this.scheduleCheckData();
     }
