@@ -10,7 +10,7 @@
     {
       "type": "device",
       "name": "device",
-      "filter": "driver_id=Sensibo|SensiboPure"
+      "filter": "driver_id=Sensibo"
     }
   ]
 }

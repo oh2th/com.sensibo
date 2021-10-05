@@ -50,10 +50,6 @@ To install:
 
 ## Release Notes:
 
-#### 1.10.0
-
-- Added support for Sensibo Pure
-
 #### 1.9.3
 
 - Added horizontal swing (capability and action card)
