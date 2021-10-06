@@ -50,7 +50,7 @@ To install:
 
 ## Release Notes:
 
-#### 1.9.4
+#### 1.9.5
 
 - Added horizontal swing (capability and action card)
 - Added action to sync the power state

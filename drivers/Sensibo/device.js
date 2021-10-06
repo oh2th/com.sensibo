@@ -250,7 +250,7 @@ module.exports = class SensiboDevice extends Homey.Device {
   }
 
   async updateIfChanged(cap, toValue) {
-    if (this.hasCapability(cap)) {
+    if (this.hasCapability(cap) && toValue !== undefined) {
       let capValue = this.getCapabilityValue(cap);
       if (capValue !== toValue || capValue === undefined || capValue === null) {
         await this.setCapabilityValue(cap, toValue).catch(err => this.log(err));
