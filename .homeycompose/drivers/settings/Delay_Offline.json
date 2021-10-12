@@ -8,6 +8,6 @@
   "min": 120,
   "max": 3600,
   "hint": {
-    "en": "Delay when checking if the Sensibo is offline (seconds)"
+    "en": "Delay when checking if the device is offline (seconds)"
   }
 }

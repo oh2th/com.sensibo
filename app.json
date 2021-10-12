@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.sensibo",
-  "version": "1.9.5",
+  "version": "1.10.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#1BB7E9",
@@ -50,6 +50,29 @@
   "homeyCommunityTopicId": 28990,
   "flow": {
     "triggers": [
+      {
+        "id": "air_quality_changed",
+        "title": {
+          "en": "Air quality changed"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=SensiboPure"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "air_quality",
+            "type": "string",
+            "title": {
+              "en": "Air quality"
+            },
+            "example": "Excellent"
+          }
+        ]
+      },
       {
         "id": "se_ac_state_changed",
         "title": {
@@ -163,7 +186,7 @@
       {
         "id": "se_offline",
         "title": {
-          "en": "Sensibo offline"
+          "en": "Device offline"
         },
         "tokens": [
           {
@@ -187,14 +210,14 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure|SensiboRoomSensor"
           }
         ]
       },
       {
         "id": "se_onoff_false",
         "title": {
-          "en": "Sensibo turned off"
+          "en": "Device turned off"
         },
         "tokens": [
           {
@@ -210,14 +233,14 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
       {
         "id": "se_onoff_true",
         "title": {
-          "en": "Sensibo turned on"
+          "en": "Device turned on"
         },
         "tokens": [
           {
@@ -233,7 +256,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -256,7 +279,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -279,7 +302,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -302,7 +325,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       }
@@ -324,13 +347,13 @@
       {
         "id": "se_onoff_is_on",
         "title": {
-          "en": "Sensibo is !{{on|off}}"
+          "en": "Device is !{{on|off}}"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -343,7 +366,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       }
@@ -401,7 +424,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -574,7 +597,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           },
           {
             "name": "fanLevel",
@@ -632,7 +655,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           },
           {
             "name": "state",
@@ -757,7 +780,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -773,7 +796,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=Sensibo"
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -970,6 +993,89 @@
         ]
       },
       {
+        "id": "sensibo_set_timer_pure",
+        "title": {
+          "en": "Set timer"
+        },
+        "titleFormatted": {
+          "en": "Set timer [[minutesFromNow]], [[on]], [[fanLevel]]"
+        },
+        "hint": {
+          "en": "Set minutes from now and select one or more parameters to be changed when the timer fires."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=SensiboPure"
+          },
+          {
+            "name": "minutesFromNow",
+            "type": "number",
+            "min": 1,
+            "max": 1440,
+            "step": 1,
+            "placeholder": {
+              "en": "Minutes from now"
+            }
+          },
+          {
+            "name": "on",
+            "title": {
+              "en": "On / off"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "nop",
+                "label": {
+                  "en": "- Unchanged -"
+                }
+              },
+              {
+                "id": "off",
+                "label": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "on",
+                "label": {
+                  "en": "On"
+                }
+              }
+            ]
+          },
+          {
+            "name": "fanLevel",
+            "title": {
+              "en": "Fan level"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "nop",
+                "label": {
+                  "en": "- Unchanged -"
+                }
+              },
+              {
+                "id": "high",
+                "label": {
+                  "en": "High"
+                }
+              },
+              {
+                "id": "low",
+                "label": {
+                  "en": "Low"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "sensibo_swing",
         "title": {
           "en": "Set swing"
@@ -1042,19 +1148,40 @@
   },
   "drivers": [
     {
-      "id": "Sensibo",
-      "name": {
-        "en": "Sensibo"
-      },
       "icon": "/drivers/Sensibo/assets/icon.svg",
       "images": {
         "large": "/drivers/Sensibo/assets/images/large.png",
         "small": "/drivers/Sensibo/assets/images/small.png"
       },
-      "class": "thermostat",
       "connectivity": [
         "cloud"
       ],
+      "pair": [
+        {
+          "id": "enter_api_key"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "enter_api_key"
+        }
+      ],
+      "id": "Sensibo",
+      "name": {
+        "en": "Sensibo"
+      },
+      "class": "thermostat",
       "capabilities": [
         "se_onoff",
         "target_temperature",
@@ -1076,6 +1203,44 @@
           "step": 1
         }
       },
+      "settings": [
+        {
+          "id": "Polling_Interval",
+          "type": "number",
+          "label": {
+            "en": "Polling interval"
+          },
+          "value": 60,
+          "min": 15,
+          "max": 300,
+          "hint": {
+            "en": "Polling interval (seconds)"
+          }
+        },
+        {
+          "id": "Delay_Offline",
+          "type": "number",
+          "label": {
+            "en": "Delay for offline"
+          },
+          "value": 300,
+          "min": 120,
+          "max": 3600,
+          "hint": {
+            "en": "Delay when checking if the device is offline (seconds)"
+          }
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/SensiboPure/assets/icon.svg",
+      "images": {
+        "large": "/drivers/SensiboPure/assets/images/large.png",
+        "small": "/drivers/SensiboPure/assets/images/small.png"
+      },
+      "connectivity": [
+        "cloud"
+      ],
       "pair": [
         {
           "id": "enter_api_key"
@@ -1096,6 +1261,92 @@
         {
           "id": "enter_api_key"
         }
+      ],
+      "id": "SensiboPure",
+      "name": {
+        "en": "Sensibo Pure"
+      },
+      "class": "fan",
+      "capabilities": [
+        "se_onoff",
+        "se_fanlevel_pure",
+        "air_quality",
+        "se_last_seen",
+        "se_last_seen_seconds"
+      ],
+      "capabilitiesOptions": {
+        "se_onoff": {
+          "greyout": true
+        }
+      },
+      "settings": [
+        {
+          "id": "Polling_Interval",
+          "type": "number",
+          "label": {
+            "en": "Polling interval"
+          },
+          "value": 60,
+          "min": 15,
+          "max": 300,
+          "hint": {
+            "en": "Polling interval (seconds)"
+          }
+        },
+        {
+          "id": "Delay_Offline",
+          "type": "number",
+          "label": {
+            "en": "Delay for offline"
+          },
+          "value": 300,
+          "min": 120,
+          "max": 3600,
+          "hint": {
+            "en": "Delay when checking if the device is offline (seconds)"
+          }
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/SensiboRoomSensor/assets/icon.svg",
+      "images": {
+        "large": "/drivers/SensiboRoomSensor/assets/images/large.png",
+        "small": "/drivers/SensiboRoomSensor/assets/images/small.png"
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "pair": [
+        {
+          "id": "enter_api_key"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "enter_api_key"
+        }
+      ],
+      "id": "SensiboRoomSensor",
+      "name": {
+        "en": "Sensibo Room Sensor"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_temperature",
+        "measure_humidity",
+        "se_last_seen"
       ],
       "settings": [
         {
@@ -1121,13 +1372,27 @@
           "min": 120,
           "max": 3600,
           "hint": {
-            "en": "Delay when checking if the Sensibo is offline (seconds)"
+            "en": "Delay when checking if the device is offline (seconds)"
           }
         }
       ]
     }
   ],
   "capabilities": {
+    "air_quality": {
+      "type": "string",
+      "title": {
+        "en": "Air quality"
+      },
+      "desc": {
+        "en": "Air quality"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/air_quality.svg",
+      "insights": false
+    },
     "se_climate_react": {
       "type": "enum",
       "title": {
@@ -1295,6 +1560,33 @@
           "id": "quiet",
           "title": {
             "en": "Quiet"
+          }
+        }
+      ]
+    },
+    "se_fanlevel_pure": {
+      "type": "enum",
+      "title": {
+        "en": "Fan level"
+      },
+      "desc": {
+        "en": "Fan level"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": false,
+      "values": [
+        {
+          "id": "high",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
           }
         }
       ]

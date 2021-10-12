@@ -9,6 +9,6 @@
   },
   "errors": {
     "failed_to_retrieve_devices": "Failed to retrieve devices.",
-    "no_devices": "No Sensibo devices were found."
+    "no_devices": "No devices were found."
   }
 }

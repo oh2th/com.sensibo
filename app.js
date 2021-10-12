@@ -1,12 +1,20 @@
 'use strict';
 
 const Homey = require('homey');
+const Sensibo = require("./lib/sensibo");
 
 class SensiboApp extends Homey.App {
 
   async onInit() {
     await this._initFlows();
+    await this.createSensiboApi();
+    await this.scheduleCheckData(5);
     this.log('SensiboApp is running...');
+  }
+
+  async onUninit() {
+    this._deleted = true;
+    this.clearCheckData();
   }
 
   async _initFlows() {
@@ -15,6 +23,7 @@ class SensiboApp extends Homey.App {
     this._offlineTrigger = this.homey.flow.getDeviceTriggerCard('se_offline');
     this._acStateChangedTrigger = this.homey.flow.getDeviceTriggerCard('se_ac_state_changed');
     this._climateReactChangedTrigger = this.homey.flow.getDeviceTriggerCard('se_climate_react_changed');
+    this._triggerAirQualityChanged = this.homey.flow.getDeviceTriggerCard('air_quality_changed');
     this._timerCreatedTrigger = this.homey.flow.getDeviceTriggerCard('se_timer_created');
     this._timerFiredTrigger = this.homey.flow.getDeviceTriggerCard('se_timer_fired');
     this._timerDeletedTrigger = this.homey.flow.getDeviceTriggerCard('se_timer_deleted');
@@ -75,12 +84,109 @@ class SensiboApp extends Homey.App {
     this.homey.flow.getActionCard('sensibo_set_timer')
       .registerRunListener((args, state) => args.device.onSetTimer(args.minutesFromNow, args.on, args.mode, args.fanLevel, args.targetTemperature));
 
+    this.homey.flow.getActionCard('sensibo_set_timer_pure')
+      .registerRunListener((args, state) => args.device.onSetTimer(args.minutesFromNow, args.on, 'nop', args.fanLevel, 0));
+
     this.homey.flow.getActionCard('sensibo_light')
       .registerRunListener((args, state) => args.device.onControlLight(args.state));
 
     this.homey.flow.getActionCard('sensibo_sync_state')
       .registerRunListener((args, state) => args.device.onSyncPowerState(args.state));
 
+  }
+
+  async createSensiboApi() {
+    this._sensibo = new Sensibo({
+      logger: this.log
+    });
+  }
+
+  clearCheckData() {
+    if (this.curTimeout) {
+      clearTimeout(this.curTimeout);
+      this.curTimeout = undefined;
+    }
+  }
+
+  async scheduleCheckData(interval = 60) {
+    if (this._deleted) {
+      return;
+    }
+    this.clearCheckData();
+    //this.log(`New polling in ${interval} seconds`);
+    this.curTimeout = this.homey.setTimeout(this.checkData.bind(this), interval * 1000);
+  }
+
+  async checkData() {
+    if (this._deleted) {
+      return;
+    }
+    let pollingInterval = 60;
+    try {
+      this.clearCheckData();
+      const { apiKeys, devices, pInterval } = this.getSensiboDevices();
+      pollingInterval = pInterval;
+      for (const apikey of apiKeys) {
+        try {
+          const data = await this._sensibo.getAllDeviceInfo(apikey);
+          await this.onDevicesDataReceived(data, devices);
+        } catch (err) {
+          this.log('checkData error', err);
+        }
+      }
+    } catch (err) {
+      this.log('checkData error', err);
+    } finally {
+      this.scheduleCheckData(pollingInterval);
+    }
+  }
+
+  getSensiboDevices() {
+    const apiKeys = new Set();
+    const devices = new Map();
+    let pInterval = 60;
+    const drivers = this.homey.drivers.getDrivers();
+    for (let key in drivers) {
+      if (drivers.hasOwnProperty(key)) {
+        for (const device of drivers[key].getDevices()) {
+          if (!!device.isInitialized && device.isInitialized() && !!device.getApiKey) {
+            const apiKey = device.getApiKey();
+            if (apiKey) {
+              devices.set(device.getData().id, device);
+              apiKeys.add(apiKey);
+            }
+          }
+          const pi = device.getSetting('Polling_Interval');
+          if (pi && pi < pInterval && pi >= 15) {
+            pInterval = pi;
+          }
+        }
+      }
+    }
+    this.log('Got Sensibo devices:', apiKeys, Array.from(devices.keys()), pInterval);
+    return { apiKeys, devices, pInterval };
+  }
+
+  async onDevicesDataReceived(data, devices) {
+    const result = data.data.result;
+    for (const resultItem of result) {
+      await this.onDeviceInfoReceived(resultItem, devices);
+      if (resultItem.motionSensors) {
+        for (const msResultItem of resultItem.motionSensors) {
+          await this.onDeviceInfoReceived(msResultItem, devices);
+        }
+      }
+    }
+  }
+
+  async onDeviceInfoReceived(resultItem, devices) {
+    if (resultItem.id) {
+      const device = devices.get(resultItem.id);
+      if (device && device.onDeviceInfoReceived) {
+        //this.log(`Received data for device: ${device.getData().id}: `, resultItem);
+        await device.onDeviceInfoReceived(resultItem);
+      }
+    }
   }
 
 }

@@ -1,11 +1,11 @@
 # Sensibo
 
-For https://sensibo.com/ air condition controllers.
+For Sensibo Sky, Sensibo Air, Sensibo Pure and Sensibo Room Sensors.
 
 To install:
 
 1. Get an API-key from https://home.sensibo.com/me/api
-2. Set the API-key during pairing of the Sensibo device
+2. Set the API-key during pairing of the device
 
 ## Device: Sensibo
 
@@ -15,9 +15,9 @@ To install:
 - Thermostat mode changed.
 - The temperature changed.
 - The humidity changed.
-- Sensibo turned on.
-- Sensibo turned off.
-- Sensibo offline.
+- Device turned on.
+- Device turned off.
+- Device offline.
 - Timer created.
 - Timer fired.
 - Timer deleted.
@@ -27,7 +27,7 @@ To install:
 #### Conditions
 
 - Thermostat mode is.
-- Sensibo is on.
+- Is on.
 - Climate React is enabled / disabled.
 - Timer is enabled / disabled.
 
@@ -48,7 +48,72 @@ To install:
 - Set timer.
 - Delete timer.
 
+#### Capabilities
+
+- On / off
+- Fan level
+- Fan mode
+- Target temperature
+- Swing
+- Horizontal swing
+- Climate React
+- Temperature
+- Humidity
+- Last seen
+
+## Device: Sensibo Pure
+
+#### Triggers
+
+- The temperature changed.
+- The humidity changed.
+- Device turned on.
+- Device turned off.
+- Air quality changed.
+- Device offline.
+- Timer created.
+- Timer fired.
+- Timer deleted.
+
+#### Conditions
+
+- Is on.
+- Timer is enabled / disabled.
+
+#### Actions
+
+- Turn on.
+- Turn off.
+- Set the fan level.
+- Control light.
+- Set timer.
+- Delete timer.
+
+#### Capabilities
+
+- On / off
+- Fan level
+- Temperature
+- Humidity
+- Last seen
+
+## Device: Sensibo Room Sensor
+
+#### Triggers
+
+- Device offline.
+
+#### Capabilities
+
+- Temperature
+- Humidity
+- Last seen
+
 ## Release Notes:
+
+#### 1.10.0
+
+- Added support for Sensibo Pure and Sensibo Room Sensor
 
 #### 1.9.5
 

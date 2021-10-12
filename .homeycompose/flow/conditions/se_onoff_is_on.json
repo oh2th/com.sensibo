@@ -1,13 +1,13 @@
 {
   "id": "se_onoff_is_on",
   "title": {
-    "en": "Sensibo is !{{on|off}}"
+    "en": "Device is !{{on|off}}"
   },
   "args": [
     {
       "name": "device",
       "type": "device",
-      "filter": "driver_id=Sensibo"
+      "filter": "driver_id=Sensibo|SensiboPure"
     }
   ]
 }

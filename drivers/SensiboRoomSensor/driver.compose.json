@@ -1,0 +1,15 @@
+{
+  "id": "SensiboRoomSensor",
+  "name": {
+    "en": "Sensibo Room Sensor"
+  },
+  "$extends": [
+    "defaults"
+  ],
+  "class": "sensor",
+  "capabilities": [
+    "measure_temperature",
+    "measure_humidity",
+    "se_last_seen"
+  ]
+}

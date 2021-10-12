@@ -1,0 +1,22 @@
+{
+  "id": "SensiboPure",
+  "name": {
+    "en": "Sensibo Pure"
+  },
+  "$extends": [
+    "defaults"
+  ],
+  "class": "fan",
+  "capabilities": [
+    "se_onoff",
+    "se_fanlevel_pure",
+    "air_quality",
+    "se_last_seen",
+    "se_last_seen_seconds"
+  ],
+  "capabilitiesOptions": {
+    "se_onoff": {
+      "greyout": true
+    }
+  }
+}

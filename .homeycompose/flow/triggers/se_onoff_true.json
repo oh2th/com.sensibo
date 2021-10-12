@@ -1,7 +1,7 @@
 {
   "id": "se_onoff_true",
   "title": {
-    "en": "Sensibo turned on"
+    "en": "Device turned on"
   },
   "tokens": [
     {
@@ -17,7 +17,7 @@
     {
       "name": "device",
       "type": "device",
-      "filter": "driver_id=Sensibo"
+      "filter": "driver_id=Sensibo|SensiboPure"
     }
   ]
 }

@@ -1,0 +1,83 @@
+{
+  "id": "sensibo_set_timer_pure",
+  "title": {
+    "en": "Set timer"
+  },
+  "titleFormatted": {
+    "en": "Set timer [[minutesFromNow]], [[on]], [[fanLevel]]"
+  },
+  "hint": {
+    "en": "Set minutes from now and select one or more parameters to be changed when the timer fires."
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=SensiboPure"
+    },
+    {
+      "name": "minutesFromNow",
+      "type": "number",
+      "min": 1,
+      "max": 1440,
+      "step": 1,
+      "placeholder": {
+        "en": "Minutes from now"
+      }
+    },
+    {
+      "name": "on",
+      "title": {
+        "en": "On / off"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "nop",
+          "label": {
+            "en": "- Unchanged -"
+          }
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On"
+          }
+        }
+      ]
+    },
+    {
+      "name": "fanLevel",
+      "title": {
+        "en": "Fan level"
+      },
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "nop",
+          "label": {
+            "en": "- Unchanged -"
+          }
+        },
+        {
+          "id": "high",
+          "label": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "low",
+          "label": {
+            "en": "Low"
+          }
+        }
+      ]
+    }
+  ]
+}

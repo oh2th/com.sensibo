@@ -1,0 +1,27 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Fan level"
+  },
+  "desc": {
+    "en": "Fan level"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "insights": false,
+  "values": [
+    {
+      "id": "high",
+      "title": {
+        "en": "High"
+      }
+    },
+    {
+      "id": "low",
+      "title": {
+        "en": "Low"
+      }
+    }
+  ]
+}

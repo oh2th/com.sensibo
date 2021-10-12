@@ -1,0 +1,23 @@
+{
+  "id": "air_quality_changed",
+  "title": {
+    "en": "Air quality changed"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=SensiboPure"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "air_quality",
+      "type": "string",
+      "title": {
+        "en": "Air quality"
+      },
+      "example": "Excellent"
+    }
+  ]
+}

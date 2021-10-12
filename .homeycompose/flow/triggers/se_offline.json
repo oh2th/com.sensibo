@@ -1,7 +1,7 @@
 {
   "id": "se_offline",
   "title": {
-    "en": "Sensibo offline"
+    "en": "Device offline"
   },
   "tokens": [
     {
@@ -25,7 +25,7 @@
     {
       "name": "device",
       "type": "device",
-      "filter": "driver_id=Sensibo"
+      "filter": "driver_id=Sensibo|SensiboPure|SensiboRoomSensor"
     }
   ]
 }

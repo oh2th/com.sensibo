@@ -13,7 +13,7 @@
     {
       "type": "device",
       "name": "device",
-      "filter": "driver_id=Sensibo"
+      "filter": "driver_id=Sensibo|SensiboPure"
     },
     {
       "name": "fanLevel",
