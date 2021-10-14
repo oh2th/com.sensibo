@@ -1,6 +1,5 @@
 {
-  "id": "sensibo_light",
-  "deprecated": true,
+  "id": "sensibo_light2",
   "title": {
     "en": "Control light"
   },
@@ -18,24 +17,13 @@
     },
     {
       "name": "state",
-      "title": {
+      "label": {
         "en": "Light state"
       },
-      "type": "dropdown",
-      "values": [
-        {
-          "id": "off",
-          "label": {
-            "en": "Off"
-          }
-        },
-        {
-          "id": "on",
-          "label": {
-            "en": "On"
-          }
-        }
-      ]
+      "type": "autocomplete",
+      "placeholder": {
+        "en": "Light state..."
+      }
     }
   ]
 }

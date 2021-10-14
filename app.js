@@ -90,6 +90,11 @@ class SensiboApp extends Homey.App {
     this.homey.flow.getActionCard('sensibo_light')
       .registerRunListener((args, state) => args.device.onControlLight(args.state));
 
+    this.homey.flow.getActionCard('sensibo_light2')
+      .registerRunListener((args, state) => args.device.onControlLight(args.state.id))
+      .getArgument('state')
+      .registerAutocompleteListener((query, args) => args.device.onLightAutocomplete(query, args));
+
     this.homey.flow.getActionCard('sensibo_sync_state')
       .registerRunListener((args, state) => args.device.onSyncPowerState(args.state));
 

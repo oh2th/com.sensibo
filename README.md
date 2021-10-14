@@ -111,6 +111,11 @@ To install:
 
 ## Release Notes:
 
+#### 1.10.1
+
+- Added Control Pure Boost action for Sensibo Pure
+- Options for lights (on, off, dim) are now fetched from remote capabilities
+
 #### 1.10.0
 
 - Added support for Sensibo Pure and Sensibo Room Sensor
