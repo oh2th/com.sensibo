@@ -85,6 +85,7 @@ To install:
 - Turn on.
 - Turn off.
 - Set the fan level.
+- Control Pure Boost.
 - Control light.
 - Set timer.
 - Delete timer.
@@ -101,6 +102,8 @@ To install:
 
 #### Triggers
 
+- The temperature changed.
+- The humidity changed.
 - Device offline.
 
 #### Capabilities
