@@ -1,4 +1,7 @@
 {
+  "1.10.2": {
+    "en": "Fixed bug when changing settings."
+  },
   "1.10.1": {
     "en": "Added support for Sensibo Pure and Sensibo Room Sensor."
   },

@@ -114,6 +114,10 @@ To install:
 
 ## Release Notes:
 
+#### 1.10.2
+
+- Fixed bug when changing settings
+
 #### 1.10.1
 
 - Added Control Pure Boost action for Sensibo Pure
