@@ -114,6 +114,10 @@ To install:
 
 ## Release Notes:
 
+#### 1.11.0
+
+- Added 'Is light turned on/off' condition
+
 #### 1.10.2
 
 - Fixed bug when changing settings

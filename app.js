@@ -37,6 +37,9 @@ class SensiboApp extends Homey.App {
     this.homey.flow.getConditionCard('se_timer_enabled')
       .registerRunListener((args, state) => args.device.isTimerEnabled());
 
+    this.homey.flow.getConditionCard('light_on')
+      .registerRunListener((args, state) => args.device.isLightOn());
+
     this.homey.flow.getActionCard('sensibo_on')
       .registerRunListener((args, state) => args.device.onActionTurnOn());
 
@@ -108,7 +111,7 @@ class SensiboApp extends Homey.App {
 
   clearCheckData() {
     if (this.curTimeout) {
-      clearTimeout(this.curTimeout);
+      this.homey.clearTimeout(this.curTimeout);
       this.curTimeout = undefined;
     }
   }

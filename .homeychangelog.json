@@ -1,4 +1,7 @@
 {
+  "1.11.0": {
+    "en": "Added 'Is light turned on/off' condition. "
+  },
   "1.10.2": {
     "en": "Fixed bug when changing settings."
   },
