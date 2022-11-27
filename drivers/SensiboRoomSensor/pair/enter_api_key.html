@@ -1,42 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../../assets/material.min.css">
-  <link rel="stylesheet" href="../../../assets/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../assets/styles.css">
 </head>
 <body>
 
-<div class="mdl-grid header">
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone grid_center">
-    <img class="logo" src="../../../assets/logo.png" alt="Sensibo"/>
-  </div>
-</div>
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone mdl-typography--text-center">
-    <span data-i18n="pair.apikey_help"></span>
-  </div>
-</div>
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone mdl-typography--text-center">
-    <div class="mdl-textfield mdl-js-textfield">
-      <input class="mdl-textfield__input input_apikey"
-             type="text"
-             id="apikey"
-             maxlength="255">
-      <span class="mdl-textfield__error" data-i18n="pair.valid_apikey"></span>
+<header class="homey-header">
+    <div class="grid_center">
+        <img class="logo" src="../../../assets/logo.png" alt="Sensibo"/>
     </div>
-  </div>
-</div>
+    <p class="homey-subtitle" data-i18n="pair.apikey_help">
+    </p>
+</header>
 
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone grid_center">
-    <button class="mdl-button mdl-js-button mdl-button--raised exec_button" id="submit"
-            data-i18n="pair.submit" style="color: white; background-color: #00c341;">
-    </button>
-  </div>
-</div>
+<form class="homey-form">
+    <fieldset class="homey-form-fieldset">
+        <legend class="homey-form-legend" data-i18n="pair.apikey_header"></legend>
+        <div class="homey-form-group">
+            <label class="homey-form-label" for="apikey" data-i18n="pair.apikey_label"></label>
+            <input class="homey-form-input"
+                   id="apikey"
+                   type="text"
+                   maxlength="255"
+            />
+        </div>
+    </fieldset>
+
+    <button class="homey-button-primary-full"
+            id="submit"
+            data-i18n="pair.submit"
+    ></button>
+</form>
 
 <script type="text/javascript">
   Homey.setTitle(Homey.__('pair.title'));
@@ -56,6 +51,5 @@
     });
   };
 </script>
-<script src="../../../assets/material.min.js"></script>
 </body>
 </html>

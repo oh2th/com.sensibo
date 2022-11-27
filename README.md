@@ -114,6 +114,10 @@ To install:
 
 ## Release Notes:
 
+#### 1.12.0
+
+- Updated pairing screens
+
 #### 1.11.0
 
 - Added 'Is light turned on/off' condition

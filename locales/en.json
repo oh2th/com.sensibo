@@ -2,9 +2,10 @@
   "pair": {
     "title": "Sensibo",
     "subtitle": "Make your air conditioner smart",
-    "apikey_help": "Enter the API-key:",
-    "apikey_label": "API-key:",
-    "valid_apikey": "Enter a valid API-key",
+    "apikey_help": "Go to https://home.sensibo.com/me/api to get an API key",
+    "apikey_header": "Enter the API key",
+    "apikey_label": "API key",
+    "valid_apikey": "Enter a valid API key",
     "submit": "Submit"
   },
   "errors": {
