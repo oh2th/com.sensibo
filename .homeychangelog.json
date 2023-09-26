@@ -79,5 +79,8 @@
   },
   "0.4.0": {
     "en": "Possible to turn on / off, change fan mode and fan level from the app (the device must be reinstalled for this). Removed duplicate triggers for temperature and humidity.n"
+  },
+  "1.13.0": {
+    "en": "New maintainer and contacts."
   }
 }
