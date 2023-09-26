@@ -1,7 +1,1 @@
-.git
-.gitignore
-.eslintrc.json
-*.iml
-.idea
-docs/*
-test/*
+/local_assets

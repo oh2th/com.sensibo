@@ -1,15 +1,17 @@
 {
   "name": "com.sensibo",
   "version": "1.10.2",
-  "description": "Sensibo",
   "main": "app.js",
   "scripts": {
-    "pretest": "eslint --ignore-path .gitignore app.js lib drivers test",
-    "test": "./node_modules/.bin/mocha --reporter spec",
-    "posttest": "homey app validate"
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore ."
   },
-  "author": "Bjørnar Almli",
-  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/node12": "^1.0.11",
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.3",
+    "@types/node": "^18.11.18",
+    "eslint": "^7.32.0",
+    "eslint-config-athom": "^3.1.1"
+  },
   "dependencies": {
     "http.min": "2.1.0"
   }

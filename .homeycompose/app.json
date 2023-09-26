@@ -3,7 +3,9 @@
   "version": "1.12.0",
   "compatibility": ">=8.1.0",
   "sdk": 3,
-  "brandColor": "#1BB7E9",
+  "platforms": [
+    "local"
+  ],
   "name": {
     "en": "Sensibo"
   },
@@ -13,6 +15,16 @@
   "category": [
     "climate"
   ],
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Tapio Heiskanen",
+    "email": "oh2th@iki.fi"
+  },
+  "brandColor": "#1BB7E9",
   "tags": {
     "en": [
       "sensibo",
@@ -22,15 +34,7 @@
       "hvac"
     ]
   },
-  "images": {
-    "large": "/assets/images/large.png",
-    "small": "/assets/images/small.png"
-  },
-  "permissions": [],
-  "author": {
-    "name": "Bjørnar Almli",
-    "email": "bjornar.almli@gmail.com"
-  },
+  "homeyCommunityTopicId": 90259,
   "contributors": {
     "developers": [
       {
@@ -42,9 +46,11 @@
   "contributing": {
     "donate": {
       "paypal": {
-        "username": "bjornaralmli"
+        "username": "oh2th"
+      },
+      "githubSponsors": {
+        "username": "oh2th"
       }
     }
-  },
-  "homeyCommunityTopicId": 28990
+  }
 }
