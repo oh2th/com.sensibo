@@ -88,5 +88,8 @@
   },
   "1.15.0": {
     "en": "ADD: Support for Sensibo Air PRO and it's measurements"
+  },
+  "1.15.1": {
+    "en": "FIX: Check for undefined values on capability updates."
   }
 }
