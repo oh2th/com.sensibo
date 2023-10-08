@@ -1,0 +1,576 @@
+{
+  "_get_pods": {
+    "_url": "https://home.sensibo.com/api/v2/users/me/pods?apiKey=zzzzzzzzzzzzzzzzzzzzzz"
+  },
+  "_get_pods_result": {
+    "status": "success",
+    "result": [
+      {
+        "id": "bQ9xT4Aa",
+        "policies": []
+      }
+    ]
+  },
+  "_get_device_info": {
+    "_url": "https://home.sensibo.com/api/v2/pods/bQ9xT4Aa?fields=%2A&apiKey=zzzzzzzzzzzzzzzzzzzzzz"
+  },
+  "_get_device_info_result": {
+    "status": "success",
+    "result": {
+      "id": "bQ9xT4Aa",
+      "qrId": "BURUVPOZZW",
+      "temperatureUnit": "C",
+      "room": {
+        "uid": "6cjGqTCi",
+        "name": "aula",
+        "icon": "Livingroom",
+        "pureBoostConfig": null
+      },
+      "acState": {
+        "timestamp": {
+          "time": "2023-10-08T12:39:23.402749Z",
+          "secondsAgo": 0
+        },
+        "on": true,
+        "mode": "heat",
+        "targetTemperature": 23,
+        "temperatureUnit": "C",
+        "fanLevel": "auto",
+        "swing": "fixedMiddleTop",
+        "horizontalSwing": "fixedCenterRight"
+      },
+      "lastStateChange": {
+        "time": "2023-10-07T07:54:38Z",
+        "secondsAgo": 103485
+      },
+      "lastStateChangeToOn": {
+        "time": "2023-10-02T15:29:56Z",
+        "secondsAgo": 508167
+      },
+      "lastStateChangeToOff": {
+        "time": "2023-10-02T15:29:34Z",
+        "secondsAgo": 508189
+      },
+      "location": {
+        "id": "CtqyJP4aX3",
+        "name": "Home",
+        "latLon": [
+          0.000000,
+          0.000000
+        ],
+        "address": [
+          "Street",
+          "Postcode City",
+          "Country"
+        ],
+        "country": null,
+        "countryAlpha2": "FI",
+        "city": null,
+        "createTime": {
+          "time": "2023-09-30T06:48:24Z",
+          "secondsAgo": 712259
+        },
+        "updateTime": {
+          "time": "2023-10-01T15:09:24Z",
+          "secondsAgo": 595799
+        },
+        "features": [],
+        "geofenceTriggerRadius": 200,
+        "subscription": null,
+        "technician": null,
+        "shareAnalytics": false
+      },
+      "connectionStatus": {
+        "isAlive": true,
+        "lastSeen": {
+          "time": "2023-10-08T12:38:49.753742Z",
+          "secondsAgo": 33
+        }
+      },
+      "firmwareVersion": "SKY40144",
+      "firmwareType": "esp32",
+      "productModel": "airq",
+      "configGroup": "stable",
+      "currentlyAvailableFirmwareVersion": "SKY40144",
+      "cleanFiltersNotificationEnabled": false,
+      "shouldShowFilterCleaningNotification": false,
+      "isGeofenceOnExitEnabled": false,
+      "isClimateReactGeofenceOnExitEnabled": false,
+      "isMotionGeofenceOnExitEnabled": false,
+      "isCalibrating": false,
+      "serial": "Q302300455",
+      "sensorsCalibration": {
+        "temperature": 0,
+        "humidity": 0
+      },
+      "motionSensors": [],
+      "tags": [],
+      "timer": null,
+      "schedules": [],
+      "motionConfig": null,
+      "filtersCleaning": {
+        "acOnSecondsSinceLastFiltersClean": 579065,
+        "filtersCleanSecondsThreshold": 1080000,
+        "lastFiltersCleanTime": null,
+        "shouldCleanFilters": false
+      },
+      "serviceSubscriptions": [],
+      "roomIsOccupied": null,
+      "mainMeasurementsSensor": null,
+      "pureBoostConfig": null,
+      "warrantyEligible": "yes",
+      "warrantyEligibleUntil": {
+        "time": "2023-10-28T06:49:59Z",
+        "secondsAgo": -1707036
+      },
+      "features": [
+        "optimusTrial",
+        "showPlus"
+      ],
+      "runningHealthcheck": null,
+      "lastHealthcheck": null,
+      "lastACStateChange": {
+        "id": "ZBfzkqBNjd",
+        "time": {
+          "time": "2023-10-07T07:54:37Z",
+          "secondsAgo": 103486
+        },
+        "status": "Success",
+        "acState": {
+          "timestamp": {
+            "time": "2023-10-08T12:39:23.514677Z",
+            "secondsAgo": 0
+          },
+          "on": true,
+          "mode": "heat",
+          "targetTemperature": 23,
+          "temperatureUnit": "C",
+          "fanLevel": "auto",
+          "swing": "fixedMiddleTop",
+          "horizontalSwing": "fixedCenterRight"
+        },
+        "resultingAcState": {
+          "timestamp": {
+            "time": "2023-10-08T12:39:23.514710Z",
+            "secondsAgo": 0
+          },
+          "on": true,
+          "mode": "heat",
+          "targetTemperature": 23,
+          "temperatureUnit": "C",
+          "fanLevel": "auto",
+          "swing": "fixedMiddleTop",
+          "horizontalSwing": "fixedCenterRight"
+        },
+        "changedProperties": [
+          "targetTemperature"
+        ],
+        "reason": "UserRequest",
+        "failureReason": null,
+        "resolveTime": {
+          "time": "2023-10-07T07:54:38Z",
+          "secondsAgo": 103485
+        },
+        "causedByUser": {
+          "username": "firstlast",
+          "firstName": "First",
+          "lastName": "Last",
+          "email": "first.last@example.com",
+          "createTime": {
+            "time": "2023-09-21T06:12:25Z",
+            "secondsAgo": 1492018
+          }
+        },
+        "causedByScheduleId": null,
+        "causedByScheduleType": null
+      },
+      "homekitSupported": true,
+      "remoteCapabilities": {
+        "modes": {
+          "cool": {
+            "temperatures": {
+              "F": {
+                "isNative": false,
+                "values": [
+                  61,
+                  63,
+                  64,
+                  66,
+                  68,
+                  70,
+                  72,
+                  73,
+                  75,
+                  77,
+                  79,
+                  81,
+                  82,
+                  84,
+                  86,
+                  88
+                ]
+              },
+              "C": {
+                "isNative": true,
+                "values": [
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31
+                ]
+              }
+            },
+            "fanLevels": [
+              "quiet",
+              "low",
+              "medium",
+              "medium_high",
+              "high",
+              "auto",
+              "strong"
+            ],
+            "swing": [
+              "stopped",
+              "fixedTop",
+              "fixedMiddleTop",
+              "fixedMiddle",
+              "fixedMiddleBottom",
+              "fixedBottom",
+              "rangeFull"
+            ],
+            "horizontalSwing": [
+              "fixedCenter",
+              "fixedCenterLeft",
+              "fixedCenterRight",
+              "fixedLeft",
+              "fixedRight",
+              "stopped",
+              "rangeFull"
+            ]
+          },
+          "heat": {
+            "temperatures": {
+              "F": {
+                "isNative": false,
+                "values": [
+                  50,
+                  61,
+                  63,
+                  64,
+                  66,
+                  68,
+                  70,
+                  72,
+                  73,
+                  75,
+                  77,
+                  79,
+                  81,
+                  82,
+                  84,
+                  86,
+                  88
+                ]
+              },
+              "C": {
+                "isNative": true,
+                "values": [
+                  10,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31
+                ]
+              }
+            },
+            "fanLevels": [
+              "quiet",
+              "low",
+              "medium",
+              "medium_high",
+              "high",
+              "auto",
+              "strong"
+            ],
+            "swing": [
+              "stopped",
+              "fixedTop",
+              "fixedMiddleTop",
+              "fixedMiddle",
+              "fixedMiddleBottom",
+              "fixedBottom",
+              "rangeFull"
+            ],
+            "horizontalSwing": [
+              "fixedCenter",
+              "fixedCenterLeft",
+              "fixedCenterRight",
+              "fixedLeft",
+              "fixedRight",
+              "stopped",
+              "rangeFull"
+            ]
+          },
+          "dry": {
+            "temperatures": {
+              "F": {
+                "isNative": false,
+                "values": [
+                  61,
+                  63,
+                  64,
+                  66,
+                  68,
+                  70,
+                  72,
+                  73,
+                  75,
+                  77,
+                  79,
+                  81,
+                  82,
+                  84,
+                  86,
+                  88
+                ]
+              },
+              "C": {
+                "isNative": true,
+                "values": [
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31
+                ]
+              }
+            },
+            "fanLevels": [
+              "quiet",
+              "low",
+              "medium",
+              "medium_high",
+              "high",
+              "auto",
+              "strong"
+            ],
+            "swing": [
+              "stopped",
+              "fixedTop",
+              "fixedMiddleTop",
+              "fixedMiddle",
+              "fixedMiddleBottom",
+              "fixedBottom",
+              "rangeFull"
+            ],
+            "horizontalSwing": [
+              "fixedCenter",
+              "fixedCenterLeft",
+              "fixedCenterRight",
+              "fixedLeft",
+              "fixedRight",
+              "stopped",
+              "rangeFull"
+            ]
+          },
+          "auto": {
+            "temperatures": {
+              "F": {
+                "isNative": false,
+                "values": [
+                  61,
+                  63,
+                  64,
+                  66,
+                  68,
+                  70,
+                  72,
+                  73,
+                  75,
+                  77,
+                  79,
+                  81,
+                  82,
+                  84,
+                  86,
+                  88
+                ]
+              },
+              "C": {
+                "isNative": true,
+                "values": [
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31
+                ]
+              }
+            },
+            "fanLevels": [
+              "quiet",
+              "low",
+              "medium",
+              "medium_high",
+              "high",
+              "auto",
+              "strong"
+            ],
+            "swing": [
+              "stopped",
+              "fixedTop",
+              "fixedMiddleTop",
+              "fixedMiddle",
+              "fixedMiddleBottom",
+              "fixedBottom",
+              "rangeFull"
+            ],
+            "horizontalSwing": [
+              "fixedCenter",
+              "fixedCenterLeft",
+              "fixedCenterRight",
+              "fixedLeft",
+              "fixedRight",
+              "stopped",
+              "rangeFull"
+            ]
+          },
+          "fan": {
+            "temperatures": {},
+            "fanLevels": [
+              "quiet",
+              "low",
+              "medium",
+              "medium_high",
+              "high",
+              "auto",
+              "strong"
+            ],
+            "swing": [
+              "stopped",
+              "fixedTop",
+              "fixedMiddleTop",
+              "fixedMiddle",
+              "fixedMiddleBottom",
+              "fixedBottom",
+              "rangeFull"
+            ],
+            "horizontalSwing": [
+              "fixedCenter",
+              "fixedCenterLeft",
+              "fixedCenterRight",
+              "fixedLeft",
+              "fixedRight",
+              "stopped",
+              "rangeFull"
+            ]
+          }
+        }
+      },
+      "remote": {
+        "toggle": false,
+        "window": false
+      },
+      "remoteFlavor": "Enthusiastic Triceratops",
+      "remoteAlternatives": [
+        "_mitsubishi1fa",
+        "_mitsubishi1_for_ben_ho",
+        "_mitsubishi1_plasma_on_clean_on_isee_on",
+        "_mitsubishi1_plasma_on",
+        "_mitsubishi1f_starts_from_61f",
+        "_mitsubishi1_plasma_on_clean_on",
+        "_mitsubishi1b",
+        "_mitsubishi1_plasma_on_clean_on_isee_on_2",
+        "_mitsubishi1f_indirect_fan",
+        "mitsubishi1f",
+        "_mitsubishi1_econo_on",
+        "_mitsubishi1_isee_and_absence_detection",
+        "_mitsubishi1f"
+      ],
+      "smartMode": null,
+      "measurements": {
+        "time": {
+          "time": "2023-10-08T12:38:49.753742Z",
+          "secondsAgo": 33
+        },
+        "temperature": 22.5,
+        "humidity": 42.5,
+        "feelsLike": 22.5,
+        "rssi": -44,
+        "motion": false,
+        "roomIsOccupied": null,
+        "tvoc": 82,
+        "co2": 467,
+        "iaq": 16
+      },
+      "accessPoint": {
+        "ssid": "SENSIBO-I-bQ9xT4Aa",
+        "password": null
+      },
+      "macAddress": "EC:62:60:D0:4F:D8",
+      "autoOffMinutes": null,
+      "autoOffEnabled": false,
+      "antiMoldTimer": null,
+      "antiMoldConfig": null,
+      "acUsage": null,
+      "optimusEnabled": true,
+      "optimusInsights": {
+        "Progress": {
+          "name": "Progress",
+          "start_time": "2023-10-07T07:54:38",
+          "data": {
+            "Percentage": 0
+          }
+        }
+      },
+      "organization": null,
+      "hasPolicy": false
+    }
+  }
+}
