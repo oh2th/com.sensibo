@@ -85,5 +85,8 @@
   },
   "1.14.0": {
     "en": "ADD: Initial support for Air PRO."
+  },
+  "1.15.0": {
+    "en": "ADD: Support for Sensibo Air PRO and it's measurements"
   }
 }
