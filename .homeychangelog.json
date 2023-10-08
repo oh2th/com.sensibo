@@ -82,5 +82,8 @@
   },
   "1.13.0": {
     "en": "New maintainer and contacts."
+  },
+  "1.14.0": {
+    "en": "ADD: Initial support for Air PRO."
   }
 }

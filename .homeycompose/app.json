@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
@@ -34,7 +34,7 @@
       "hvac"
     ]
   },
-  "homeyCommunityTopicId": 90259,
+  "homeyCommunityTopicId": 90295,
   "contributors": {
     "developers": [
       {
