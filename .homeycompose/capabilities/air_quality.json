@@ -9,6 +9,6 @@
   "getable": true,
   "setable": false,
   "uiComponent": "sensor",
-  "icon": "/assets/air_quality.svg",
+  "icon": "/assets/icons/air_quality.svg",
   "insights": false
 }

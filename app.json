@@ -1439,8 +1439,33 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "/assets/air_quality.svg",
+      "icon": "/assets/icons/air_quality.svg",
       "insights": false
+    },
+    "measure_iaq": {
+      "type": "number",
+      "title": {
+        "en": "Inside Air Qauality Score"
+      },
+      "icon": "/assets/icons/iaq.svg",
+      "insights": true,
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false
+    },
+    "measure_tvoc": {
+      "type": "number",
+      "title": {
+        "en": "Total Volatile Organic Compounds"
+      },
+      "icon": "/assets/icons/tvoc.svg",
+      "insights": true,
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "PPB"
+      }
     },
     "se_climate_react": {
       "type": "enum",
@@ -1720,7 +1745,7 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "/assets/clock.svg",
+      "icon": "/assets/icons/clock.svg",
       "insights": false
     },
     "se_last_seen_seconds": {
