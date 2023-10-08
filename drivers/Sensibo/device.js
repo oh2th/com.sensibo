@@ -121,7 +121,7 @@ module.exports = class SensiboDevice extends BaseDevice {
             reason: anAcState.reason,
             on: anAcState.acState.on,
             fanLevel: anAcState.acState.fanLevel ? anAcState.acState.fanLevel : '',
-            targetTemperature: anAcState.acState.targetTemperature,
+            targetTemperature: anAcState.acState.targetTemperature ? anAcState.acState.targetTemperature : null,
             mode: anAcState.acState.mode ? anAcState.acState.mode : '',
             swing: anAcState.acState.swing ? anAcState.acState.swing : '',
             failureReason: anAcState.failureReason ? anAcState.failureReason : '',
@@ -140,15 +140,17 @@ module.exports = class SensiboDevice extends BaseDevice {
   async onClimateReactSettingsReceived(data) {
     if (data.data) {
       let result = data.data.result;
-      this.log(`Climate React settings for: ${this._sensibo.getDeviceId()}: enabled: ${result.enabled}`);
-      await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
-      if (this._lastClimateReact !== undefined && this._lastClimateReact !== result.enabled) {
-        this.homey.app._climateReactChangedTrigger.trigger(this, {
-          climate_react_enabled: result.enabled,
-          climate_react: result.enabled ? 'enabled' : 'disabled',
-        }, {});
+      if (result.enabled !== undefined) {
+        this.log(`Climate React settings for: ${this._sensibo.getDeviceId()}: enabled: ${result.enabled}`);
+        await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
+        if (this._lastClimateReact !== undefined && this._lastClimateReact !== result.enabled) {
+          this.homey.app._climateReactChangedTrigger.trigger(this, {
+            climate_react_enabled: result.enabled,
+            climate_react: result.enabled ? 'enabled' : 'disabled',
+          }, {});
+        }
+        this._lastClimateReact = result.enabled;
       }
-      this._lastClimateReact = result.enabled;
     }
   }
 
