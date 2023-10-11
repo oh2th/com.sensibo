@@ -3,7 +3,7 @@
 	"title": {
 		"en": "Total Volatile Organic Compounds"
 	},
-	"icon": "/assets/icons/tvoc.svg",
+	"icon": "./assets/tvoc.svg",
 	"insights": true,
 	"uiComponent": "sensor",
 	"getable": true,

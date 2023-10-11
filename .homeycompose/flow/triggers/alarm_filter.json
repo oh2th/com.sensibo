@@ -1,0 +1,23 @@
+{
+  "id": "alarm_filter",
+  "title": {
+    "en": "Filter alarm changed"
+  },
+  "tokens": [
+    {
+      "name": "state",
+      "type": "boolean",
+      "title": {
+        "en": "State"
+      },
+      "example": true
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=Sensibo|SensiboPure"
+    }
+  ]
+}
