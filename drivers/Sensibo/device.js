@@ -116,12 +116,13 @@ module.exports = class SensiboDevice extends BaseDevice {
           if (this._lastAcStatesIds[anAcState.id]) {
             break;
           }
+          if (typeof anAcState.acState.targetTemperature !== 'number') anAcState.acState.targetTemperature = null;
           const payload = {
             status: anAcState.status,
             reason: anAcState.reason,
             on: anAcState.acState.on,
             fanLevel: anAcState.acState.fanLevel ? anAcState.acState.fanLevel : '',
-            targetTemperature: anAcState.acState.targetTemperature ? anAcState.acState.targetTemperature : null,
+            targetTemperature: anAcState.acState.targetTemperature,
             mode: anAcState.acState.mode ? anAcState.acState.mode : '',
             swing: anAcState.acState.swing ? anAcState.acState.swing : '',
             failureReason: anAcState.failureReason ? anAcState.failureReason : '',
