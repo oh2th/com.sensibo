@@ -91,5 +91,8 @@
   },
   "1.15.1": {
     "en": "FIX: Check for undefined values on capability updates."
+  },
+  "1.16.0": {
+    "en": "ADD: Clean filter alarm and trigger."
   }
 }
