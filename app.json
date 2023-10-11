@@ -1702,6 +1702,20 @@
         }
       ]
     },
+    "se_filter_due_date": {
+      "type": "string",
+      "title": {
+        "en": "Clean filters by"
+      },
+      "desc": {
+        "en": "Clean the filters by date."
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "./assets/clock.svg",
+      "insights": false
+    },
     "se_horizontal_swing": {
       "type": "enum",
       "title": {

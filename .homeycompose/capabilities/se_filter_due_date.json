@@ -1,0 +1,14 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Clean filters by"
+  },
+  "desc": {
+    "en": "Clean the filters by date."
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "./assets/clock.svg",
+  "insights": false
+}
