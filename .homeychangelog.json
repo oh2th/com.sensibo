@@ -94,5 +94,8 @@
   },
   "1.16.0": {
     "en": "ADD: Clean filter alarm and trigger."
+  },
+  "1.16.1": {
+    "en": "ADD: Filter clean due date"
   }
 }
