@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.sensibo",
-  "version": "1.16.1",
+  "version": "1.16.2",
   "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
@@ -1459,10 +1459,10 @@
       "desc": {
         "en": "Air quality"
       },
+      "icon": "./assets/air_quality.svg",
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "./assets/air_quality.svg",
       "insights": false
     },
     "alarm_filter": {
@@ -1474,10 +1474,10 @@
         "en": "Filter needs cleaning"
       },
       "icon": "./assets/air_filter.svg",
-      "insights": true,
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "insights": true
     },
     "measure_iaq": {
       "type": "number",
@@ -1485,24 +1485,24 @@
         "en": "Inside Air Qauality Score"
       },
       "icon": "./assets/iaq.svg",
-      "insights": true,
-      "uiComponent": "sensor",
       "getable": true,
-      "setable": false
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true
     },
     "measure_tvoc": {
       "type": "number",
       "title": {
         "en": "Total Volatile Organic Compounds"
       },
+      "units": {
+        "en": "ppb"
+      },
       "icon": "./assets/tvoc.svg",
-      "insights": true,
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
-      "units": {
-        "en": "PPB"
-      }
+      "insights": true
     },
     "se_climate_react": {
       "type": "enum",
@@ -1710,10 +1710,10 @@
       "desc": {
         "en": "Clean the filters by date."
       },
+      "icon": "./assets/clock.svg",
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "./assets/clock.svg",
       "insights": false
     },
     "se_filter_due_hours": {
@@ -1727,10 +1727,10 @@
       "units": {
         "en": "h"
       },
+      "icon": "./assets/clock.svg",
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "./assets/clock.svg",
       "insights": false
     },
     "se_filter_run_hours": {
@@ -1744,10 +1744,10 @@
       "units": {
         "en": "h"
       },
+      "icon": "./assets/clock.svg",
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "./assets/clock.svg",
       "insights": false
     },
     "se_horizontal_swing": {
@@ -1827,10 +1827,10 @@
       "desc": {
         "en": "Last seen"
       },
+      "icon": "./assets/clock.svg",
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "./assets/clock.svg",
       "insights": false
     },
     "se_last_seen_seconds": {
@@ -1841,6 +1841,7 @@
       "desc": {
         "en": "Last seen seconds ago"
       },
+      "icon": "./assets/clock.svg",
       "getable": true,
       "setable": false,
       "uiComponent": null,

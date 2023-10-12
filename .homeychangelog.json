@@ -97,5 +97,8 @@
   },
   "1.16.1": {
     "en": "ADD: Filter clean due date"
+  },
+  "1.16.2": {
+    "en": "ADD: Filter sensors for cleaning times."
   }
 }
