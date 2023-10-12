@@ -1716,6 +1716,44 @@
       "icon": "./assets/clock.svg",
       "insights": false
     },
+    "se_filter_due_hours": {
+      "type": "number",
+      "title": {
+        "en": "Filter hours remaining"
+      },
+      "desc": {
+        "en": "Hours remaining to clean filters."
+      },
+      "capabilitiesOptions": {
+        "units": {
+          "en": "h"
+        }
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "./assets/clock.svg",
+      "insights": false
+    },
+    "se_filter_run_hours": {
+      "type": "number",
+      "title": {
+        "en": "Filter hours"
+      },
+      "desc": {
+        "en": "Run hours since filters cleaned."
+      },
+      "capabilitiesOptions": {
+        "units": {
+          "en": "h"
+        }
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "./assets/clock.svg",
+      "insights": false
+    },
     "se_horizontal_swing": {
       "type": "enum",
       "title": {

@@ -1,0 +1,19 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Filter hours"
+  },
+  "desc": {
+    "en": "Run hours since filters cleaned."
+  },
+  "capabilitiesOptions": {
+    "units": {
+      "en": "h"
+    }
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "./assets/clock.svg",
+  "insights": false
+}
