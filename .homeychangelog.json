@@ -106,5 +106,8 @@
   },
   "1.16.4": {
     "en": "FIX: Crash errors from onAcStatesReceived"
+  },
+  "1.16.5": {
+    "en": "FIX: Handle errors if triggers fail (catch rejections)"
   }
 }
