@@ -100,5 +100,8 @@
   },
   "1.16.2": {
     "en": "ADD: Filter sensors for cleaning times."
+  },
+  "1.16.3": {
+    "en": "FIX: \"se_ac_state_changed\": Invalid value for token on. Expected boolean but got object"
   }
 }
