@@ -113,9 +113,8 @@ module.exports = class SensiboDevice extends BaseDevice {
       this.log(`AC States for: ${this._sensibo.getDeviceId()}`, curAcStates.length, curAcStates.map(acs => acs.id));
       if (this._lastAcStatesIds) {
         for (let anAcState of curAcStates) {
-          if (this._lastAcStatesIds[anAcState.id]) {
-            break;
-          }
+          if (this._lastAcStatesIds[anAcState.id]) break;
+          if (typeof anAcState.acState.on !== 'boolean') anAcState.acState.on = null;
           if (typeof anAcState.acState.targetTemperature !== 'number') anAcState.acState.targetTemperature = null;
           const payload = {
             status: anAcState.status,
