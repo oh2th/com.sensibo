@@ -1,9 +1,8 @@
 'use strict';
 
 const Homey = require('homey');
-const Sensibo = require('./sensibo');
-const util = require('./util');
-const { resolveObjectURL } = require('buffer');
+const Sensibo = require('../lib/sensibo');
+const util = require('../lib/util');
 
 module.exports = class BaseDevice extends Homey.Device {
 
@@ -32,7 +31,7 @@ module.exports = class BaseDevice extends Homey.Device {
     this._sensibo = new Sensibo({
       apikey: this.getApiKey(),
       deviceId: this.getData().id,
-      logger: logger
+      logger: logger,
     });
   }
 
@@ -41,12 +40,12 @@ module.exports = class BaseDevice extends Homey.Device {
 
   async fetchRemoteCapabilities() {
     try {
-      let data = await this._sensibo.getRemoteCapabilities();
+      const data = await this._sensibo.getRemoteCapabilities();
       if (data.data) {
         const remoteCapabilities = data.data.result.remoteCapabilities;
         const remoteMeasurements = { measurements: data.data.result.measurements };
         const filtersCleaning = { filtersCleaning: data.data.result.filtersCleaning };
-        let result = { ...remoteCapabilities, ...remoteMeasurements, ...filtersCleaning };
+        const result = { ...remoteCapabilities, ...remoteMeasurements, ...filtersCleaning };
         this.log('fetchRemoteCapabilities', result);
         this._sensibo._remoteCapabilities = result;
         await this.onRemoteCapabilitiesReceived(result);
@@ -108,7 +107,7 @@ module.exports = class BaseDevice extends Homey.Device {
 
   async onDeviceInfoReceived(result) {
     if (result) {
-      this.log(`Device info for: ${this.getData().id}:`, result );
+      this.log(`Device info for: ${this.getData().id}:`, result);
       if (result.acState) {
         this._sensibo.updateAcState(result.acState);
         if (await this.updateIfChanged('se_onoff', result.acState.on)) {
@@ -124,8 +123,7 @@ module.exports = class BaseDevice extends Homey.Device {
         await this.updateIfChanged('se_fanlevel_pure', result.acState.fanLevel);
         await this.updateIfChanged('se_fandirection', result.acState.swing);
         await this.updateIfChanged('se_horizontal_swing', result.acState.horizontalSwing);
-        let thermostat_mode = result.acState.on === false ? 'off' :
-          (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
+        const thermostat_mode = result.acState.on === false ? 'off' : (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
         if (thermostat_mode) {
           await this.updateIfChanged('thermostat_mode', thermostat_mode);
         }
@@ -169,13 +167,13 @@ module.exports = class BaseDevice extends Homey.Device {
           await this.updateIfChanged('se_last_seen_seconds', secondsAgo);
           await this.updateIfChanged('se_last_seen', lastSeen);
 
-          let settings = await this.getSettings();
+          const settings = await this.getSettings();
           const limitOffline = settings.Delay_Offline || 300;
 
           if (secondsAgo > limitOffline && !this._offlineTrigged) {
             this.homey.app._offlineTrigger.trigger(this, {
               seconds_ago: secondsAgo,
-              last_seen: lastSeen
+              last_seen: lastSeen,
             }, {});
             this._offlineTrigged = true;
           } else {
@@ -191,25 +189,25 @@ module.exports = class BaseDevice extends Homey.Device {
       }
       if (typeof result.filtersCleaning.acOnSecondsSinceLastFiltersClean === 'number'
         && typeof result.filtersCleaning.filtersCleanSecondsThreshold === 'number') {
-          const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
-          if (filterCleanTimeLeft > 0) {
-            const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
-            // Format due date to yyyy-MM-dd
-            await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
-            // Format due date to hours remaining
-            await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
-          }
-          // Run hours since last filter clean
-          await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
+        const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
+        if (filterCleanTimeLeft > 0) {
+          const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
+          // Format due date to yyyy-MM-dd
+          await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
+          // Format due date to hours remaining
+          await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
         }
+        // Run hours since last filter clean
+        await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
+      }
     }
   }
 
   async updateIfChanged(cap, toValue) {
     if (this.hasCapability(cap) && toValue !== undefined) {
-      let capValue = this.getCapabilityValue(cap);
+      const capValue = this.getCapabilityValue(cap);
       if (capValue !== toValue || capValue === undefined || capValue === null) {
-        await this.setCapabilityValue(cap, toValue).catch(err => this.log(err));
+        await this.setCapabilityValue(cap, toValue).catch((err) => this.log(err));
         return true;
       }
     }
@@ -230,7 +228,7 @@ module.exports = class BaseDevice extends Homey.Device {
     this.clearCheckData();
     let interval = seconds;
     if (!interval) {
-      let settings = await this.getSettings();
+      const settings = await this.getSettings();
       interval = settings.Polling_Interval || 30;
     }
     this.curTimeout = this.homey.setTimeout(this.checkData.bind(this), interval * 1000);
@@ -272,11 +270,11 @@ module.exports = class BaseDevice extends Homey.Device {
       this.clearCheckData();
       this.log(`turn on: ${this._sensibo.getDeviceId()}`);
       await this._sensibo.setAcState({ on: true });
-      await this.setCapabilityValue('se_onoff', true).catch(err => this.log(err));
+      await this.setCapabilityValue('se_onoff', true).catch((err) => this.log(err));
       if (this.hasCapability('thermostat_mode')) {
         let mode = this._sensibo.getAcState()['mode'];
         mode = (mode !== 'heat' && mode !== 'cool' && mode !== 'auto') ? 'auto' : mode;
-        await this.setCapabilityValue('thermostat_mode', mode).catch(err => this.log(err));
+        await this.setCapabilityValue('thermostat_mode', mode).catch((err) => this.log(err));
       }
       this.homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
       this.log(`turned on OK: ${this._sensibo.getDeviceId()}`);
@@ -290,9 +288,9 @@ module.exports = class BaseDevice extends Homey.Device {
       this.clearCheckData();
       this.log(`turn off: ${this._sensibo.getDeviceId()}`);
       await this._sensibo.setAcState({ on: false });
-      await this.setCapabilityValue('se_onoff', false).catch(err => this.log(err));
+      await this.setCapabilityValue('se_onoff', false).catch((err) => this.log(err));
       if (this.hasCapability('thermostat_mode')) {
-        await this.setCapabilityValue('thermostat_mode', 'off').catch(err => this.log(err));
+        await this.setCapabilityValue('thermostat_mode', 'off').catch((err) => this.log(err));
       }
       this.homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
       this.log(`turned off OK: ${this._sensibo.getDeviceId()}`);
@@ -316,12 +314,12 @@ module.exports = class BaseDevice extends Homey.Device {
 
   async onModeAutocomplete(query, args) {
     const modes = this._sensibo.getModes() || ['cool', 'heat', 'fan', 'auto', 'dry'];
-    return Promise.resolve((modes).map(mode => {
+    return Promise.resolve((modes).map((mode) => {
       return {
         id: mode,
-        name: mode[0].toUpperCase() + mode.substr(1).toLowerCase()
+        name: mode[0].toUpperCase() + mode.substr(1).toLowerCase(),
       };
-    }).filter(result => {
+    }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
     }));
   }
@@ -329,20 +327,20 @@ module.exports = class BaseDevice extends Homey.Device {
   async onActionSetFanLevel(fanLevel) {
     await this.onUpdateFanlevel(fanLevel);
     if (this.hasCapability('se_fanlevel')) {
-      await this.setCapabilityValue('se_fanlevel', fanLevel).catch(err => this.log(err));
+      await this.setCapabilityValue('se_fanlevel', fanLevel).catch((err) => this.log(err));
     }
   }
 
   async onFanLevelAutocomplete(query, args) {
     const fanLevels = this._sensibo.getAllFanLevels() || ['auto', 'high', 'medium', 'low'];
-    return Promise.resolve((fanLevels).map(fanLevel => {
+    return Promise.resolve((fanLevels).map((fanLevel) => {
       let name = fanLevel[0].toUpperCase() + fanLevel.substr(1).toLowerCase();
       name = name.replace('_', ' ');
       return {
         id: fanLevel,
-        name: name
+        name: name,
       };
-    }).filter(result => {
+    }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
     }));
   }
@@ -350,20 +348,20 @@ module.exports = class BaseDevice extends Homey.Device {
   async onActionSetSwing(swing) {
     await this.onUpdateSwing(swing);
     if (this.hasCapability('se_fandirection')) {
-      await this.setCapabilityValue('se_fandirection', swing).catch(err => this.log(err));
+      await this.setCapabilityValue('se_fandirection', swing).catch((err) => this.log(err));
     }
   }
 
   async onSwingAutocomplete(query, args) {
     const items = this._sensibo.getAllSwings() || ['stopped', 'fixedBottom', 'fixedTop', 'rangeTop', 'rangeFull'];
-    return Promise.resolve((items).map(item => {
+    return Promise.resolve((items).map((item) => {
       let name = item[0].toUpperCase() + item.substr(1).toLowerCase();
       name = name.replace('_', ' ');
       return {
         id: item,
-        name: name
+        name: name,
       };
-    }).filter(result => {
+    }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
     }));
   }
@@ -371,20 +369,20 @@ module.exports = class BaseDevice extends Homey.Device {
   async onActionSetHorizontalSwing(horizontalSwing) {
     await this.onUpdateHorizontalSwing(horizontalSwing);
     if (this.hasCapability('se_horizontal_swing')) {
-      await this.setCapabilityValue('se_horizontal_swing', horizontalSwing).catch(err => this.log(err));
+      await this.setCapabilityValue('se_horizontal_swing', horizontalSwing).catch((err) => this.log(err));
     }
   }
 
   async onHorizontalSwingAutocomplete(query, args) {
     const items = this._sensibo.getAllHorizontalSwings() || ['stopped', 'fixedLeft', 'fixedRight', 'rangeCenter', 'rangeFull'];
-    return Promise.resolve((items).map(item => {
+    return Promise.resolve((items).map((item) => {
       let name = item[0].toUpperCase() + item.substr(1).toLowerCase();
       name = name.replace('_', ' ');
       return {
         id: item,
-        name: name
+        name: name,
       };
-    }).filter(result => {
+    }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
     }));
   }
@@ -392,7 +390,7 @@ module.exports = class BaseDevice extends Homey.Device {
   async onActionClimateReact(enabled) {
     await this.onUpdateClimateReact(enabled);
     if (this.hasCapability('se_climate_react')) {
-      await this.setCapabilityValue('se_climate_react', enabled).catch(err => this.log(err));
+      await this.setCapabilityValue('se_climate_react', enabled).catch((err) => this.log(err));
     }
   }
 
@@ -409,9 +407,8 @@ module.exports = class BaseDevice extends Homey.Device {
     if (lightModes) {
       const light = this._sensibo.getAcState()['light'];
       return !!light && light !== 'off';
-    } else {
-      throw new Error(this.homey.__('errors.light_not_supported'));
     }
+    throw new Error(this.homey.__('errors.light_not_supported'));
   }
 
   async onDeleteTimer() {
@@ -445,10 +442,10 @@ module.exports = class BaseDevice extends Homey.Device {
       if (minutesFromNow > 1440) {
         throw new Error('Minutes from now cannot be larger than 1440.');
       }
-      if (newAcState.on === undefined &&
-        newAcState.mode === undefined &&
-        newAcState.fanLevel === undefined &&
-        newAcState.targetTemperature === undefined) {
+      if (newAcState.on === undefined
+        && newAcState.mode === undefined
+        && newAcState.fanLevel === undefined
+        && newAcState.targetTemperature === undefined) {
         throw new Error('At least one parameter must be specified.');
       }
       await this._sensibo.setCurrentTimer(minutesFromNow, newAcState);
@@ -479,14 +476,14 @@ module.exports = class BaseDevice extends Homey.Device {
 
   async onLightAutocomplete(query, args) {
     const items = this._sensibo.getAllLights() || ['on', 'off'];
-    return Promise.resolve((items).map(item => {
+    return Promise.resolve((items).map((item) => {
       let name = item[0].toUpperCase() + item.substr(1).toLowerCase();
       name = name.replace('_', ' ');
       return {
         id: item,
-        name: name
+        name: name,
       };
-    }).filter(result => {
+    }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
     }));
   }
@@ -522,11 +519,11 @@ module.exports = class BaseDevice extends Homey.Device {
         this.log(`set thermostat mode: ${this._sensibo.getDeviceId()} -> ${value}`);
         if (value === 'off') {
           await this._sensibo.setAcState({ on: false });
-          await this.setCapabilityValue('se_onoff', false).catch(err => this.log(err));
+          await this.setCapabilityValue('se_onoff', false).catch((err) => this.log(err));
           this.homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
         } else {
           await this._sensibo.setAcState({ on: true, mode: value });
-          await this.setCapabilityValue('se_onoff', true).catch(err => this.log(err));
+          await this.setCapabilityValue('se_onoff', true).catch((err) => this.log(err));
           this.homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
         }
         this.log(`set thermostat OK: ${this._sensibo.getDeviceId()} -> ${value}`);

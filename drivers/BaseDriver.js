@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Sensibo = require('./sensibo');
+const Sensibo = require('../lib/sensibo');
 
 module.exports = class BaseDriver extends Homey.Driver {
 
@@ -19,19 +19,19 @@ module.exports = class BaseDriver extends Homey.Driver {
 
   filterDevices = (result, apikey) => {
     const filtered = result
-      .filter(device => this.filterProductModel(device));
+      .filter((device) => this.filterProductModel(device));
     if (filtered.length === 0) {
       throw new Error(this.homey.__('errors.no_devices'));
     }
     return filtered
-      .map(device => ({
+      .map((device) => ({
         name: this.deviceName(device),
         data: {
-          id: device.id
+          id: device.id,
         },
         store: {
-          apikey: apikey
-        }
+          apikey: apikey,
+        },
       }));
   }
 
@@ -41,16 +41,16 @@ module.exports = class BaseDriver extends Homey.Driver {
     let apikey;
     let sensibo;
 
-    session.setHandler("apikey_input", async (data) => {
+    session.setHandler('apikey_input', async (data) => {
       apikey = data.apikey;
       sensibo = new Sensibo({
         apikey: apikey,
-        logger: this.log
+        logger: this.log,
       });
       await session.showView('list_devices');
     });
 
-    session.setHandler("list_devices", async () => {
+    session.setHandler('list_devices', async () => {
       let devices;
       try {
         devices = await sensibo.getAllDevices();
@@ -69,11 +69,11 @@ module.exports = class BaseDriver extends Homey.Driver {
     let apikey;
     let sensibo;
 
-    session.setHandler("apikey_input", async (data) => {
+    session.setHandler('apikey_input', async (data) => {
       apikey = data.apikey;
       sensibo = new Sensibo({
         apikey: apikey,
-        logger: this.log
+        logger: this.log,
       });
 
       let devices;
@@ -95,7 +95,6 @@ module.exports = class BaseDriver extends Homey.Driver {
       await session.done();
       return true;
     });
-
   }
 
 };

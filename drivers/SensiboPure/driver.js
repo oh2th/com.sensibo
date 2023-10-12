@@ -1,6 +1,6 @@
 'use strict';
 
-const BaseDriver = require('../../lib/BaseDriver');
+const BaseDriver = require('../BaseDriver');
 
 module.exports = class SensiboPureDriver extends BaseDriver {
 

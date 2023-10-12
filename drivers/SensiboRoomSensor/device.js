@@ -1,6 +1,6 @@
 'use strict';
 
-const BaseDevice = require('../../lib/BaseDevice');
+const BaseDevice = require('../BaseDevice');
 
 module.exports = class SensiboRoomSensorDevice extends BaseDevice {
 
