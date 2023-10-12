@@ -27,6 +27,7 @@ class SensiboApp extends Homey.App {
     this._timerCreatedTrigger = this.homey.flow.getDeviceTriggerCard('se_timer_created');
     this._timerFiredTrigger = this.homey.flow.getDeviceTriggerCard('se_timer_fired');
     this._timerDeletedTrigger = this.homey.flow.getDeviceTriggerCard('se_timer_deleted');
+    this._filterAlarmTrigger = this.homey.flow.getDeviceTriggerCard('alarm_filter');
 
     this.homey.flow.getConditionCard('se_onoff_is_on')
       .registerRunListener((args, state) => args.device.getCapabilityValue('se_onoff'));
@@ -191,7 +192,7 @@ class SensiboApp extends Homey.App {
     if (resultItem.id) {
       const device = devices.get(resultItem.id);
       if (device && device.onDeviceInfoReceived) {
-        //this.log(`Received data for device: ${device.getData().id}: `, resultItem);
+        // this.log(`Received data for device: ${device.getData().id}: `, resultItem);
         await device.onDeviceInfoReceived(resultItem);
       }
     }

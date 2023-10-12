@@ -1,14 +1,14 @@
 {
-  "type": "number",
+  "type": "string",
   "title": {
-    "en": "Last seen seconds ago"
+    "en": "Clean filters by"
   },
   "desc": {
-    "en": "Last seen seconds ago"
+    "en": "Clean the filters by date."
   },
   "icon": "./assets/clock.svg",
   "getable": true,
   "setable": false,
-  "uiComponent": null,
+  "uiComponent": "sensor",
   "insights": false
 }

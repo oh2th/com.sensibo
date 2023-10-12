@@ -3,9 +3,9 @@
 	"title": {
 		"en": "Inside Air Qauality Score"
 	},
-	"icon": "/assets/icons/iaq.svg",
-	"insights": true,
-	"uiComponent": "sensor",
+	"icon": "./assets/iaq.svg",
 	"getable": true, 
-	"setable": false
+	"setable": false,
+	"uiComponent": "sensor",
+	"insights": true
 }

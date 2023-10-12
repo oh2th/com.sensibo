@@ -1,14 +1,17 @@
 {
   "type": "number",
   "title": {
-    "en": "Last seen seconds ago"
+    "en": "Filter hours"
   },
   "desc": {
-    "en": "Last seen seconds ago"
+    "en": "Run hours since filters cleaned."
+  },
+  "units": {
+    "en": "h"
   },
   "icon": "./assets/clock.svg",
   "getable": true,
   "setable": false,
-  "uiComponent": null,
+  "uiComponent": "sensor",
   "insights": false
 }

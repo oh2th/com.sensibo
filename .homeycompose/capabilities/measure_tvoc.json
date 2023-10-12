@@ -3,12 +3,12 @@
 	"title": {
 		"en": "Total Volatile Organic Compounds"
 	},
-	"icon": "/assets/icons/tvoc.svg",
-	"insights": true,
+	"units": {
+		"en": "ppb"
+	},
+	"icon": "./assets/tvoc.svg",
 	"uiComponent": "sensor",
 	"getable": true,
 	"setable": false,
-	"units": {
-		"en": "PPB"
-	}
+	"insights": true
 }

@@ -1,14 +1,17 @@
 {
   "type": "number",
   "title": {
-    "en": "Last seen seconds ago"
+    "en": "Filter hours remaining"
   },
   "desc": {
-    "en": "Last seen seconds ago"
+    "en": "Hours remaining to clean filters."
+  },
+  "units": {
+      "en": "h"
   },
   "icon": "./assets/clock.svg",
   "getable": true,
   "setable": false,
-  "uiComponent": null,
+  "uiComponent": "sensor",
   "insights": false
 }

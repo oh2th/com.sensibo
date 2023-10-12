@@ -1,0 +1,14 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Filter Alarm"
+  },
+  "desc": {
+    "en": "Filter needs cleaning"
+  },
+  "icon": "./assets/air_filter.svg",
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true
+}

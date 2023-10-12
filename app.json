@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.sensibo",
-  "version": "1.15.1",
+  "version": "1.16.2",
   "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
@@ -76,6 +76,29 @@
               "en": "Air quality"
             },
             "example": "Excellent"
+          }
+        ]
+      },
+      {
+        "id": "alarm_filter",
+        "title": {
+          "en": "Filter alarm changed"
+        },
+        "tokens": [
+          {
+            "name": "state",
+            "type": "boolean",
+            "title": {
+              "en": "State"
+            },
+            "example": true
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=Sensibo|SensiboPure"
           }
         ]
       },
@@ -1436,36 +1459,50 @@
       "desc": {
         "en": "Air quality"
       },
+      "icon": "./assets/air_quality.svg",
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "/assets/icons/air_quality.svg",
       "insights": false
+    },
+    "alarm_filter": {
+      "type": "boolean",
+      "title": {
+        "en": "Filter Alarm"
+      },
+      "desc": {
+        "en": "Filter needs cleaning"
+      },
+      "icon": "./assets/air_filter.svg",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true
     },
     "measure_iaq": {
       "type": "number",
       "title": {
         "en": "Inside Air Qauality Score"
       },
-      "icon": "/assets/icons/iaq.svg",
-      "insights": true,
-      "uiComponent": "sensor",
+      "icon": "./assets/iaq.svg",
       "getable": true,
-      "setable": false
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true
     },
     "measure_tvoc": {
       "type": "number",
       "title": {
         "en": "Total Volatile Organic Compounds"
       },
-      "icon": "/assets/icons/tvoc.svg",
-      "insights": true,
+      "units": {
+        "en": "ppb"
+      },
+      "icon": "./assets/tvoc.svg",
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
-      "units": {
-        "en": "PPB"
-      }
+      "insights": true
     },
     "se_climate_react": {
       "type": "enum",
@@ -1665,6 +1702,54 @@
         }
       ]
     },
+    "se_filter_due_date": {
+      "type": "string",
+      "title": {
+        "en": "Clean filters by"
+      },
+      "desc": {
+        "en": "Clean the filters by date."
+      },
+      "icon": "./assets/clock.svg",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "se_filter_due_hours": {
+      "type": "number",
+      "title": {
+        "en": "Filter hours remaining"
+      },
+      "desc": {
+        "en": "Hours remaining to clean filters."
+      },
+      "units": {
+        "en": "h"
+      },
+      "icon": "./assets/clock.svg",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "se_filter_run_hours": {
+      "type": "number",
+      "title": {
+        "en": "Filter hours"
+      },
+      "desc": {
+        "en": "Run hours since filters cleaned."
+      },
+      "units": {
+        "en": "h"
+      },
+      "icon": "./assets/clock.svg",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
     "se_horizontal_swing": {
       "type": "enum",
       "title": {
@@ -1742,10 +1827,10 @@
       "desc": {
         "en": "Last seen"
       },
+      "icon": "./assets/clock.svg",
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "/assets/icons/clock.svg",
       "insights": false
     },
     "se_last_seen_seconds": {
@@ -1756,6 +1841,7 @@
       "desc": {
         "en": "Last seen seconds ago"
       },
+      "icon": "./assets/clock.svg",
       "getable": true,
       "setable": false,
       "uiComponent": null,

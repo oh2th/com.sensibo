@@ -6,9 +6,9 @@
   "desc": {
     "en": "Last seen"
   },
+  "icon": "./assets/clock.svg",
   "getable": true,
   "setable": false,
   "uiComponent": "sensor",
-  "icon": "/assets/icons/clock.svg",
   "insights": false
 }
