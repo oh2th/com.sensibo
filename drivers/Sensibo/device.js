@@ -114,8 +114,6 @@ module.exports = class SensiboDevice extends BaseDevice {
       if (this._lastAcStatesIds) {
         for (let anAcState of curAcStates) {
           if (this._lastAcStatesIds[anAcState.id]) break;
-          if (typeof anAcState.acState.on !== 'boolean') anAcState.acState.on = null;
-          if (typeof anAcState.acState.targetTemperature !== 'number') anAcState.acState.targetTemperature = null;
           const payload = {
             status: anAcState.status,
             reason: anAcState.reason,
