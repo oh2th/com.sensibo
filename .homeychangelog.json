@@ -103,5 +103,8 @@
   },
   "1.16.3": {
     "en": "FIX: \"se_ac_state_changed\": Invalid value for token on. Expected boolean but got object"
+  },
+  "1.16.4": {
+    "en": "FIX: Crash errors from onAcStatesReceived"
   }
 }
