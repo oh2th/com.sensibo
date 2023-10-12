@@ -124,8 +124,10 @@ module.exports = class SensiboDevice extends BaseDevice {
             swing: anAcState.acState.swing ? anAcState.acState.swing : '',
             failureReason: anAcState.failureReason ? anAcState.failureReason : '',
           };
-          this.homey.app._acStateChangedTrigger.trigger(this, payload, {});
-          this.log(`AC State change triggered: ${this._sensibo.getDeviceId()}`, anAcState.id, payload);
+          this.homey.app._acStateChangedTrigger
+            .trigger(this, payload, {})
+            .then(() => this.log(`AC State change triggered: ${this._sensibo.getDeviceId()}`, anAcState.id, payload))
+            .catch((err) => this.log('Error triggering AC State change:', err));
         }
       }
       this._lastAcStatesIds = curAcStates.reduce((map, obj) => {
@@ -142,10 +144,13 @@ module.exports = class SensiboDevice extends BaseDevice {
         this.log(`Climate React settings for: ${this._sensibo.getDeviceId()}: enabled: ${result.enabled}`);
         await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
         if (this._lastClimateReact !== undefined && this._lastClimateReact !== result.enabled) {
-          this.homey.app._climateReactChangedTrigger.trigger(this, {
-            climate_react_enabled: result.enabled,
-            climate_react: result.enabled ? 'enabled' : 'disabled',
-          }, {});
+          this.homey.app._climateReactChangedTrigger
+            .trigger(this, {
+              climate_react_enabled: result.enabled,
+              climate_react: result.enabled ? 'enabled' : 'disabled',
+            }, {})
+            .then(() => this.log(`Climate React change triggered: ${this._sensibo.getDeviceId()}`, result.enabled))
+            .catch((err) => this.log('Error triggering Climate React change:', err));
         }
         this._lastClimateReact = result.enabled;
       }

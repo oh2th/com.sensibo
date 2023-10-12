@@ -112,9 +112,15 @@ module.exports = class BaseDevice extends Homey.Device {
         this._sensibo.updateAcState(result.acState);
         if (await this.updateIfChanged('se_onoff', result.acState.on)) {
           if (result.acState.on) {
-            this.homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
+            this.homey.app._turnedOnTrigger
+              .trigger(this, { state: 1 }, {})
+              .then(() => this.log(`Turned on triggered: ${this.getData().id}`))
+              .catch((err) => this.log('Error triggering Turned on:', err));
           } else {
-            this.homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
+            this.homey.app._turnedOffTrigger
+              .trigger(this, { state: 0 }, {})
+              .then(() => this.log(`Turned off triggered: ${this.getData().id}`))
+              .catch((err) => this.log('Error triggering Turned off:', err));
           }
         }
 
@@ -136,9 +142,15 @@ module.exports = class BaseDevice extends Homey.Device {
       const hasTimer = !!result.timer;
       const hasTimerEnabled = !!(result.timer && result.timer.isEnabled);
       if (this._hasTimerEnabled === false && hasTimerEnabled === true) {
-        this.homey.app._timerCreatedTrigger.trigger(this, { homey: false }, {});
+        this.homey.app._timerCreatedTrigger
+          .trigger(this, { homey: false }, {})
+          .then(() => this.log(`Timer created triggered: ${this.getData().id}`))
+          .catch((err) => this.log('Error triggering Timer created:', err));
       } else if (this._hasTimer === true && hasTimer === false) {
-        this.homey.app._timerDeletedTrigger.trigger(this, { homey: false }, {});
+        this.homey.app._timerDeletedTrigger
+          .trigger(this, { homey: false }, {})
+          .then(() => this.log(`Timer deleted triggered: ${this.getData().id}`))
+          .catch((err) => this.log('Error triggering Timer deleted:', err));
       }
       this._hasTimer = hasTimer;
       this._hasTimerEnabled = hasTimerEnabled;
@@ -171,20 +183,25 @@ module.exports = class BaseDevice extends Homey.Device {
           const limitOffline = settings.Delay_Offline || 300;
 
           if (secondsAgo > limitOffline && !this._offlineTrigged) {
-            this.homey.app._offlineTrigger.trigger(this, {
-              seconds_ago: secondsAgo,
-              last_seen: lastSeen,
-            }, {});
-            this._offlineTrigged = true;
-          } else {
-            this._offlineTrigged = false;
+            try {
+              this.homey.app._offlineTrigger.trigger(this, {
+                seconds_ago: secondsAgo,
+                last_seen: lastSeen,
+              }, {});
+              this._offlineTrigged = true;
+            } catch (error) {
+              this._offlineTrigged = false;
+            }
           }
         }
       }
       if (typeof result.filtersCleaning.shouldCleanFilters === 'boolean') {
         if (this.getCapabilityValue('alarm_filter') !== result.filtersCleaning.shouldCleanFilters) {
           await this.updateIfChanged('alarm_filter', result.filtersCleaning.shouldCleanFilters);
-          this.homey.app._filterAlarmTrigger.trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {});
+          this.homey.app._filterAlarmTrigger
+            .trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {})
+            .then(() => this.log(`Clean Filter alarm triggered: ${this.getData().id}`))
+            .catch((err) => this.log('Error triggering Clean Filter alarm:', err));
         }
       }
       if (typeof result.filtersCleaning.acOnSecondsSinceLastFiltersClean === 'number'
