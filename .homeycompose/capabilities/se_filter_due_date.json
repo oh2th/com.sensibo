@@ -6,9 +6,9 @@
   "desc": {
     "en": "Clean the filters by date."
   },
+  "icon": "./assets/clock.svg",
   "getable": true,
   "setable": false,
   "uiComponent": "sensor",
-  "icon": "./assets/clock.svg",
   "insights": false
 }

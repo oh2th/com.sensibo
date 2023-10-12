@@ -7,8 +7,8 @@
     "en": "Filter needs cleaning"
   },
   "icon": "./assets/air_filter.svg",
-  "insights": true,
   "getable": true,
   "setable": false,
-  "uiComponent": "sensor"
+  "uiComponent": "sensor",
+  "insights": true
 }

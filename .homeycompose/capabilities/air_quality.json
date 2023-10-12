@@ -6,9 +6,9 @@
   "desc": {
     "en": "Air quality"
   },
+  "icon": "./assets/air_quality.svg",
   "getable": true,
   "setable": false,
   "uiComponent": "sensor",
-  "icon": "./assets/air_quality.svg",
   "insights": false
 }

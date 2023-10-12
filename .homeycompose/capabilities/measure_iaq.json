@@ -4,8 +4,8 @@
 		"en": "Inside Air Qauality Score"
 	},
 	"icon": "./assets/iaq.svg",
-	"insights": true,
-	"uiComponent": "sensor",
 	"getable": true, 
-	"setable": false
+	"setable": false,
+	"uiComponent": "sensor",
+	"insights": true
 }

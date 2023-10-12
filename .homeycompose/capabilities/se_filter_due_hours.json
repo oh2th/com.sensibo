@@ -6,14 +6,12 @@
   "desc": {
     "en": "Hours remaining to clean filters."
   },
-  "capabilitiesOptions": {
-    "units": {
+  "units": {
       "en": "h"
-    }
   },
+  "icon": "./assets/clock.svg",
   "getable": true,
   "setable": false,
   "uiComponent": "sensor",
-  "icon": "./assets/clock.svg",
   "insights": false
 }

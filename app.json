@@ -1724,10 +1724,8 @@
       "desc": {
         "en": "Hours remaining to clean filters."
       },
-      "capabilitiesOptions": {
-        "units": {
-          "en": "h"
-        }
+      "units": {
+        "en": "h"
       },
       "getable": true,
       "setable": false,
@@ -1743,10 +1741,8 @@
       "desc": {
         "en": "Run hours since filters cleaned."
       },
-      "capabilitiesOptions": {
-        "units": {
-          "en": "h"
-        }
+      "units": {
+        "en": "h"
       },
       "getable": true,
       "setable": false,

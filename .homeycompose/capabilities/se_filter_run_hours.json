@@ -6,14 +6,12 @@
   "desc": {
     "en": "Run hours since filters cleaned."
   },
-  "capabilitiesOptions": {
-    "units": {
-      "en": "h"
-    }
+  "units": {
+    "en": "h"
   },
+  "icon": "./assets/clock.svg",
   "getable": true,
   "setable": false,
   "uiComponent": "sensor",
-  "icon": "./assets/clock.svg",
   "insights": false
 }
