@@ -95,9 +95,9 @@ module.exports = class SensiboDevice extends BaseDevice {
       this.clearCheckData();
       if (this.hasCapability('se_climate_react')) {
         this.log(`Fetching AC state for: ${this._sensibo.getDeviceId()}`);
-        let acStatesData = await this._sensibo.getAcStates();
+        const acStatesData = await this._sensibo.getAcStates();
         await this.onAcStatesReceived(acStatesData);
-        let climateReactSettings = await this._sensibo.getClimateReactSettings();
+        const climateReactSettings = await this._sensibo.getClimateReactSettings();
         await this.onClimateReactSettingsReceived(climateReactSettings);
       }
     } catch (err) {
@@ -109,10 +109,10 @@ module.exports = class SensiboDevice extends BaseDevice {
 
   async onAcStatesReceived(data) {
     if (data.data) {
-      let curAcStates = data.data.result;
-      this.log(`AC States for: ${this._sensibo.getDeviceId()}`, curAcStates.length, curAcStates.map(acs => acs.id));
+      const curAcStates = data.data.result;
+      this.log(`AC States for: ${this._sensibo.getDeviceId()}`, curAcStates.length, curAcStates.map((acs) => acs.id));
       if (this._lastAcStatesIds) {
-        for (let anAcState of curAcStates) {
+        for (const anAcState of curAcStates) {
           if (this._lastAcStatesIds[anAcState.id]) break;
           const payload = {
             status: anAcState.status,
@@ -128,7 +128,7 @@ module.exports = class SensiboDevice extends BaseDevice {
           this.log(`AC State change triggered: ${this._sensibo.getDeviceId()}`, anAcState.id, payload);
         }
       }
-      this._lastAcStatesIds = curAcStates.reduce(function (map, obj) {
+      this._lastAcStatesIds = curAcStates.reduce((map, obj) => {
         map[obj.id] = obj.id;
         return map;
       }, {});
@@ -137,7 +137,7 @@ module.exports = class SensiboDevice extends BaseDevice {
 
   async onClimateReactSettingsReceived(data) {
     if (data.data) {
-      let result = data.data.result;
+      const { result } = data.data;
       if (result.enabled !== undefined) {
         this.log(`Climate React settings for: ${this._sensibo.getDeviceId()}: enabled: ${result.enabled}`);
         await this.updateIfChanged('se_climate_react', result.enabled ? 'on' : 'off');
