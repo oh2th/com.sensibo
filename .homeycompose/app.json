@@ -17,6 +17,7 @@
   ],
   "permissions": [],
   "images": {
+    "xlarge": "/assets/images/xlarge.png",
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
   },
@@ -24,7 +25,7 @@
     "name": "Tapio Heiskanen",
     "email": "oh2th@iki.fi"
   },
-  "brandColor": "#1BB7E9",
+  "brandColor": "#23b791",
   "tags": {
     "en": [
       "sensibo",
@@ -52,5 +53,11 @@
         "username": "oh2th"
       }
     }
-  }
+  },
+  "source": "https://github.com/oh2th/com.sensibo",
+  "support": "https://github.com/oh2th/com.sensibo/issues",
+  "bugs": {
+    "url": "https://github.com/oh2th/com.sensibo/issues"
+  },
+  "homepage": "https://sensibo.com"
 }
