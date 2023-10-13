@@ -1,0 +1,20 @@
+{
+  "id": "SensiboElemets",
+  "name": {
+    "en": "Sensibo Elements"
+  },
+  "$extends": [
+    "defaults"
+  ],
+  "class": "sensor",
+  "capabilities": [
+    "measure_temperature",
+    "measure_humidity",
+    "measure_co2",
+    "measure_pm25",
+    "measure_tvoc",
+    "measure_ethanol",
+    "se_last_seen",
+    "se_last_seen_seconds"
+  ]
+}
