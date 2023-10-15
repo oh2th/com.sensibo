@@ -109,5 +109,8 @@
   },
   "1.16.5": {
     "en": "FIX: Handle errors if triggers fail (catch rejections)"
+  },
+  "1.16.6": {
+    "en": "FIX: SensiboRoomSensor - rollback formating"
   }
 }
