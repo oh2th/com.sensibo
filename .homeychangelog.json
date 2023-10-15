@@ -115,5 +115,8 @@
   },
   "1.16.7": {
     "en": "FIX: for non Sensibo Air Pro capabilities check."
+  },
+  "1.16.8": {
+    "en": "FIX: Sky, Air and RoomSensor failing due to new features from Air Pro."
   }
 }
