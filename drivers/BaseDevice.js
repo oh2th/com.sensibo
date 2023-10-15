@@ -43,8 +43,11 @@ module.exports = class BaseDevice extends Homey.Device {
       const data = await this._sensibo.getRemoteCapabilities();
       if (data.data) {
         const remoteCapabilities = data.data.result.remoteCapabilities;
-        const remoteMeasurements = { measurements: data.data.result.measurements };
-        const filtersCleaning = { filtersCleaning: data.data.result.filtersCleaning };
+
+        // Check if remoteMeasurements and filtersCleaning exist in data.data.result
+        const remoteMeasurements = data.data.result.measurements ? { measurements: data.data.result.measurements } : {};
+        const filtersCleaning = data.data.result.filtersCleaning ? { filtersCleaning: data.data.result.filtersCleaning } : {};
+
         const result = { ...remoteCapabilities, ...remoteMeasurements, ...filtersCleaning };
         this.log('fetchRemoteCapabilities', result);
         this._sensibo._remoteCapabilities = result;
