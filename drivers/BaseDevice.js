@@ -198,27 +198,29 @@ module.exports = class BaseDevice extends Homey.Device {
           }
         }
       }
-      if (typeof result.filtersCleaning.shouldCleanFilters === 'boolean') {
-        if (this.getCapabilityValue('alarm_filter') !== result.filtersCleaning.shouldCleanFilters) {
-          await this.updateIfChanged('alarm_filter', result.filtersCleaning.shouldCleanFilters);
-          this.homey.app._filterAlarmTrigger
-            .trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {})
-            .then(() => this.log(`Clean Filter alarm triggered: ${this.getData().id}`))
-            .catch((err) => this.log('Error triggering Clean Filter alarm:', err));
+      if (result.filtersCleaning !== undefined) {
+        if (typeof result.filtersCleaning.shouldCleanFilters === 'boolean') {
+          if (this.getCapabilityValue('alarm_filter') !== result.filtersCleaning.shouldCleanFilters) {
+            await this.updateIfChanged('alarm_filter', result.filtersCleaning.shouldCleanFilters);
+            this.homey.app._filterAlarmTrigger
+              .trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {})
+              .then(() => this.log(`Clean Filter alarm triggered: ${this.getData().id}`))
+              .catch((err) => this.log('Error triggering Clean Filter alarm:', err));
+          }
         }
-      }
-      if (typeof result.filtersCleaning.acOnSecondsSinceLastFiltersClean === 'number'
+        if (typeof result.filtersCleaning.acOnSecondsSinceLastFiltersClean === 'number'
         && typeof result.filtersCleaning.filtersCleanSecondsThreshold === 'number') {
-        const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
-        if (filterCleanTimeLeft > 0) {
-          const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
-          // Format due date to yyyy-MM-dd
-          await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
-          // Format due date to hours remaining
-          await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
+          const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
+          if (filterCleanTimeLeft > 0) {
+            const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
+            // Format due date to yyyy-MM-dd
+            await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
+            // Format due date to hours remaining
+            await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
+          }
+          // Run hours since last filter clean
+          await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
         }
-        // Run hours since last filter clean
-        await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
       }
     }
   }
