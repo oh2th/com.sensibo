@@ -198,6 +198,7 @@ module.exports = class BaseDevice extends Homey.Device {
           }
         }
       }
+      // Does the device have filters and their cleaning.
       if (result.filtersCleaning !== undefined) {
         if (typeof result.filtersCleaning.shouldCleanFilters === 'boolean') {
           if (this.getCapabilityValue('alarm_filter') !== result.filtersCleaning.shouldCleanFilters) {
