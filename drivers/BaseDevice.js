@@ -43,8 +43,11 @@ module.exports = class BaseDevice extends Homey.Device {
       const data = await this._sensibo.getRemoteCapabilities();
       if (data.data) {
         const remoteCapabilities = data.data.result.remoteCapabilities;
-        const remoteMeasurements = { measurements: data.data.result.measurements };
-        const filtersCleaning = { filtersCleaning: data.data.result.filtersCleaning };
+
+        // Check if remoteMeasurements and filtersCleaning exist in data.data.result
+        const remoteMeasurements = data.data.result.measurements ? { measurements: data.data.result.measurements } : {};
+        const filtersCleaning = data.data.result.filtersCleaning ? { filtersCleaning: data.data.result.filtersCleaning } : {};
+
         const result = { ...remoteCapabilities, ...remoteMeasurements, ...filtersCleaning };
         this.log('fetchRemoteCapabilities', result);
         this._sensibo._remoteCapabilities = result;
@@ -195,27 +198,30 @@ module.exports = class BaseDevice extends Homey.Device {
           }
         }
       }
-      if (typeof result.filtersCleaning.shouldCleanFilters === 'boolean') {
-        if (this.getCapabilityValue('alarm_filter') !== result.filtersCleaning.shouldCleanFilters) {
-          await this.updateIfChanged('alarm_filter', result.filtersCleaning.shouldCleanFilters);
-          this.homey.app._filterAlarmTrigger
-            .trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {})
-            .then(() => this.log(`Clean Filter alarm triggered: ${this.getData().id}`))
-            .catch((err) => this.log('Error triggering Clean Filter alarm:', err));
+      // Does the device have filters and their cleaning.
+      if (result.filtersCleaning !== undefined) {
+        if (typeof result.filtersCleaning.shouldCleanFilters === 'boolean') {
+          if (this.getCapabilityValue('alarm_filter') !== result.filtersCleaning.shouldCleanFilters) {
+            await this.updateIfChanged('alarm_filter', result.filtersCleaning.shouldCleanFilters);
+            this.homey.app._filterAlarmTrigger
+              .trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {})
+              .then(() => this.log(`Clean Filter alarm triggered: ${this.getData().id}`))
+              .catch((err) => this.log('Error triggering Clean Filter alarm:', err));
+          }
         }
-      }
-      if (typeof result.filtersCleaning.acOnSecondsSinceLastFiltersClean === 'number'
+        if (typeof result.filtersCleaning.acOnSecondsSinceLastFiltersClean === 'number'
         && typeof result.filtersCleaning.filtersCleanSecondsThreshold === 'number') {
-        const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
-        if (filterCleanTimeLeft > 0) {
-          const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
-          // Format due date to yyyy-MM-dd
-          await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
-          // Format due date to hours remaining
-          await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
+          const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
+          if (filterCleanTimeLeft > 0) {
+            const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
+            // Format due date to yyyy-MM-dd
+            await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
+            // Format due date to hours remaining
+            await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
+          }
+          // Run hours since last filter clean
+          await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
         }
-        // Run hours since last filter clean
-        await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
       }
     }
   }
