@@ -58,31 +58,16 @@ module.exports = class BaseDevice extends Homey.Device {
     }
   }
 
-  async onRemoteCapabilitiesReceived(remoteCaps) {
-    // Add Sensibo device model specific measurement capabilities if available and not yet added.
-    if (remoteCaps.measurements.tvoc !== undefined && this.hasCapability('measure_tvoc') === false) {
+  async onRemoteCapabilitiesReceived(capabilities) {
+    // Add Sensibo device model specific measurement capabilities, if available and not yet added.
+    if (capabilities.measurements.tvoc !== undefined && this.hasCapability('measure_tvoc') === false) {
       await this.addCapability('measure_tvoc');
     }
-    if (remoteCaps.measurements.co2 !== undefined && this.hasCapability('measure_co2') === false) {
+    if (capabilities.measurements.co2 !== undefined && this.hasCapability('measure_co2') === false) {
       await this.addCapability('measure_co2');
     }
-    if (remoteCaps.measurements.iaq !== undefined && this.hasCapability('measure_iaq') === false) {
+    if (capabilities.measurements.iaq !== undefined && this.hasCapability('measure_iaq') === false) {
       await this.addCapability('measure_iaq');
-    }
-    if (remoteCaps.filtersCleaning.shouldCleanFilters !== undefined && this.hasCapability('alarm_filter') === false) {
-      await this.addCapability('alarm_filter');
-    }
-    // Filter cleaning capabilities for due date and hours
-    if (remoteCaps.filtersCleaning.acOnSecondsSinceLastFiltersClean !== undefined && remoteCaps.filtersCleaning.filtersCleanSecondsThreshold !== undefined) {
-      if (this.hasCapability('se_filter_run_hours') === false) {
-        await this.addCapability('se_filter_run_hours');
-      }
-      if (this.hasCapability('se_filter_due_hours') === false) {
-        await this.addCapability('se_filter_due_hours');
-      }
-      if (this.hasCapability('se_filter_due_date') === false) {
-        await this.addCapability('se_filter_due_date');
-      }
     }
   }
 
@@ -160,24 +145,33 @@ module.exports = class BaseDevice extends Homey.Device {
       if (result.measurements) {
         await this.updateIfChanged('measure_temperature', result.measurements.temperature);
         await this.updateIfChanged('measure_humidity', result.measurements.humidity);
-        if (result.measurements.pm25) {
-          const airQuality = util.AIR_QUALITIES[result.measurements.pm25];
-          if (airQuality) {
-            await this.updateIfChanged('air_quality', airQuality);
-          }
-        }
         if (result.measurements.co2) {
           await this.updateIfChanged('measure_co2', result.measurements.co2);
         }
         if (result.measurements.tvoc) {
           await this.updateIfChanged('measure_tvoc', result.measurements.tvoc);
         }
+        if (result.measurements.etoh) {
+          await this.updateIfChanged('measure_etoh', result.measurements.etoh);
+        }
         if (result.measurements.iaq) {
           await this.updateIfChanged('measure_iaq', result.measurements.iaq);
         }
+        // PM2.5 is different for Pure (air_quality reference) and Elements (pm25 value)
+        if (result.measurements.pm25) {
+          if (result.productModel === 'pure') {
+            const airQuality = util.AIR_QUALITIES[result.measurements.pm25];
+            if (airQuality) {
+              await this.updateIfChanged('air_quality', airQuality);
+            }
+          }
+          if (result.productModel === 'elements') {
+            await this.updateIfChanged('measure_pm25', result.measurements.pm25);
+          }
+        }
         if (result.measurements.time) {
           const secondsAgo = result.measurements.time.secondsAgo;
-          const lastSeen = new Date(result.measurements.time.time).toTimeString().substr(0, 8);
+          const lastSeen = new Date(result.measurements.time.time).toLocaleTimeString('POSIX', { hour12: false, timeZone: this.homey.clock.getTimezone() });
 
           await this.updateIfChanged('se_last_seen_seconds', secondsAgo);
           await this.updateIfChanged('se_last_seen', lastSeen);
@@ -198,30 +192,25 @@ module.exports = class BaseDevice extends Homey.Device {
           }
         }
       }
-      // Does the device have filters and their cleaning.
-      if (result.filtersCleaning !== undefined) {
-        if (typeof result.filtersCleaning.shouldCleanFilters === 'boolean') {
-          if (this.getCapabilityValue('alarm_filter') !== result.filtersCleaning.shouldCleanFilters) {
-            await this.updateIfChanged('alarm_filter', result.filtersCleaning.shouldCleanFilters);
-            this.homey.app._filterAlarmTrigger
-              .trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {})
-              .then(() => this.log(`Clean Filter alarm triggered: ${this.getData().id}`))
-              .catch((err) => this.log('Error triggering Clean Filter alarm:', err));
-          }
+      // Does the device have filters and their cleaning information.
+      if (this.hasCapability('alarm_filter')) {
+        // Update and trigger alarm_filter if changed.
+        if (await this.updateIfChanged('alarm_filter', result.filtersCleaning.shouldCleanFilters)) {
+          this.homey.app._filterAlarmTrigger
+            .trigger(this, { state: result.filtersCleaning.shouldCleanFilters }, {})
+            .then(() => this.log(`Clean Filter alarm triggered: ${this.getData().id}`))
+            .catch((err) => this.log('Error triggering Clean Filter alarm:', err));
         }
-        if (typeof result.filtersCleaning.acOnSecondsSinceLastFiltersClean === 'number'
-        && typeof result.filtersCleaning.filtersCleanSecondsThreshold === 'number') {
-          const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
-          if (filterCleanTimeLeft > 0) {
-            const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
-            // Format due date to yyyy-MM-dd
-            await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
-            // Format due date to hours remaining
-            await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
-          }
-          // Run hours since last filter clean
-          await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
+        const filterCleanTimeLeft = result.filtersCleaning.filtersCleanSecondsThreshold - result.filtersCleaning.acOnSecondsSinceLastFiltersClean;
+        if (filterCleanTimeLeft > 0) {
+          const dueDate = new Date(Date.now() + filterCleanTimeLeft * 1000);
+          // Format due date to yyyy-MM-dd
+          await this.updateIfChanged('se_filter_due_date', dueDate.toISOString().split('T')[0]);
+          // Format due date to hours remaining
+          await this.updateIfChanged('se_filter_due_hours', Math.ceil(filterCleanTimeLeft / 3600));
         }
+        // Run hours since last filter clean
+        await this.updateIfChanged('se_filter_run_hours', Math.floor(result.filtersCleaning.acOnSecondsSinceLastFiltersClean / 3600));
       }
     }
   }

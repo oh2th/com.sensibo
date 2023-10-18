@@ -1,5 +1,5 @@
 {
-  "id": "SensiboElemets",
+  "id": "SensiboElements",
   "name": {
     "en": "Sensibo Elements"
   },
@@ -13,7 +13,7 @@
     "measure_co2",
     "measure_pm25",
     "measure_tvoc",
-    "measure_ethanol",
+    "measure_etoh",
     "se_last_seen",
     "se_last_seen_seconds"
   ]
