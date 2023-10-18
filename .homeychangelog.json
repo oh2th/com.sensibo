@@ -118,5 +118,8 @@
   },
   "1.16.8": {
     "en": "FIX: Sky, Air and RoomSensor failing due to new features from Air Pro."
+  },
+  "1.17.0": {
+    "en": "Support for Sensibo Elements and it's measurements"
   }
 }
