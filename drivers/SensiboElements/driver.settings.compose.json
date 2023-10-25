@@ -1,0 +1,10 @@
+[
+  {
+    "$extends": "Polling_Interval",
+    "id": "Polling_Interval"
+  },
+  {
+    "$extends": "Delay_Offline",
+    "id": "Delay_Offline"
+  }
+]
