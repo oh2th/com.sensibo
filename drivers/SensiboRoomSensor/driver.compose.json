@@ -10,6 +10,10 @@
   "capabilities": [
     "measure_temperature",
     "measure_humidity",
-    "se_last_seen"
-  ]
+    "se_last_seen",
+    "measure_battery"
+  ],
+  "energy": {
+    "batteries": ["AAA", "AAA"]
+  }
 }

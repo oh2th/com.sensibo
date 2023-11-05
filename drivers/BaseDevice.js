@@ -145,6 +145,11 @@ module.exports = class BaseDevice extends Homey.Device {
       if (result.measurements) {
         await this.updateIfChanged('measure_temperature', result.measurements.temperature);
         await this.updateIfChanged('measure_humidity', result.measurements.humidity);
+        if (result.measurements.batteryVoltage) {
+          if (result.productModel === 'motion_sensor') {
+            await this.updateIfChanged('measure_battery', Math.round(3000 / result.measurements.batteryVoltage) * 100);
+          }
+        }
         if (result.measurements.co2) {
           await this.updateIfChanged('measure_co2', result.measurements.co2);
         }
