@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Sensibo = require("./lib/sensibo");
+const Sensibo = require('./lib/sensibo');
 
 class SensiboApp extends Homey.App {
 
@@ -101,12 +101,11 @@ class SensiboApp extends Homey.App {
 
     this.homey.flow.getActionCard('sensibo_sync_state')
       .registerRunListener((args, state) => args.device.onSyncPowerState(args.state));
-
   }
 
   async createSensiboApi() {
     this._sensibo = new Sensibo({
-      logger: this.log
+      logger: this.log,
     });
   }
 
@@ -122,7 +121,7 @@ class SensiboApp extends Homey.App {
       return;
     }
     this.clearCheckData();
-    //this.log(`New polling in ${interval} seconds`);
+    // this.log(`New polling in ${interval} seconds`);
     this.curTimeout = this.homey.setTimeout(this.checkData.bind(this), interval * 1000);
   }
 
@@ -140,11 +139,11 @@ class SensiboApp extends Homey.App {
           const data = await this._sensibo.getAllDeviceInfo(apikey);
           await this.onDevicesDataReceived(data, devices);
         } catch (err) {
-          this.log('checkData error', err);
+          this.log('checkData', err);
         }
       }
     } catch (err) {
-      this.log('checkData error', err);
+      this.log('checkData', err);
     } finally {
       this.scheduleCheckData(pollingInterval);
     }
@@ -155,23 +154,23 @@ class SensiboApp extends Homey.App {
     const devices = new Map();
     let pInterval = 60;
     const drivers = this.homey.drivers.getDrivers();
-    for (let key in drivers) {
-      if (drivers.hasOwnProperty(key)) {
-        for (const device of drivers[key].getDevices()) {
-          if (!!device.isInitialized && device.isInitialized() && !!device.getApiKey) {
-            const apiKey = device.getApiKey();
-            if (apiKey) {
-              devices.set(device.getData().id, device);
-              apiKeys.add(apiKey);
-            }
-          }
-          const pi = device.getSetting('Polling_Interval');
-          if (pi && pi < pInterval && pi >= 15) {
-            pInterval = pi;
+    Object.keys(drivers).forEach((key) => {
+      const driver = drivers[key];
+      driver.getDevices().forEach((device) => {
+        if (!!device.isInitialized && device.isInitialized() && !!device.getApiKey) {
+          const apiKey = device.getApiKey();
+          if (apiKey) {
+            devices.set(device.getData().id, device);
+            apiKeys.add(apiKey);
           }
         }
-      }
-    }
+        const pi = device.getSetting('Polling_Interval');
+        if (pi && pi < pInterval && pi >= 15) {
+          pInterval = pi;
+        }
+      });
+    });
+
     this.log('Got Sensibo devices:', apiKeys, Array.from(devices.keys()), pInterval);
     return { apiKeys, devices, pInterval };
   }

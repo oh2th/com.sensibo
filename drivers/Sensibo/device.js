@@ -101,7 +101,7 @@ module.exports = class SensiboDevice extends BaseDevice {
         await this.onClimateReactSettingsReceived(climateReactSettings);
       }
     } catch (err) {
-      this.log('checkData error', err);
+      this.log('checkData', err);
     } finally {
       this.scheduleCheckData();
     }
