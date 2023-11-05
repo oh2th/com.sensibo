@@ -124,5 +124,8 @@
   },
   "1.17.1": {
     "en": "Support for Sensibo Elements and it's measurements"
+  },
+  "1.17.2": {
+    "en": "ADD: Battery measurement to Room Sensor"
   }
 }
