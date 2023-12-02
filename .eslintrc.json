@@ -31,12 +31,8 @@
 	      "quote-props": ["error", "consistent-as-needed", { "keywords": true }],
         "dot-notation": "off",
         "arrow-body-style": "off",
-        "object-curly-newline": "off",
-        "object-shorthand": "off",
-        "prefer-destructuring": "off",
-        "no-nested-ternary": "off",
-        "prefer-arrow-callback": "off",
-        "arrow-parens": "off"
+        "no-useless-escape": "off",
+        "prefer-destructuring": "off"
       }
     }
   ]

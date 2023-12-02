@@ -30,7 +30,7 @@ module.exports = class BaseDriver extends Homey.Driver {
           id: device.id,
         },
         store: {
-          apikey: apikey,
+          apikey,
         },
       }));
   }
@@ -44,7 +44,7 @@ module.exports = class BaseDriver extends Homey.Driver {
     session.setHandler('apikey_input', async (data) => {
       apikey = data.apikey;
       sensibo = new Sensibo({
-        apikey: apikey,
+        apikey,
         logger: this.log,
       });
       await session.showView('list_devices');
@@ -72,7 +72,7 @@ module.exports = class BaseDriver extends Homey.Driver {
     session.setHandler('apikey_input', async (data) => {
       apikey = data.apikey;
       sensibo = new Sensibo({
-        apikey: apikey,
+        apikey,
         logger: this.log,
       });
 

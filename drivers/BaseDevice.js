@@ -31,7 +31,7 @@ module.exports = class BaseDevice extends Homey.Device {
     this._sensibo = new Sensibo({
       apikey: this.getApiKey(),
       deviceId: this.getData().id,
-      logger: logger,
+      logger,
     });
   }
 
@@ -42,13 +42,11 @@ module.exports = class BaseDevice extends Homey.Device {
     try {
       const data = await this._sensibo.getRemoteCapabilities();
       if (data.data) {
-        const remoteCapabilities = data.data.result.remoteCapabilities;
-
         // Check if remoteMeasurements and filtersCleaning exist in data.data.result
         const remoteMeasurements = data.data.result.measurements ? { measurements: data.data.result.measurements } : {};
         const filtersCleaning = data.data.result.filtersCleaning ? { filtersCleaning: data.data.result.filtersCleaning } : {};
 
-        const result = { ...remoteCapabilities, ...remoteMeasurements, ...filtersCleaning };
+        const result = { ...data.data.result.remoteCapabilities, ...remoteMeasurements, ...filtersCleaning };
         this.log('fetchRemoteCapabilities', result);
         this._sensibo._remoteCapabilities = result;
         await this.onRemoteCapabilitiesReceived(result);
@@ -117,7 +115,10 @@ module.exports = class BaseDevice extends Homey.Device {
         await this.updateIfChanged('se_fanlevel_pure', result.acState.fanLevel);
         await this.updateIfChanged('se_fandirection', result.acState.swing);
         await this.updateIfChanged('se_horizontal_swing', result.acState.horizontalSwing);
-        const thermostat_mode = result.acState.on === false ? 'off' : (result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined);
+        let thermostat_mode = off;
+        if (result.acState.on !== false) {
+          thermostat_mode = result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined;
+        }
         if (thermostat_mode) {
           await this.updateIfChanged('thermostat_mode', thermostat_mode);
         }
@@ -175,19 +176,18 @@ module.exports = class BaseDevice extends Homey.Device {
           }
         }
         if (result.measurements.time) {
-          const secondsAgo = result.measurements.time.secondsAgo;
           const lastSeen = new Date(result.measurements.time.time).toLocaleTimeString('POSIX', { hour12: false, timeZone: this.homey.clock.getTimezone() });
 
-          await this.updateIfChanged('se_last_seen_seconds', secondsAgo);
+          await this.updateIfChanged('se_last_seen_seconds', result.measurements.time.secondsAgo);
           await this.updateIfChanged('se_last_seen', lastSeen);
 
           const settings = await this.getSettings();
           const limitOffline = settings.Delay_Offline || 300;
 
-          if (secondsAgo > limitOffline && !this._offlineTrigged) {
+          if (result.measurements.time.secondsAgo > limitOffline && !this._offlineTrigged) {
             try {
               this.homey.app._offlineTrigger.trigger(this, {
-                seconds_ago: secondsAgo,
+                seconds_ago: result.measurements.time.secondsAgo,
                 last_seen: lastSeen,
               }, {});
               this._offlineTrigged = true;
@@ -321,7 +321,7 @@ module.exports = class BaseDevice extends Homey.Device {
       this.clearCheckData();
       if (this._sensibo.checkMode(mode)) {
         this.log(`set fan mode: ${this._sensibo.getDeviceId()} -> ${mode}`);
-        await this._sensibo.setAcState({ mode: mode });
+        await this._sensibo.setAcState({ mode });
         this.log(`set fan mode OK: ${this._sensibo.getDeviceId()} -> ${mode}`);
       }
     } finally {
@@ -355,7 +355,7 @@ module.exports = class BaseDevice extends Homey.Device {
       name = name.replace('_', ' ');
       return {
         id: fanLevel,
-        name: name,
+        name,
       };
     }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
@@ -376,7 +376,7 @@ module.exports = class BaseDevice extends Homey.Device {
       name = name.replace('_', ' ');
       return {
         id: item,
-        name: name,
+        name,
       };
     }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
@@ -397,7 +397,7 @@ module.exports = class BaseDevice extends Homey.Device {
       name = name.replace('_', ' ');
       return {
         id: item,
-        name: name,
+        name,
       };
     }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
@@ -498,7 +498,7 @@ module.exports = class BaseDevice extends Homey.Device {
       name = name.replace('_', ' ');
       return {
         id: item,
-        name: name,
+        name,
       };
     }).filter((result) => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
