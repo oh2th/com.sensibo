@@ -130,5 +130,8 @@
   },
   "1.17.3": {
     "en": "ADD: Offline trigger for Sensibo Elements"
+  },
+  "1.17.4": {
+    "en": "FIX: No sensor value updates with 1.17.3"
   }
 }
