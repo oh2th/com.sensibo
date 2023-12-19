@@ -127,5 +127,8 @@
   },
   "1.17.2": {
     "en": "ADD: Battery measurement to Room Sensor"
+  },
+  "1.17.3": {
+    "en": "ADD: Offline trigger for Sensibo Elements"
   }
 }
