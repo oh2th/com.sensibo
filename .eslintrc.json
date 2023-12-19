@@ -32,7 +32,8 @@
         "dot-notation": "off",
         "arrow-body-style": "off",
         "no-useless-escape": "off",
-        "prefer-destructuring": "off"
+        "prefer-destructuring": "off",
+        "no-nested-ternary": "off"
       }
     }
   ]
