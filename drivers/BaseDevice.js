@@ -115,7 +115,7 @@ module.exports = class BaseDevice extends Homey.Device {
         await this.updateIfChanged('se_fanlevel_pure', result.acState.fanLevel);
         await this.updateIfChanged('se_fandirection', result.acState.swing);
         await this.updateIfChanged('se_horizontal_swing', result.acState.horizontalSwing);
-        let thermostat_mode = off;
+        let thermostat_mode = 'off';
         if (result.acState.on !== false) {
           thermostat_mode = result.acState.mode === 'heat' || result.acState.mode === 'cool' || result.acState.mode === 'auto' ? result.acState.mode : undefined;
         }
