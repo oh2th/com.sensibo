@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 const Sensibo = require('./lib/sensibo');
-const { sleep } = require('./lib/util');
+const { randomDelay } = require('./lib/util');
 
 class SensiboApp extends Homey.App {
 
@@ -136,12 +136,12 @@ class SensiboApp extends Homey.App {
       const { apiKeys, devices, pInterval } = this.getSensiboDevices();
       pollingInterval = pInterval;
       for (const apikey of apiKeys) {
-        sleep(3);
+        await randomDelay(2, 10);
         try {
           const data = await this._sensibo.getAllDeviceInfo(apikey);
           await this.onDevicesDataReceived(data, devices);
         } catch (err) {
-          this.log('checkData', err);
+          this.log('checkData api', err);
         }
       }
     } catch (err) {

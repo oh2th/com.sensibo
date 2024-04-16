@@ -13,7 +13,7 @@ module.exports = class BaseDevice extends Homey.Device {
     await this.fetchRemoteCapabilities();
     this.log(`${this.deviceName()} device initialized`);
     this._initialized = true;
-    this.homey.app.scheduleCheckData(5);
+    this.homey.app.scheduleCheckData(15);
   }
 
   async migrate() {

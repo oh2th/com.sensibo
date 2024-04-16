@@ -1,7 +1,7 @@
 'use strict';
 
 const BaseDevice = require('../BaseDevice');
-const { sleep } = require('../../lib/util');
+const { randomDelay } = require('../../lib/util');
 
 module.exports = class SensiboDevice extends BaseDevice {
 
@@ -96,15 +96,15 @@ module.exports = class SensiboDevice extends BaseDevice {
       this.clearCheckData();
       if (this.hasCapability('se_climate_react')) {
         this.log(`Fetching AC state for: ${this._sensibo.getDeviceId()}`);
-        sleep(1);
+        await randomDelay(1, 3);
         const acStatesData = await this._sensibo.getAcStates();
         await this.onAcStatesReceived(acStatesData);
-        sleep(3);
+        await randomDelay(2, 10);
         const climateReactSettings = await this._sensibo.getClimateReactSettings();
         await this.onClimateReactSettingsReceived(climateReactSettings);
       }
     } catch (err) {
-      this.log('checkData', err);
+      this.log('checkData device', err);
     } finally {
       this.scheduleCheckData();
     }
