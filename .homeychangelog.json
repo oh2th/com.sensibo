@@ -142,5 +142,8 @@
   },
   "1.18.1": {
     "en": "Fix some http-calls with axios."
+  },
+  "1.18.2": {
+    "en": "More Axios adjustments"
   }
 }
