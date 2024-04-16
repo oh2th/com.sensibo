@@ -136,5 +136,8 @@
   },
   "1.17.5": {
     "en": "FIX: No sensor value updates with 1.17.3"
+  },
+  "1.18.0": {
+    "en": "Switch from http.min to axios, add support for gzipped results from the Sensibo API. Add some delays in APi queries to mitigate rate limiting. Not the perfect solution, but helps."
   }
 }
