@@ -2,6 +2,7 @@
 
 const Homey = require('homey');
 const Sensibo = require('./lib/sensibo');
+const { sleep } = require('./lib/util');
 
 class SensiboApp extends Homey.App {
 
@@ -135,6 +136,7 @@ class SensiboApp extends Homey.App {
       const { apiKeys, devices, pInterval } = this.getSensiboDevices();
       pollingInterval = pInterval;
       for (const apikey of apiKeys) {
+        sleep(3);
         try {
           const data = await this._sensibo.getAllDeviceInfo(apikey);
           await this.onDevicesDataReceived(data, devices);
