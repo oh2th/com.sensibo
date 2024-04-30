@@ -1,0 +1,102 @@
+{
+  "response": {
+    "status": 403,
+    "statusText": "Forbidden",
+    "headers": {
+      "content-type": "application/json",
+      "date": "Tue, 30 Apr 2024 16:14:07 GMT",
+      "server": "nginx",
+      "vary": "Origin",
+      "x-frame-options": "DENY",
+      "content-length": "133",
+      "connection": "Close"
+    },
+    "config": {
+      "transitional": {},
+      "adapter": [],
+      "transformRequest": [],
+      "transformResponse": [],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1,
+      "env": {},
+      "validateStatus": "Function: validateStatus",
+      "headers": {},
+      "method": "put",
+      "url": "https://home.sensibo.com/api/v2/pods/bQ9xT4Aa/pureboost?apiKey=TSij2LQ7qilKBOY0lLbUEhxHJCvvlf",
+      "data": "{\"enabled\":false}"
+    },
+    "request": {
+      "_events": {},
+      "_eventsCount": 7,
+      "_maxListeners": undefined,
+      "outputData": [],
+      "outputSize": 0,
+      "writable": true,
+      "destroyed": true,
+      "_last": true,
+      "chunkedEncoding": false,
+      "shouldKeepAlive": false,
+      "maxRequestsOnConnectionReached": false,
+      "_defaultKeepAlive": true,
+      "useChunkedEncodingByDefault": true,
+      "sendDate": false,
+      "_removedConnection": false,
+      "_removedContLen": false,
+      "_removedTE": false,
+      "strictContentLength": false,
+      "_contentLength": "17",
+      "_hasBody": true,
+      "_trailer": "",
+      "finished": true,
+      "_headerSent": true,
+      "_closed": true,
+      "socket": {},
+      "_header": "PUT /api/v2/pods/bQ9xT4Aa/pureboost?apiKey=TSij2LQ7qilKBOY0lLbUEhxHJCvvlf HTTP/1.1\r\n" +
+        "Accept: application/json, text/plain, */*\r\n" +
+        "Content-Type: application/json\r\n" +
+        "Accept-Encoding: gzip\r\n" +
+        "User-Agent: axios/1.6.8\r\n" +
+        "Content-Length: 17\r\n" +
+        "Host: home.sensibo.com\r\n" +
+        "Connection: close\r\n" +
+        "\r\n",
+      "_keepAliveTimeout": 0,
+      "_onPendingData": "Function: nop",
+      "agent": {},
+      "socketPath": undefined,
+      "method": "PUT",
+      "maxHeaderSize": undefined,
+      "insecureHTTPParser": undefined,
+      "joinDuplicateHeaders": undefined,
+      "path": "/api/v2/pods/bQ9xT4Aa/pureboost?apiKey=TSij2LQ7qilKBOY0lLbUEhxHJCvvlf",
+      "_ended": true,
+      "res": {},
+      "aborted": false,
+      "timeoutCb": null,
+      "upgradeOrConnect": false,
+      "parser": null,
+      "maxHeadersCount": null,
+      "reusedSocket": false,
+      "host": "home.sensibo.com",
+      "protocol": "https:",
+      "_redirectable": {},
+      "Symbol(kCapture)": false,
+      "Symbol(kBytesWritten)": 0,
+      "Symbol(kNeedDrain)": false,
+      "Symbol(corked)": 0,
+      "Symbol(kOutHeaders)": {},
+      "Symbol(errored)": null,
+      "Symbol(kHighWaterMark)": 16384,
+      "Symbol(kRejectNonStandardBodyWrites)": false,
+      "Symbol(kUniqueHeaders)": null
+    },
+    "data": {
+      "status": "failed",
+      "reason": "NotAuthorized",
+      "message": "PureBoost feature are available for plus users only or if there pure device in the room"
+    }
+  }
+}

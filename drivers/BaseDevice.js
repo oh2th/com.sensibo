@@ -521,6 +521,9 @@ module.exports = class BaseDevice extends Homey.Device {
 			this.log(`set target temperature: ${this._sensibo.getDeviceId()} -> ${value}`);
 			await this._sensibo.setAcState({ targetTemperature: value });
 			this.log(`set target temperature OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+		} catch(err) {
+			this.log('onUpdateTargetTemperature error', err)
+			throw err;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -542,6 +545,8 @@ module.exports = class BaseDevice extends Homey.Device {
 				}
 				this.log(`set thermostat OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
+		} catch(err) {
+			throw err;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -555,6 +560,8 @@ module.exports = class BaseDevice extends Homey.Device {
 				await this._sensibo.setAcState({ fanLevel: value });
 				this.log(`set fan level OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
+		} catch(err) {
+			throw err;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -568,6 +575,8 @@ module.exports = class BaseDevice extends Homey.Device {
 				await this._sensibo.setAcState({ swing: value });
 				this.log(`set swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
+		} catch(err) {
+			throw err;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -581,6 +590,8 @@ module.exports = class BaseDevice extends Homey.Device {
 				await this._sensibo.setAcState({ horizontalSwing: value });
 				this.log(`set horizontal swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
+		} catch(err) {
+			throw err;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -592,6 +603,8 @@ module.exports = class BaseDevice extends Homey.Device {
 			this.log(`enable/disable Climate React: ${this._sensibo.getDeviceId()} -> ${value}`);
 			await this._sensibo.enableClimateReact(value === 'on');
 			this.log(`enable/disable Climate React OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+		} catch(err) {
+			throw err;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -603,6 +616,8 @@ module.exports = class BaseDevice extends Homey.Device {
 			this.log(`enable/disable Pure Boost: ${this._sensibo.getDeviceId()} -> ${value}`);
 			await this._sensibo.enablePureBoost(value === 'on');
 			this.log(`enable/disable Pure Boost OK: ${this._sensibo.getDeviceId()} -> ${value}`);
+		} catch(err) {
+			throw err;
 		} finally {
 			this.scheduleCheckData();
 		}
