@@ -145,5 +145,8 @@
   },
   "1.18.2": {
     "en": "More Axios adjustments"
+  },
+  "1.18.3": {
+    "en": "FIX: HTTP 400 Errors on certain flow cards using PUT."
   }
 }
