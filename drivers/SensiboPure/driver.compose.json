@@ -1,26 +1,26 @@
 {
-  "id": "SensiboPure",
-  "name": {
-    "en": "Sensibo Pure"
-  },
-  "$extends": [
-    "defaults"
-  ],
-  "class": "fan",
-  "capabilities": [
-    "se_onoff",
-    "se_fanlevel_pure",
-    "air_quality",
-    "se_last_seen",
-    "se_last_seen_seconds",
-    "alarm_filter",
-    "se_filter_run_hours",
-    "se_filter_due_hours",
-    "se_filter_due_date"
-  ],
-  "capabilitiesOptions": {
-    "se_onoff": {
-      "greyout": true
-    }
-  }
+	"id": "SensiboPure",
+	"name": {
+		"en": "Sensibo Pure"
+	},
+	"$extends": [
+		"defaults"
+	],
+	"class": "fan",
+	"capabilities": [
+		"se_onoff",
+		"se_fanlevel_pure",
+		"air_quality",
+		"se_last_seen",
+		"se_last_seen_seconds",
+		"alarm_filter",
+		"se_filter_run_hours",
+		"se_filter_due_hours",
+		"se_filter_due_date"
+	],
+	"capabilitiesOptions": {
+		"se_onoff": {
+			"greyout": true
+		}
+	}
 }
