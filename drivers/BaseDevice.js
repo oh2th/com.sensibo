@@ -292,6 +292,10 @@ module.exports = class BaseDevice extends Homey.Device {
 			}
 			this.homey.app._turnedOnTrigger.trigger(this, { state: 1 }, {});
 			this.log(`turned on OK: ${this._sensibo.getDeviceId()}`);
+		} catch(err) {
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onActionTurnOn error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -308,6 +312,10 @@ module.exports = class BaseDevice extends Homey.Device {
 			}
 			this.homey.app._turnedOffTrigger.trigger(this, { state: 0 }, {});
 			this.log(`turned off OK: ${this._sensibo.getDeviceId()}`);
+		} catch(err) {
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onActionTurnOff error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -321,6 +329,10 @@ module.exports = class BaseDevice extends Homey.Device {
 				await this._sensibo.setAcState({ mode });
 				this.log(`set fan mode OK: ${this._sensibo.getDeviceId()} -> ${mode}`);
 			}
+		} catch(err) {
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onActionSetMode error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -433,8 +445,9 @@ module.exports = class BaseDevice extends Homey.Device {
 			this._hasTimerEnabled = false;
 			this.homey.app._timerDeletedTrigger.trigger(this, { homey: true }, {});
 		} catch (err) {
-			this.log('onDeleteTimer error', err);
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onDeleteTimer error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -467,8 +480,9 @@ module.exports = class BaseDevice extends Homey.Device {
 			this._hasTimerEnabled = true;
 			this.homey.app._timerCreatedTrigger.trigger(this, { homey: true }, {});
 		} catch (err) {
-			this.log('onSetTimer error', err);
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onSetTimer error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -481,8 +495,9 @@ module.exports = class BaseDevice extends Homey.Device {
 			await this._sensibo.setAcState({ light: state });
 			this.log(`set light OK: ${this._sensibo.getDeviceId()} -> ${state}`);
 		} catch (err) {
-			this.log('onControlLight error', err);
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onControlLight error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -508,8 +523,9 @@ module.exports = class BaseDevice extends Homey.Device {
 			this.log('onSyncPowerState', state);
 			await this._sensibo.syncDeviceState(state === 'on');
 		} catch (err) {
-			this.log('onSyncPowerState error', err);
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onSyncPowerState error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -522,8 +538,9 @@ module.exports = class BaseDevice extends Homey.Device {
 			await this._sensibo.setAcState({ targetTemperature: value });
 			this.log(`set target temperature OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 		} catch(err) {
-			this.log('onUpdateTargetTemperature error', err)
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onUpdateTargetTemperature error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -546,7 +563,9 @@ module.exports = class BaseDevice extends Homey.Device {
 				this.log(`set thermostat OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
 		} catch(err) {
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onUpdateThermostatMode error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -561,7 +580,9 @@ module.exports = class BaseDevice extends Homey.Device {
 				this.log(`set fan level OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
 		} catch(err) {
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onUpdateFanlevel error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -576,7 +597,9 @@ module.exports = class BaseDevice extends Homey.Device {
 				this.log(`set swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
 		} catch(err) {
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onUpdateSwing error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -591,7 +614,9 @@ module.exports = class BaseDevice extends Homey.Device {
 				this.log(`set horizontal swing OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 			}
 		} catch(err) {
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onUpdateHorizontalSwing error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -602,9 +627,10 @@ module.exports = class BaseDevice extends Homey.Device {
 			this.clearCheckData();
 			this.log(`enable/disable Climate React: ${this._sensibo.getDeviceId()} -> ${value}`);
 			await this._sensibo.enableClimateReact(value === 'on');
-			this.log(`enable/disable Climate React OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 		} catch(err) {
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onUpdateClimateReact error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
@@ -615,9 +641,10 @@ module.exports = class BaseDevice extends Homey.Device {
 			this.clearCheckData();
 			this.log(`enable/disable Pure Boost: ${this._sensibo.getDeviceId()} -> ${value}`);
 			await this._sensibo.enablePureBoost(value === 'on');
-			this.log(`enable/disable Pure Boost OK: ${this._sensibo.getDeviceId()} -> ${value}`);
 		} catch(err) {
-			throw err;
+			let message = err; if (err.response.data.message !== undefined) { message = err.response.data.message };
+			this.log('onUpdatePureBoost error', message);
+			throw message;
 		} finally {
 			this.scheduleCheckData();
 		}
