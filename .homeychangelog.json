@@ -151,5 +151,8 @@
   },
   "1.18.4": {
     "en": "FIX: Cleanup Axios methods for Sensibo API calls"
+  },
+  "1.18.5": {
+    "en": "FIX: Improved API error reporting to the user"
   }
 }
