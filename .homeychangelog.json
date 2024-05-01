@@ -148,5 +148,8 @@
   },
   "1.18.3": {
     "en": "FIX: HTTP 400 Errors on certain flow cards using PUT."
+  },
+  "1.18.4": {
+    "en": "FIX: Cleanup Axios methods for Sensibo API calls"
   }
 }
