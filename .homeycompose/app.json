@@ -1,6 +1,6 @@
 {
   "id": "com.sensibo",
-  "version": "1.18.6",
+  "version": "1.18.7",
   "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
